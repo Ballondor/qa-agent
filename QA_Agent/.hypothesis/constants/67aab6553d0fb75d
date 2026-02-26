@@ -1,0 +1,4 @@
+# file: /Users/bhj/Desktop/UnicronGym/QA_Agent/src/qa_agent_system/agents/tc_scenario_agent.py
+# hypothesis_version: 6.141.1
+
+['TC-001', 'TC-002', '```', '```json', 'action', 'expected_result', 'id', 'message', 'name', 'negative', 'positive', 'preconditions', 'scenario_type', 'step_number', 'steps', 'test_cases', '{', '}', '기본 페이지 접근 및 로드 확인', '기본 페이지 접근 확인', '브라우저가 실행 중이어야 합니다', '에러 메시지가 표시됩니다', '잘못된 입력 처리 확인', '잘못된 입력에 대한 에러 처리 확인', '페이지 제목이 존재합니다', '페이지가 로드됩니다', '페이지가 정상적으로 로드됩니다']

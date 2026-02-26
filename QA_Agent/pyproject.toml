@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qa-agent-system"
+version = "0.1.0"
+description = "Strands SDK 기반 멀티 에이전트 QA 자동화 시스템"
+requires-python = ">=3.11"
+dependencies = [
+    "strands-agents>=0.1.0",
+    "strands-agents-builder>=0.1.0",
+    "pydantic>=2.0.0",
+    "playwright>=1.40.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "hypothesis>=6.0.0",
+    "pytest-asyncio>=0.23.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
