@@ -1,0 +1,36 @@
+{
+  "title": "테스트 리포트 - https://news.jtbc.co.kr/article/NB12269137",
+  "summary": {
+    "total_tests": 2,
+    "passed_tests": 2,
+    "failed_tests": 0,
+    "success_rate": 1.0
+  },
+  "detailed_results": [
+    {
+      "test_case_id": "TC-001",
+      "test_name": "기본 페이지 접근 및 로드 확인",
+      "passed": true,
+      "execution_time_ms": 3017.1698330086656,
+      "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/screenshots/tc-001_20260227_144201.png",
+      "actual_result": "아티클 페이지 정상 로딩 (URL: https://news.jtbc.co.kr/article/NB12269137)",
+      "expected_result": "페이지가 정상적으로 로드되고 제목이 표시됩니다",
+      "failure_reason": null,
+      "timed_out": false
+    },
+    {
+      "test_case_id": "TC-002",
+      "test_name": "잘못된 입력에 대한 에러 처리 확인",
+      "passed": true,
+      "execution_time_ms": 2643.0892500065966,
+      "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/screenshots/tc-002_20260227_144203.png",
+      "actual_result": "댓글 입력 버튼 클릭 완료",
+      "expected_result": "적절한 에러 메시지가 표시되고 시스템이 안정적으로 동작합니다",
+      "failure_reason": null,
+      "timed_out": false
+    }
+  ],
+  "failed_screenshots": [],
+  "generated_at": "2026-02-27T05:42:04.233854Z",
+  "markdown_content": "# 테스트 리포트 - https://news.jtbc.co.kr/article/NB12269137\n\n## 요약\n\n- total_tests: 2\n- passed_tests: 2\n- failed_tests: 0\n- success_rate: 1.0\n\n- generated_at: 2026-02-27T05:42:04.233854+00:00\n\n## 상세 결과\n\n| test_case_id | test_name | passed | execution_time_ms | screenshot_path | actual_result | expected_result | failure_reason | timed_out |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| TC-001 | 기본 페이지 접근 및 로드 확인 | True | 3017.1698330086656 | /Users/bhj/DEV/QA/QA_Agent/screenshots/tc-001_20260227_144201.png | 아티클 페이지 정상 로딩 (URL: https://news.jtbc.co.kr/article/NB12269137) | 페이지가 정상적으로 로드되고 제목이 표시됩니다 |  | False |\n| TC-002 | 잘못된 입력에 대한 에러 처리 확인 | True | 2643.0892500065966 | /Users/bhj/DEV/QA/QA_Agent/screenshots/tc-002_20260227_144203.png | 댓글 입력 버튼 클릭 완료 | 적절한 에러 메시지가 표시되고 시스템이 안정적으로 동작합니다 |  | False |\n\n## 실패 스크린샷\n\n없음\n"
+}

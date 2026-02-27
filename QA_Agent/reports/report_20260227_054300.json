@@ -1,0 +1,113 @@
+{
+  "title": "테스트 리포트 - https://news.jtbc.co.kr/article/NB12269137",
+  "summary": {
+    "total_tests": 9,
+    "passed_tests": 9,
+    "failed_tests": 0,
+    "success_rate": 1.0
+  },
+  "detailed_results": [
+    {
+      "test_case_id": "TC-001",
+      "test_name": "비로그인 상태로 아티클 상세 페이지 접속",
+      "passed": true,
+      "execution_time_ms": 2940.766125000664,
+      "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/screenshots/tc-001_20260227_144234.png",
+      "actual_result": "아티클 페이지 정상 로딩 (URL: https://news.jtbc.co.kr/article/NB12269137)",
+      "expected_result": "아티클 상세 페이지가 정상적으로 로딩된다",
+      "failure_reason": null,
+      "timed_out": false
+    },
+    {
+      "test_case_id": "TC-002",
+      "test_name": "화면 스크롤 하여 댓글 입력창 클릭",
+      "passed": true,
+      "execution_time_ms": 2578.455832990585,
+      "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/screenshots/tc-002_20260227_144236.png",
+      "actual_result": "댓글 입력 버튼 클릭 완료",
+      "expected_result": "댓글 입력창이 포커스된다",
+      "failure_reason": null,
+      "timed_out": false
+    },
+    {
+      "test_case_id": "TC-003",
+      "test_name": "로그인 안내 모달 노출 및 로그인 페이지 이동",
+      "passed": true,
+      "execution_time_ms": 3715.8027080004103,
+      "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/screenshots/tc-003_20260227_144241.png",
+      "actual_result": "로그인 페이지로 이동 완료 (모달: 로그인이 필요한 서비스입니다.로그인 하시겠습니까?취소확인, URL: https://join.jtbc.co.kr/login?targetUrl=https%3A%2F%2Fnews.jtbc.co.kr%2Farticle%2FNB12269137)",
+      "expected_result": "로그인 페이지로 이동한다",
+      "failure_reason": null,
+      "timed_out": false
+    },
+    {
+      "test_case_id": "TC-004",
+      "test_name": "로그인 수행",
+      "passed": true,
+      "execution_time_ms": 7105.318541987799,
+      "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/screenshots/tc-004_20260227_144248.png",
+      "actual_result": "로그인 완료 (URL: https://news.jtbc.co.kr/article/NB12269137)",
+      "expected_result": "로그인이 성공적으로 완료된다",
+      "failure_reason": null,
+      "timed_out": false
+    },
+    {
+      "test_case_id": "TC-005",
+      "test_name": "원래 아티클 페이지로 랜딩",
+      "passed": true,
+      "execution_time_ms": 0.022249994799494743,
+      "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/screenshots/tc-005_20260227_144248.png",
+      "actual_result": "아티클 페이지 랜딩 완료 (URL: https://news.jtbc.co.kr/article/NB12269137)",
+      "expected_result": "원래 아티클 상세 페이지로 돌아온다",
+      "failure_reason": null,
+      "timed_out": false
+    },
+    {
+      "test_case_id": "TC-006",
+      "test_name": "댓글 입력창 클릭 (로그인 상태)",
+      "passed": true,
+      "execution_time_ms": 4101.298749999842,
+      "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/screenshots/tc-006_20260227_144253.png",
+      "actual_result": "댓글 입력창 활성화 완료 (textarea#write visible)",
+      "expected_result": "댓글 입력창이 활성화되어 입력 가능한 상태가 된다",
+      "failure_reason": null,
+      "timed_out": false
+    },
+    {
+      "test_case_id": "TC-007",
+      "test_name": "댓글 입력 및 등록",
+      "passed": true,
+      "execution_time_ms": 4571.1255420028465,
+      "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/screenshots/tc-007_20260227_144257.png",
+      "actual_result": "댓글 '기사 잘 읽었습니다~' 입력 및 등록 완료",
+      "expected_result": "댓글 등록 요청이 전송된다",
+      "failure_reason": null,
+      "timed_out": false
+    },
+    {
+      "test_case_id": "TC-008",
+      "test_name": "댓글 등록 확인",
+      "passed": true,
+      "execution_time_ms": 2038.026207999792,
+      "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/screenshots/tc-008_20260227_144259.png",
+      "actual_result": "댓글 '기사 잘 읽었습니다~' 정상 등록 확인",
+      "expected_result": "\"기사 잘 읽었습니다~\" 댓글이 정상적으로 등록되어 표시된다",
+      "failure_reason": null,
+      "timed_out": false
+    },
+    {
+      "test_case_id": "TC-009",
+      "test_name": "비로그인 상태에서 댓글 직접 등록 불가 확인",
+      "passed": true,
+      "execution_time_ms": 0.0021669984562322497,
+      "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/screenshots/tc-009_20260227_144300.png",
+      "actual_result": "비로그인 상태 댓글 시도 시 로그인 모달 노출 확인 (TC-003에서 검증 완료)",
+      "expected_result": "비로그인 상태에서는 댓글을 직접 등록할 수 없고 로그인 안내가 표시된다",
+      "failure_reason": null,
+      "timed_out": false
+    }
+  ],
+  "failed_screenshots": [],
+  "generated_at": "2026-02-27T05:43:00.248344Z",
+  "markdown_content": "# 테스트 리포트 - https://news.jtbc.co.kr/article/NB12269137\n\n## 요약\n\n- total_tests: 9\n- passed_tests: 9\n- failed_tests: 0\n- success_rate: 1.0\n\n- generated_at: 2026-02-27T05:43:00.248344+00:00\n\n## 상세 결과\n\n| test_case_id | test_name | passed | execution_time_ms | screenshot_path | actual_result | expected_result | failure_reason | timed_out |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| TC-001 | 비로그인 상태로 아티클 상세 페이지 접속 | True | 2940.766125000664 | /Users/bhj/DEV/QA/QA_Agent/screenshots/tc-001_20260227_144234.png | 아티클 페이지 정상 로딩 (URL: https://news.jtbc.co.kr/article/NB12269137) | 아티클 상세 페이지가 정상적으로 로딩된다 |  | False |\n| TC-002 | 화면 스크롤 하여 댓글 입력창 클릭 | True | 2578.455832990585 | /Users/bhj/DEV/QA/QA_Agent/screenshots/tc-002_20260227_144236.png | 댓글 입력 버튼 클릭 완료 | 댓글 입력창이 포커스된다 |  | False |\n| TC-003 | 로그인 안내 모달 노출 및 로그인 페이지 이동 | True | 3715.8027080004103 | /Users/bhj/DEV/QA/QA_Agent/screenshots/tc-003_20260227_144241.png | 로그인 페이지로 이동 완료 (모달: 로그인이 필요한 서비스입니다.로그인 하시겠습니까?취소확인, URL: https://join.jtbc.co.kr/login?targetUrl=https%3A%2F%2Fnews.jtbc.co.kr%2Farticle%2FNB12269137) | 로그인 페이지로 이동한다 |  | False |\n| TC-004 | 로그인 수행 | True | 7105.318541987799 | /Users/bhj/DEV/QA/QA_Agent/screenshots/tc-004_20260227_144248.png | 로그인 완료 (URL: https://news.jtbc.co.kr/article/NB12269137) | 로그인이 성공적으로 완료된다 |  | False |\n| TC-005 | 원래 아티클 페이지로 랜딩 | True | 0.022249994799494743 | /Users/bhj/DEV/QA/QA_Agent/screenshots/tc-005_20260227_144248.png | 아티클 페이지 랜딩 완료 (URL: https://news.jtbc.co.kr/article/NB12269137) | 원래 아티클 상세 페이지로 돌아온다 |  | False |\n| TC-006 | 댓글 입력창 클릭 (로그인 상태) | True | 4101.298749999842 | /Users/bhj/DEV/QA/QA_Agent/screenshots/tc-006_20260227_144253.png | 댓글 입력창 활성화 완료 (textarea#write visible) | 댓글 입력창이 활성화되어 입력 가능한 상태가 된다 |  | False |\n| TC-007 | 댓글 입력 및 등록 | True | 4571.1255420028465 | /Users/bhj/DEV/QA/QA_Agent/screenshots/tc-007_20260227_144257.png | 댓글 '기사 잘 읽었습니다~' 입력 및 등록 완료 | 댓글 등록 요청이 전송된다 |  | False |\n| TC-008 | 댓글 등록 확인 | True | 2038.026207999792 | /Users/bhj/DEV/QA/QA_Agent/screenshots/tc-008_20260227_144259.png | 댓글 '기사 잘 읽었습니다~' 정상 등록 확인 | \"기사 잘 읽었습니다~\" 댓글이 정상적으로 등록되어 표시된다 |  | False |\n| TC-009 | 비로그인 상태에서 댓글 직접 등록 불가 확인 | True | 0.0021669984562322497 | /Users/bhj/DEV/QA/QA_Agent/screenshots/tc-009_20260227_144300.png | 비로그인 상태 댓글 시도 시 로그인 모달 노출 확인 (TC-003에서 검증 완료) | 비로그인 상태에서는 댓글을 직접 등록할 수 없고 로그인 안내가 표시된다 |  | False |\n\n## 실패 스크린샷\n\n없음\n"
+}

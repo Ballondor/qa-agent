@@ -1,0 +1,181 @@
+{
+  "target_url": "https://news.jtbc.co.kr/article/NB12269137",
+  "requirements": "JTBC 아티클 댓글 등록 E2E 테스트 - 비로그인 → 로그인 → 댓글 등록 플로우",
+  "test_cases": [
+    {
+      "id": "TC-001",
+      "name": "비로그인 상태로 아티클 상세 페이지 접속",
+      "preconditions": [
+        "크롬 브라우저에서 비로그인 상태"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Navigate to https://news.jtbc.co.kr/article/NB12269137",
+          "expected_result": "아티클 상세 페이지가 정상적으로 로딩된다"
+        }
+      ],
+      "expected_result": "아티클 상세 페이지가 정상적으로 로딩된다",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-002",
+      "name": "화면 스크롤 하여 댓글 입력창 클릭",
+      "preconditions": [
+        "아티클 상세 페이지가 로딩된 상태"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Scroll to .comment-write__box button and click",
+          "expected_result": "댓글 입력창이 포커스된다"
+        }
+      ],
+      "expected_result": "댓글 입력창이 포커스된다",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-003",
+      "name": "로그인 안내 모달 노출 및 로그인 페이지 이동",
+      "preconditions": [
+        "비로그인 상태에서 댓글 입력창을 클릭"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Wait for .react-responsive-modal-modal visible",
+          "expected_result": "로그인 안내 모달이 노출된다"
+        },
+        {
+          "step_number": 2,
+          "action": "Click modal button:has-text(\"확인\")",
+          "expected_result": "로그인 페이지로 이동한다"
+        }
+      ],
+      "expected_result": "로그인 페이지로 이동한다",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-004",
+      "name": "로그인 수행",
+      "preconditions": [
+        "로그인 페이지에 도착"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Fill #id with ohyoon1@yopmail.com",
+          "expected_result": "이메일 입력 완료"
+        },
+        {
+          "step_number": 2,
+          "action": "Fill #password with 1715qwer!AA",
+          "expected_result": "비밀번호 입력 완료"
+        },
+        {
+          "step_number": 3,
+          "action": "Click button[type=\"submit\"]",
+          "expected_result": "로그인이 성공적으로 완료된다"
+        }
+      ],
+      "expected_result": "로그인이 성공적으로 완료된다",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-005",
+      "name": "원래 아티클 페이지로 랜딩",
+      "preconditions": [
+        "로그인 완료"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Verify URL contains NB12269137 or navigate to https://news.jtbc.co.kr/article/NB12269137",
+          "expected_result": "원래 아티클 상세 페이지로 돌아온다"
+        }
+      ],
+      "expected_result": "원래 아티클 상세 페이지로 돌아온다",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-006",
+      "name": "댓글 입력창 클릭 (로그인 상태)",
+      "preconditions": [
+        "로그인 상태로 아티클 페이지에 돌아옴"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Scroll to .comment-write__box button and click",
+          "expected_result": "댓글 입력창이 활성화된다"
+        },
+        {
+          "step_number": 2,
+          "action": "Wait for textarea#write visible",
+          "expected_result": "textarea가 입력 가능한 상태가 된다"
+        }
+      ],
+      "expected_result": "댓글 입력창이 활성화되어 입력 가능한 상태가 된다",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-007",
+      "name": "댓글 입력 및 등록",
+      "preconditions": [
+        "댓글 입력창이 활성화된 상태"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Fill textarea#write with \"기사 잘 읽었습니다~\"",
+          "expected_result": "댓글 텍스트 입력 완료"
+        },
+        {
+          "step_number": 2,
+          "action": "Click button:has-text(\"등록\")",
+          "expected_result": "댓글 등록 요청이 전송된다"
+        }
+      ],
+      "expected_result": "댓글 등록 요청이 전송된다",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-008",
+      "name": "댓글 등록 확인",
+      "preconditions": [
+        "댓글 등록 요청이 전송됨"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Verify page contains \"기사 잘 읽었습니다~\"",
+          "expected_result": "댓글이 정상적으로 등록되어 표시된다"
+        }
+      ],
+      "expected_result": "\"기사 잘 읽었습니다~\" 댓글이 정상적으로 등록되어 표시된다",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-009",
+      "name": "비로그인 상태에서 댓글 직접 등록 불가 확인",
+      "preconditions": [
+        "크롬 브라우저에서 비로그인 상태"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "Navigate to https://news.jtbc.co.kr/article/NB12269137",
+          "expected_result": "페이지 로딩"
+        },
+        {
+          "step_number": 2,
+          "action": "Click .comment-write__box button",
+          "expected_result": "로그인 안내 모달이 노출된다"
+        }
+      ],
+      "expected_result": "비로그인 상태에서는 댓글을 직접 등록할 수 없고 로그인 안내가 표시된다",
+      "scenario_type": "negative"
+    }
+  ],
+  "created_at": "2026-02-27T05:47:43.546065Z"
+}

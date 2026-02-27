@@ -1,0 +1,74 @@
+[
+  {
+    "step": 1,
+    "name": "비로그인 상태로 아티클 상세 페이지 접속",
+    "passed": true,
+    "actual_result": "아티클 페이지 정상 로딩 (URL: https://news.jtbc.co.kr/article/NB12269137)",
+    "failure_reason": null,
+    "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/tests/e2e/../../screenshots/step1_article_page_20260227_143115.png",
+    "execution_time_ms": 3329.34
+  },
+  {
+    "step": 2,
+    "name": "화면 스크롤 하여 댓글 입력창 클릭",
+    "passed": true,
+    "actual_result": "댓글 입력 버튼 클릭 완료",
+    "failure_reason": null,
+    "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/tests/e2e/../../screenshots/step2_comment_click_20260227_143119.png",
+    "execution_time_ms": 2608.37
+  },
+  {
+    "step": 3,
+    "name": "로그인 안내 모달 노출 및 로그인 페이지 이동",
+    "passed": true,
+    "actual_result": "로그인 페이지로 이동 완료 (URL: https://join.jtbc.co.kr/login?targetUrl=https%3A%2F%2Fnews.jtbc.co.kr%2Farticle%2FNB12269137)",
+    "failure_reason": null,
+    "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/tests/e2e/../../screenshots/step3_login_modal_20260227_143123.png",
+    "execution_time_ms": 3742.9
+  },
+  {
+    "step": 4,
+    "name": "로그인 수행",
+    "passed": true,
+    "actual_result": "로그인 완료 (현재 URL: https://news.jtbc.co.kr/article/NB12269137)",
+    "failure_reason": null,
+    "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/tests/e2e/../../screenshots/step4_login_20260227_143130.png",
+    "execution_time_ms": 7082.9
+  },
+  {
+    "step": 5,
+    "name": "원래 아티클 페이지로 랜딩",
+    "passed": true,
+    "actual_result": "아티클 페이지 랜딩 완료 (URL: https://news.jtbc.co.kr/article/NB12269137)",
+    "failure_reason": null,
+    "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/tests/e2e/../../screenshots/step5_article_return_20260227_143130.png",
+    "execution_time_ms": 0.01
+  },
+  {
+    "step": 6,
+    "name": "댓글 입력창 클릭 (로그인 상태)",
+    "passed": true,
+    "actual_result": "댓글 입력창 활성화 완료 (textarea#write visible)",
+    "failure_reason": null,
+    "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/tests/e2e/../../screenshots/step6_comment_click_logged_in_20260227_143134.png",
+    "execution_time_ms": 4075.36
+  },
+  {
+    "step": 7,
+    "name": "댓글 입력 및 등록",
+    "passed": true,
+    "actual_result": "댓글 '기사 잘 읽었습니다~' 입력 및 등록 버튼 클릭 완료",
+    "failure_reason": null,
+    "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/tests/e2e/../../screenshots/step7_comment_submit_20260227_143139.png",
+    "execution_time_ms": 4557.64
+  },
+  {
+    "step": 8,
+    "name": "댓글 등록 확인",
+    "passed": true,
+    "actual_result": "댓글 '기사 잘 읽었습니다~' 정상 등록 확인",
+    "failure_reason": null,
+    "screenshot_path": "/Users/bhj/DEV/QA/QA_Agent/tests/e2e/../../screenshots/step8_comment_verify_20260227_143141.png",
+    "execution_time_ms": 2026.07
+  }
+]
