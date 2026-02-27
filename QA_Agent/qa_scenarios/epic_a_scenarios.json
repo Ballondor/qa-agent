@@ -1,0 +1,3041 @@
+{
+  "target_url": "https://metaj.jtbc.co.kr",
+  "requirements": "# Epic A: 여론조사 데이터 시각화 서비스\n\n유저 스토리 ID: US-A-0-01\n기능: Feature A-0: [CMS] 선거 관리\n제목: 선거 등록\n역할: 여론조사 관리자 (박데이터)\n목표: 선거 정보(선거명, 선거일, 선거타입)를 등록할 수 있다\n가치: 해당 선거에 속하는 정당, 후보자, 여론조사 데이터를 체계적으로 관리할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 선거 관리 페이지에서, When 선거명, 선거일, 선거타입(대선/지방선거/국회의원선거 등)을 입력하고 저장하면, Then 선거고유번호가 자동 생성되고 선거가 등록된다\n  2. Given 선거명을 입력하지 않았을 때, When 저장을 시도하면, Then 필수값 입력 안내 메시지가 표시된다\n  3. Given 선거일을 선택하지 않았을 때, When 저장을 시도하면, Then 필수값 입력 안내 메시지가 표시된다\n  4. Given 선거타입을 선택하지 않았을 때, When 저장을 시도하면, Then 필수값 입력 안내 메시지가 표시된다\n  5. Given 동일한 선거명이 이미 존재할 때, When 저장을 시도하면, Then 중복 경고가 표시된다\n  6. Given 선거가 등록되었을 때, When 선거 리스트를 확인하면, Then 등록된 선거가 목록에 표시된다\n\n---\n\n유저 스토리 ID: US-A-0-02\n기능: Feature A-0: [CMS] 선거 관리\n제목: 선거 조회/수정/삭제\n역할: 여론조사 관리자 (박데이터)\n목표: 등록된 선거 목록을 조회하고 정보를 수정하거나 삭제할 수 있다\n가치: 선거 정보를 최신 상태로 유지할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 선거 관리 페이지에서, When 선거 목록을 확인하면, Then 등록된 모든 선거가 리스트로 표시된다\n  2. Given 선거를 선택했을 때, When 수정 버튼을 클릭하면, Then 선거명, 선거일, 선거타입을 수정할 수 있다\n  3. Given 선거를 삭제하려 할 때, When 해당 선거에 연결된 정당/후보자/여론조사 데이터가 존재하면, Then 삭제 불가 경고가 표시된다\n  4. Given 하위 데이터가 없는 선거를 삭제할 때, When 삭제 확인을 클릭하면, Then 선거가 삭제된다\n\n---\n\n유저 스토리 ID: US-A-0-03\n기능: Feature A-0: [CMS] 선거 관리\n제목: 선거 선택 후 하위 관리\n역할: 여론조사 관리자 (박데이터)\n목표: 선거를 선택한 후 해당 선거의 정당/후보자/데이터를 관리할 수 있다\n가치: 선거별로 분리된 데이터를 관리할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 선거 목록에서 특정 선거를 선택했을 때, When 데이터 관리/정당 관리/후보자 관리 메뉴에 진입하면, Then 해당 선거에 속한 데이터만 표시된다\n  2. Given 선거가 선택되지 않은 상태에서, When 정당/후보자/데이터 관리에 진입하면, Then 선거 선택 안내 메시지가 표시된다\n  3. Given 선거 A에서 등록한 정당이 있을 때, When 선거 B로 전환하면, Then 선거 A의 정당은 표시되지 않는다\n\n---\n\n유저 스토리 ID: US-A-1-01\n기능: Feature A-1: [CMS] 데이터 관리\n제목: XLSX 파일 업로드\n역할: 여론조사 관리자 (박데이터)\n목표: 정해진 양식의 .xlsx 파일을 업로드하고 카테고리를 선택할 수 있다\n가치: 여론조사 데이터를 시스템에 등록하여 시각화할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 관리자가 데이터 관리 페이지에 접속했을 때, When '정당 지지율' 또는 '후보자 지지율' 카테고리를 선택하고 .xlsx 파일을 업로드하면, Then 파일이 성공적으로 업로드되고 확인 메시지가 표시된다\n  2. Given 관리자가 카테고리를 선택하지 않았을 때, When 업로드를 시도하면, Then 카테고리 선택 필수 안내 메시지가 표시된다\n  3. Given 관리자가 .xlsx가 아닌 파일을 업로드할 때, When 업로드를 시도하면, Then \"파일 형식이 잘못되었습니다.\" 오류 메시지가 표시된다\n  4. Given 파일 업로드 중 네트워크 오류가 발생했을 때, When 업로드가 실패하면, Then 재시도 안내 메시지가 표시된다\n  5. Given 빈 파일을 업로드할 때, When 파싱을 시도하면, Then \"필수 데이터가 없습니다.\" 오류 메시지가 표시된다\n  6. Given 파일 업로드가 완료되었을 때, When 처리 시간을 측정하면, Then 10초 이내에 완료된다\n  7. Given 파일이 업로드되면, When 버전 목록을 확인하면, Then 새 버전으로 등록되어 이력이 관리된다\n\n---\n\n유저 스토리 ID: US-A-1-02\n기능: Feature A-1: [CMS] 데이터 관리\n제목: 데이터 유효성 검사\n역할: 여론조사 관리자 (박데이터)\n목표: 업로드된 파일의 필수 컬럼명, 날짜 형식, 수치 데이터를 자동 검증받을 수 있다\n가치: 잘못된 데이터가 시스템에 등록되는 것을 방지할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 정당 지지율 파일이 업로드되었을 때, When 유효성 검사가 실행되면, Then 해당 선거에 설정된 필수 컬럼(date, party1~partyN) 존재 여부가 확인된다\n  2. Given 후보자 지지율 파일이 업로드되었을 때, When 유효성 검사가 실행되면, Then 해당 선거에 설정된 필수 컬럼(date, candi1~candiN, candi_non, candi_na) 존재 여부가 확인된다\n  3. Given 선거별로 필수 컬럼 갯수가 다를 때, When 검사가 실행되면, Then 해당 선거에 등록된 정당/후보자 수에 맞는 컬럼이 검증된다\n  4. Given 날짜 컬럼에 잘못된 형식이 있을 때, When 검사가 실행되면, Then \"날짜 형식이 잘못되었습니다.\" 오류 메시지가 표시된다\n  5. Given 수치 데이터에 문자열이 포함되어 있을 때, When 검사가 실행되면, Then 해당 셀 위치와 함께 오류가 표시된다\n  6. Given 필수 컬럼이 누락되었을 때, When 검사가 실행되면, Then \"필수 데이터가 없습니다.\" 오류 메시지와 누락 컬럼명이 표시된다\n  7. Given 수치 데이터가 0~1 범위를 벗어날 때, When 검사가 실행되면, Then 범위 초과 경고가 표시된다\n  8. Given 중복된 날짜 데이터가 있을 때, When 검사가 실행되면, Then 중복 날짜 경고가 표시된다\n  9. Given 모든 유효성 검사를 통과했을 때, When 결과가 표시되면, Then 검증 성공 메시지와 데이터 요약(행 수, 기간)이 표시된다\n\n---\n\n유저 스토리 ID: US-A-1-03\n기능: Feature A-1: [CMS] 데이터 관리\n제목: 데이터 미리보기\n역할: 여론조사 관리자 (박데이터)\n목표: 업로드된 데이터를 FO와 동일한 화면으로 카테고리별 미리보기할 수 있다\n가치: 게시하기 전에 데이터가 올바르게 표시되는지 확인할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 파일이 성공적으로 업로드되었을 때, When 미리보기 버튼을 클릭하면, Then FO와 동일한 형태의 그래프가 CMS 내에서 표시된다\n  2. Given 정당 지지율 카테고리로 업로드했을 때, When 미리보기를 실행하면, Then 정당 지지율 그래프가 표시된다\n  3. Given 후보자 지지율 카테고리로 업로드했을 때, When 미리보기를 실행하면, Then 후보자 지지율 그래프가 표시된다\n  4. Given 미리보기 화면에서, When 필터(전체/성별/연령 등)를 변경하면, Then 해당 필터에 맞는 데이터로 그래프가 갱신된다\n  5. Given 데이터에 오류가 있을 때, When 미리보기를 시도하면, Then 오류 영역이 dimmed 처리되고 안내 메시지가 표시된다\n  6. Given 미리보기 화면에서, When 그래프 렌더링 시간을 측정하면, Then 1초 이내에 완료된다\n\n---\n\n유저 스토리 ID: US-A-1-04\n기능: Feature A-1: [CMS] 데이터 관리\n제목: 데이터 버전 관리 및 게시\n역할: 여론조사 관리자 (박데이터)\n목표: 업로드된 데이터를 버전으로 관리하고, 특정 버전을 선택하여 게시(publish)할 수 있다\n가치: 검증된 데이터만 사용자에게 공개하고, 이전 버전으로 롤백할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 데이터가 업로드되었을 때, When 버전 목록을 확인하면, Then 업로드 일시와 버전 번호가 표시되고 디폴트 상태는 '미리보기(preview)'이다\n  2. Given 미리보기 상태의 버전이 있을 때, When '게시(publish)'를 실행하면, Then 해당 버전의 데이터가 FO에 표시된다\n  3. Given 게시 상태의 버전이 있을 때, When 다른 버전을 게시하면, Then 이전 버전은 미리보기 상태로 변경되고 새 버전이 게시된다\n  4. Given 게시 상태를 변경했을 때, When 저장하지 않고 페이지를 이탈하면, Then 변경사항 저장 확인 알림이 표시된다\n  5. Given 버전 목록에서, When 이전 버전을 선택하여 게시하면, Then 해당 버전으로 FO 데이터가 롤백된다\n\n---\n\n유저 스토리 ID: US-A-2-01\n기능: Feature A-2: [CMS] 특정 시점 표시 관리\n제목: 특정 시점 추가\n역할: 여론조사 관리자 (박데이터)\n목표: 그래프에 표시할 특정 시점(예: 공식 선거운동 시작)의 이름과 날짜를 캘린더에서 선택하여 추가할 수 있다\n가치: 사용자가 그래프에서 주요 이벤트 시점을 확인할 수 있다\n우선순위: Medium\n\n인수 조건 (Acceptance Criteria):\n  1. Given 시점 관리 페이지에서, When 시점명을 입력하고 캘린더에서 날짜를 선택하면, Then 새 시점이 등록된다\n  2. Given 캘린더 UI가 표시될 때, When 날짜를 클릭하면, Then 선택된 날짜가 입력 필드에 반영된다\n  3. Given 시점명을 입력하지 않았을 때, When 저장을 시도하면, Then 필수값 입력 안내 메시지가 표시된다\n  4. Given 날짜를 선택하지 않았을 때, When 저장을 시도하면, Then 날짜 선택 필수 안내 메시지가 표시된다\n  5. Given 동일한 날짜에 시점이 이미 존재할 때, When 같은 날짜로 추가를 시도하면, Then 중복 경고가 표시된다\n  6. Given 시점이 등록되었을 때, When FO 그래프를 확인하면, Then 해당 날짜에 시점 마커가 표시된다\n  7. Given 등록된 시점이 있을 때, When 수정 또는 삭제를 실행하면, Then 시점 정보가 업데이트/제거된다\n\n---\n\n유저 스토리 ID: US-A-2-1-01\n기능: Feature A-2-1: [CMS] 엑셀 구조 매핑 관리\n제목: 엑셀 구조 매핑 등록\n역할: 여론조사 관리자 (박데이터)\n목표: 업로드할 엑셀 파일의 시트명과 컬럼명을 DB 테이블 컬럼과 매핑할 수 있다\n가치: 선거마다 다른 엑셀 구조를 사용하더라도 시스템이 올바르게 데이터를 파싱할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 엑셀 매핑 관리 페이지에서, When 카테고리(정당지지율/후보자지지율)를 선택하면, Then 해당 카테고리의 매핑 설정 화면이 표시된다\n  2. Given 매핑 설정 화면에서, When 시트명(예: \"전체\", \"성\", \"연령대\")과 필터타입(예: \"ALL\", \"GENDER\", \"AGE\")을 매핑하면, Then 시트명→필터타입 매핑이 저장된다\n  3. Given 매핑 설정 화면에서, When 컬럼명(예: \"party1\", \"candi1\")과 DB 컬럼명을 매핑하면, Then 컬럼명→DB 컬럼 매핑이 저장된다\n  4. Given 시트명 매핑에서, When 동일한 시트명이 중복 입력되면, Then 중복 경고가 표시된다\n  5. Given 컬럼명 매핑에서, When 필수 컬럼(date)이 누락되면, Then 필수 컬럼 누락 경고가 표시된다\n  6. Given 매핑이 저장되었을 때, When 엑셀 파일을 업로드하면, Then 저장된 매핑 규칙에 따라 데이터가 파싱된다\n  7. Given 선거 A의 매핑이 설정되었을 때, When 선거 B로 전환하면, Then 선거 B의 매핑 설정이 별도로 관리된다\n\n---\n\n유저 스토리 ID: US-A-2-1-02\n기능: Feature A-2-1: [CMS] 엑셀 구조 매핑 관리\n제목: 엑셀 구조 매핑 조회 및 수정\n역할: 여론조사 관리자 (박데이터)\n목표: 등록된 엑셀 구조 매핑을 조회하고 수정할 수 있다\n가치: 엑셀 구조가 변경되었을 때 매핑 정보를 업데이트할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 엑셀 매핑 관리 페이지에서, When 카테고리를 선택하면, Then 해당 카테고리의 기존 매핑 목록이 표시된다\n  2. Given 매핑 목록에서, When 특정 매핑을 선택하면, Then 시트명, 필터타입, 컬럼명, DB 컬럼명이 수정 가능한 형태로 표시된다\n  3. Given 매핑을 수정했을 때, When 저장하면, Then 변경사항이 반영되고 확인 메시지가 표시된다\n  4. Given 매핑을 삭제하려 할 때, When 해당 매핑을 사용하는 업로드 이력이 있으면, Then 삭제 불가 경고가 표시된다\n  5. Given 매핑 목록에서, When 카테고리별 필터를 적용하면, Then 정당지지율/후보자지지율 매핑이 분리되어 표시된다\n\n---\n\n유저 스토리 ID: US-A-2-1-03\n기능: Feature A-2-1: [CMS] 엑셀 구조 매핑 관리\n제목: 변수명→실제명 매핑 관리\n역할: 여론조사 관리자 (박데이터)\n목표: 엑셀 컬럼의 변수명(party1, candi1)을 실제 정당명/후보자명으로 매핑할 수 있다\n가치: 그래프에서 \"party1\" 대신 \"국민의힘\" 같은 실제 이름이 표시될 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 변수명 매핑 페이지에서, When 변수명(예: \"party1\")과 실제명(예: \"국민의힘\")을 입력하고 저장하면, Then 매핑이 등록된다\n  2. Given 정당 지지율 카테고리에서, When party1~party8 변수명을 매핑하면, Then 각 변수명에 대응하는 정당명이 저장된다\n  3. Given 후보자 지지율 카테고리에서, When candi1~candi4, candi_non, candi_na 변수명을 매핑하면, Then 각 변수명에 대응하는 후보자명이 저장된다\n  4. Given 변수명 매핑이 완료되었을 때, When FO 그래프를 확인하면, Then 변수명 대신 실제명이 범례에 표시된다\n  5. Given 변수명 매핑이 없을 때, When 그래프를 표시하면, Then 변수명 그대로 표시된다\n  6. Given 변수명 매핑을 수정했을 때, When 저장하면, Then 기존 매핑이 업데이트되고 그래프에 즉시 반영된다\n\n---\n\n유저 스토리 ID: US-A-3-01\n기능: Feature A-3: [CMS] 정당 관리\n제목: 정당 정보 등록\n역할: 여론조사 관리자 (박데이터)\n목표: 정당 번호, 정당명, 색상 코드, 이미지를 입력하여 정당을 등록할 수 있다\n가치: 여론조사 그래프에서 정당별 데이터를 구분하여 표시할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 정당 관리 페이지에서, When 정당 번호(숫자, 1부터 시작), 정당명, 색상 코드, 이미지를 입력하고 저장하면, Then 정당이 등록된다\n  2. Given 정당 번호에 문자를 입력할 때, When 입력을 시도하면, Then \"숫자만 입력 가능합니다.\" 오류가 표시된다\n  3. Given 정당 번호가 0 이하이거나 100을 초과할 때, When 저장을 시도하면, Then 범위 오류가 표시된다\n  4. Given 정당명이 30자를 초과할 때, When 저장을 시도하면, Then \"최대 30자까지 입력 가능합니다.\" 오류가 표시된다\n  5. Given 정당명에 한글, 숫자, 특수문자를 입력할 때, When 저장하면, Then 모두 허용되어 정상 저장된다\n  6. Given 필수 입력값이 비어있을 때, When 저장을 시도하면, Then \"정보 입력은 필수값 입니다.\" 오류가 표시된다\n  7. Given 이미 존재하는 정당 번호로 등록을 시도할 때, When 저장하면, Then 중복 오류가 표시된다\n  8. Given 정당이 등록되었을 때, When 정당 리스트를 확인하면, Then 정당 번호 오름차순으로 정렬되어 표시된다\n\n---\n\n유저 스토리 ID: US-A-3-02\n기능: Feature A-3: [CMS] 정당 관리\n제목: 정당 정보 수정 및 비활성화\n역할: 여론조사 관리자 (박데이터)\n목표: 등록된 정당의 정보를 수정하거나 비활성화할 수 있다\n가치: 정당 정보를 최신 상태로 유지할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 정당 리스트에서 정당을 선택했을 때, When 수정 버튼을 클릭하면, Then 정당 정보 편집 화면이 표시된다\n  2. Given 편집 화면에서 정보를 변경했을 때, When 저장하면, Then 변경된 정보가 반영된다\n  3. Given 정당을 비활성화할 때, When 비활성화를 실행하면, Then 해당 정당이 FO에서 표시되지 않는다\n  4. Given 수정 시 유효성 검사 규칙은, When 등록과 동일하게 적용된다, Then 동일한 오류 메시지가 표시된다\n\n---\n\n유저 스토리 ID: US-A-4-01\n기능: Feature A-4: [CMS] 후보자 관리\n제목: 후보자 정보 등록\n역할: 여론조사 관리자 (박데이터)\n목표: 기호, 후보자명, 이미지(대/소), 약력, 사퇴 여부를 입력하여 후보자를 등록할 수 있다\n가치: 여론조사 그래프에서 후보자별 데이터를 표시할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 후보자 관리 페이지에서, When 기호(숫자), 후보자명을 입력하고 저장하면, Then 후보자가 등록된다\n  2. Given 기호에 문자를 입력할 때, When 입력을 시도하면, Then \"숫자만 입력 가능합니다.\" 오류가 표시된다\n  3. Given 후보자명이 30자를 초과할 때, When 저장을 시도하면, Then \"최대 30자까지 입력 가능합니다.\" 오류가 표시된다\n  4. Given 이미지(대/소)를 등록하지 않았을 때, When 저장하면, Then 이미지 없이 정상 저장된다 (FO에서 디폴트 이미지 표시)\n  5. Given 약력(출생, 핵심공약, 학력, 경력, SNS)을 입력하지 않았을 때, When 저장하면, Then 약력 없이 정상 저장된다 (선택값)\n  6. Given 사퇴 여부를 Y로 설정했을 때, When 저장하면, Then FO에서 해당 후보자가 사퇴 표시된다\n  7. Given 이미 존재하는 기호로 등록을 시도할 때, When 저장하면, Then 중복 오류가 표시된다\n\n---\n\n유저 스토리 ID: US-A-4-02\n기능: Feature A-4: [CMS] 후보자 관리\n제목: 후보자 정보 수정 및 비활성화\n역할: 여론조사 관리자 (박데이터)\n목표: 등록된 후보자의 정보를 수정하거나 비활성화할 수 있다\n가치: 후보자 정보를 최신 상태로 유지할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 후보자 리스트에서 후보자를 선택했을 때, When 수정 버튼을 클릭하면, Then 후보자 정보 편집 화면이 표시된다\n  2. Given 편집 화면에서 정보를 변경했을 때, When 저장하면, Then 변경된 정보가 반영된다\n  3. Given 후보자를 비활성화할 때, When 비활성화를 실행하면, Then 해당 후보자가 FO에서 표시되지 않는다\n\n---\n\n유저 스토리 ID: US-A-5-01\n기능: Feature A-5: [FO] 메인 페이지\n제목: 메인 페이지 표시\n역할: 일반 사용자 (김시민)\n목표: 메인 페이지에서 정당/후보자 지지율 요약 그래프를 볼 수 있다\n가치: 최신 여론조사 추이를 한눈에 파악할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 사용자가 메인 페이지에 접속했을 때, When 페이지가 로딩되면, Then \"민심이 선택한 대통령 후보는?\" / \"민심이 선택한 정당은?\" 소타이틀이 표시된다\n  2. Given 메인 페이지에서, When 정당 지지율 그래프 영역을 확인하면, Then S3에 저장된 JSON 파일을 읽어 시계열 선 그래프가 표시된다\n  3. Given 메인 페이지에서, When 후보자 지지율 그래프 영역을 확인하면, Then S3에 저장된 JSON 파일을 읽어 시계열 선 그래프가 표시된다\n  4. Given 페이지 로딩 시간을 측정할 때, When 접속하면, Then 1초 이내에 로딩이 완료된다\n\n---\n\n유저 스토리 ID: US-A-6-01\n기능: Feature A-6: [FO] 정당 지지율 그래프\n제목: 정당 지지율 전체 그래프 조회\n역할: 일반 사용자 (김시민)\n목표: 정당 지지율 전체(종합) 시계열 선 그래프를 볼 수 있다\n가치: 정당별 지지율 추이를 비교할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 정당 지지율 페이지에 접속했을 때, When 디폴트 화면이 로딩되면, Then S3 JSON 파일을 읽어 전체(종합) 지지율 시계열 선 그래프가 표시된다\n  2. Given 그래프가 표시될 때, When 각 정당 라인을 확인하면, Then 정당별 색상과 이름이 범례에 표시된다\n  3. Given 그래프 위에 마우스를 올렸을 때, When 특정 날짜 위치에 호버하면, Then 해당 날짜의 각 정당 지지율 수치가 툴팁으로 표시된다\n  4. Given 특정 시점 마커가 등록되어 있을 때, When 그래프를 확인하면, Then 해당 날짜에 시점 마커가 표시된다 (시점 마커 데이터도 JSON에 포함)\n  5. Given 그래프 렌더링 시간을 측정할 때, When 데이터가 로딩되면, Then 1초 이내에 렌더링이 완료된다\n\n---\n\n유저 스토리 ID: US-A-6-02\n기능: Feature A-6: [FO] 정당 지지율 그래프\n제목: 정당 지지율 필터 적용\n역할: 일반 사용자 (김시민)\n목표: 성별, 연령, 지역, 정치 성향, 조사방식 필터를 적용하여 세부 데이터를 볼 수 있다\n가치: 특정 인구통계 그룹의 정당 지지율 추이를 분석할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 정당 지지율 페이지에서, When 성별 필터(남성/여성)를 선택하면, Then JSON 데이터 내 해당 성별의 지지율 데이터로 그래프가 갱신된다\n  2. Given 연령 필터를 선택할 때, When 18~29, 30~39, 40~49, 50~59, 60~69, 70~ 중 하나를 선택하면, Then 해당 연령대 데이터로 그래프가 갱신된다\n  3. Given 지역 필터를 선택할 때, When 서울, 경기/인천, 대전/충청/세종, 광주/전라, 대구/경북, 부산/울산/경남, 강원/제주 중 하나를 선택하면, Then 해당 지역 데이터로 그래프가 갱신된다\n  4. Given 정치 성향 필터를 선택할 때, When 진보, 중도, 보수, 모름/무응답 중 하나를 선택하면, Then 해당 성향 데이터로 그래프가 갱신된다\n  5. Given 조사방식 필터를 선택할 때, When 휴대전화 RDD/ARS 또는 휴대전화 가상번호 전화면접을 선택하면, Then 해당 조사방식 데이터로 그래프가 갱신된다\n  6. Given 필터를 변경했을 때, When 그래프가 갱신되면, Then 1초 이내에 렌더링이 완료된다 (필터별 데이터는 JSON 내 구분되어 있으며 Frontend에서 필터링)\n\n---\n\n유저 스토리 ID: US-A-6-03\n기능: Feature A-6: [FO] 정당 지지율 그래프\n제목: 정당 지지율 기간 조회\n역할: 일반 사용자 (김시민)\n목표: 주별, 월별, 전체, 특정 기간으로 데이터 조회 기간을 설정할 수 있다\n가치: 원하는 기간의 지지율 추이를 확인할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 기간 조회 옵션에서, When '주별'을 선택하면, Then Frontend에서 JSON 데이터를 주 단위로 집계하여 표시된다\n  2. Given 기간 조회 옵션에서, When '월별'을 선택하면, Then Frontend에서 JSON 데이터를 월 단위로 집계하여 표시된다\n  3. Given 기간 조회 옵션에서, When '전체'를 선택하면, Then 전체 기간 데이터가 표시된다\n  4. Given 기간 조회 옵션에서, When '특정 기간 설정'을 선택하면, Then 시작일/종료일을 선택할 수 있는 캘린더가 표시된다\n  5. Given 시작일이 종료일보다 이후일 때, When 조회를 시도하면, Then 기간 설정 오류 메시지가 표시된다\n\n---\n\n유저 스토리 ID: US-A-6-04\n기능: Feature A-6: [FO] 정당 지지율 그래프\n제목: 정당 체크박스 on/off\n역할: 일반 사용자 (김시민)\n목표: 특정 정당을 체크박스로 on/off하여 그래프에서 표시/숨김할 수 있다\n가치: 관심 있는 정당만 비교하여 볼 수 있다\n우선순위: Medium\n\n인수 조건 (Acceptance Criteria):\n  1. Given 정당 지지율 그래프에서, When 특정 정당 체크박스를 해제하면, Then 해당 정당 라인이 그래프에서 숨겨진다\n  2. Given 체크박스가 해제된 정당이 있을 때, When 다시 체크하면, Then 해당 정당 라인이 그래프에 다시 표시된다\n  3. Given 모든 정당 체크박스를 해제했을 때, When 그래프를 확인하면, Then 빈 그래프가 표시된다\n\n---\n\n유저 스토리 ID: US-A-7-01\n기능: Feature A-7: [FO] 후보자 지지율 그래프\n제목: 후보자 지지율 전체 그래프 조회\n역할: 일반 사용자 (김시민)\n목표: 후보자 지지율 전체(종합) 시계열 선 그래프를 볼 수 있다\n가치: 후보자별 지지율 추이를 비교할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 후보자 지지율 페이지에 접속했을 때, When 디폴트 화면이 로딩되면, Then S3 JSON 파일을 읽어 전체(종합) 지지율 시계열 선 그래프가 표시된다\n  2. Given 그래프에서, When 각 후보자 라인을 확인하면, Then 후보자별 색상과 이름이 범례에 표시된다\n  3. Given 그래프에서, When \"지지 후보 없음\"과 \"모름/무응답\" 라인도 확인하면, Then 별도 라인으로 표시된다 (JSON 내 non_support/no_answer 컬럼)\n  4. Given 특정 시점 마커가 등록되어 있을 때, When 그래프를 확인하면, Then 해당 날짜에 시점 마커가 표시된다\n\n---\n\n유저 스토리 ID: US-A-7-02\n기능: Feature A-7: [FO] 후보자 지지율 그래프\n제목: 후보자 지지율 필터 적용\n역할: 일반 사용자 (김시민)\n목표: 성별, 연령, 지역, 정치 성향, 조사방식 필터를 적용하여 세부 데이터를 볼 수 있다\n가치: 특정 인구통계 그룹의 후보자 지지율 추이를 분석할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 후보자 지지율 페이지에서, When 각 필터(성별/연령/지역/정치성향/조사방식)를 선택하면, Then JSON 데이터 내 해당 필터의 데이터로 그래프가 갱신된다\n  2. Given 필터 옵션은, When 정당 지지율과 동일한 옵션이 제공된다, Then 성별(남/여), 연령(6구간), 지역(7권역), 정치성향(4구분), 조사방식(2종)이 표시된다\n\n---\n\n유저 스토리 ID: US-A-7-03\n기능: Feature A-7: [FO] 후보자 지지율 그래프\n제목: 후보자 지지율 기간 조회\n역할: 일반 사용자 (김시민)\n목표: 주별, 월별, 전체, 특정 기간으로 데이터 조회 기간을 설정할 수 있다\n가치: 원하는 기간의 후보자 지지율 추이를 확인할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 기간 조회 옵션은, When 정당 지지율과 동일하게 주별/월별/전체/특정기간이 제공된다, Then Frontend에서 JSON 데이터를 집계하여 선택한 기간에 맞는 데이터가 표시된다\n\n---\n\n유저 스토리 ID: US-A-7-04\n기능: Feature A-7: [FO] 후보자 지지율 그래프\n제목: 후보자 체크박스 on/off\n역할: 일반 사용자 (김시민)\n목표: 특정 후보자를 체크박스로 on/off하여 그래프에서 표시/숨김할 수 있다\n가치: 관심 있는 후보자만 비교하여 볼 수 있다\n우선순위: Medium\n\n인수 조건 (Acceptance Criteria):\n  1. Given 후보자 지지율 그래프에서, When 특정 후보자 체크박스를 해제하면, Then 해당 후보자 라인이 그래프에서 숨겨진다\n  2. Given 체크박스가 해제된 후보자가 있을 때, When 다시 체크하면, Then 해당 후보자 라인이 다시 표시된다\n\n---\n\n유저 스토리 ID: US-A-8-01\n기능: Feature A-8: [FO] 정적 페이지 및 공통 UI\n제목: 메타J 소개 페이지\n역할: 일반 사용자 (김시민)\n목표: 메타J 소개 페이지에서 서비스 설명을 확인할 수 있다\n가치: 여론조사 서비스의 배경과 목적을 이해할 수 있다\n우선순위: Low\n\n인수 조건 (Acceptance Criteria):\n  1. Given 메뉴에서 '메타J 소개'를 클릭했을 때, When 페이지가 로딩되면, Then 정적 콘텐츠(텍스트/이미지)가 표시된다\n  2. Given 페이지 로딩 시간을 측정할 때, When 접속하면, Then 1초 이내에 로딩이 완료된다\n\n---\n\n유저 스토리 ID: US-A-8-02\n기능: Feature A-8: [FO] 정적 페이지 및 공통 UI\n제목: 방법론 페이지\n역할: 일반 사용자 (김시민)\n목표: 방법론 페이지에서 여론조사 방법론을 확인할 수 있다\n가치: 데이터의 신뢰성과 조사 방법을 이해할 수 있다\n우선순위: Low\n\n인수 조건 (Acceptance Criteria):\n  1. Given 메뉴에서 '방법론'을 클릭했을 때, When 페이지가 로딩되면, Then 정적 콘텐츠(텍스트/이미지)가 표시된다\n\n---\n\n유저 스토리 ID: US-A-8-03\n기능: Feature A-8: [FO] 정적 페이지 및 공통 UI\n제목: 공통 헤더/푸터 및 네비게이션\n역할: 일반 사용자 (김시민)\n목표: 모든 페이지에서 공통 헤더(로고, 메뉴)와 푸터를 볼 수 있다\n가치: 일관된 UI로 서비스를 이용할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 어떤 페이지에 접속하든, When 화면 최상단을 확인하면, Then 공통 헤더(로고 + 메뉴)가 표시된다\n  2. Given 어떤 페이지에 접속하든, When 화면 최하단을 확인하면, Then 공통 푸터가 표시된다 (news.jtbc.co.kr과 동일한 스타일)\n  3. Given 헤더 메뉴에서, When 메타J/정당 지지율/후보자 지지율/메타J 소개/방법론을 클릭하면, Then 해당 페이지로 이동한다\n\n---\n",
+  "test_cases": [
+    {
+      "id": "TC-A-0-01-P01",
+      "name": "[긍정] 선거 정보 정상 등록",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거 관리 페이지에 접근 가능함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/election')",
+          "expected_result": "선거 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-election-button\"]')",
+          "expected_result": "선거 등록 모달/폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"election-name\"]', '제21대 대통령선거')",
+          "expected_result": "선거명 입력 필드에 텍스트가 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"election-date\"]', '2024-03-09')",
+          "expected_result": "선거일이 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_select('select[name=\"election-type\"]', '대선')",
+          "expected_result": "선거타입이 '대선'으로 선택됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "성공 메시지가 표시됨"
+        },
+        {
+          "step_number": 8,
+          "action": "playwright_get_text('.election-id')",
+          "expected_result": "선거고유번호가 자동 생성되어 표시됨"
+        }
+      ],
+      "expected_result": "선거가 정상 등록되고 고유번호가 생성됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-0-01-N01",
+      "name": "[부정] 선거명 미입력 시 저장 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거 관리 페이지에 접근 가능함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/election')",
+          "expected_result": "선거 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-election-button\"]')",
+          "expected_result": "선거 등록 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"election-date\"]', '2024-03-09')",
+          "expected_result": "선거일만 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_select('select[name=\"election-type\"]', '대선')",
+          "expected_result": "선거타입만 선택됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "'필수값 입력 안내 메시지'가 표시됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_get_text('.error-message')",
+          "expected_result": "선거명 필수 입력 안내 메시지 텍스트 확인"
+        }
+      ],
+      "expected_result": "선거명 필수값 입력 안내 메시지가 표시되고 저장이 차단됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-0-01-N02",
+      "name": "[부정] 선거일 미선택 시 저장 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거 관리 페이지에 접근 가능함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/election')",
+          "expected_result": "선거 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-election-button\"]')",
+          "expected_result": "선거 등록 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"election-name\"]', '제21대 대통령선거')",
+          "expected_result": "선거명이 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_select('select[name=\"election-type\"]', '대선')",
+          "expected_result": "선거타입만 선택됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "선거일 필수값 입력 안내 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "선거일 필수값 입력 안내 메시지가 표시되고 저장이 차단됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-0-01-N03",
+      "name": "[부정] 선거타입 미선택 시 저장 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거 관리 페이지에 접근 가능함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/election')",
+          "expected_result": "선거 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-election-button\"]')",
+          "expected_result": "선거 등록 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"election-name\"]', '제21대 대통령선거')",
+          "expected_result": "선거명이 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"election-date\"]', '2024-03-09')",
+          "expected_result": "선거일이 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "선거타입 필수값 입력 안내 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "선거타입 필수값 입력 안내 메시지가 표시되고 저장이 차단됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-0-01-N04",
+      "name": "[부정] 중복 선거명 등록 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "'제21대 대통령선거'라는 이름의 선거가 이미 등록되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/election')",
+          "expected_result": "선거 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-election-button\"]')",
+          "expected_result": "선거 등록 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"election-name\"]', '제21대 대통령선거')",
+          "expected_result": "기존과 동일한 선거명이 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"election-date\"]', '2024-03-09')",
+          "expected_result": "선거일이 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_select('select[name=\"election-type\"]', '대선')",
+          "expected_result": "선거타입이 선택됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_wait_for_selector('.warning-message')",
+          "expected_result": "중복 경고 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "중복 선거명 경고가 표시되고 저장이 차단됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-0-01-P02",
+      "name": "[긍정] 등록된 선거 목록 확인",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "1개 이상의 선거가 등록되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/election')",
+          "expected_result": "선거 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_wait_for_selector('.election-list')",
+          "expected_result": "선거 목록이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_query_selector_all('.election-item')",
+          "expected_result": "등록된 선거들이 리스트 아이템으로 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_get_text('.election-item:first-child .election-name')",
+          "expected_result": "첫 번째 선거의 선거명이 표시됨"
+        }
+      ],
+      "expected_result": "등록된 모든 선거가 목록에 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-0-02-P01",
+      "name": "[긍정] 선거 목록 조회",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "2개 이상의 선거가 등록되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/election')",
+          "expected_result": "선거 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_wait_for_selector('.election-list')",
+          "expected_result": "선거 목록 컨테이너가 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_query_selector_all('.election-item')",
+          "expected_result": "등록된 모든 선거가 리스트로 표시됨"
+        }
+      ],
+      "expected_result": "등록된 모든 선거가 리스트로 정상 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-0-02-P02",
+      "name": "[긍정] 선거 정보 수정",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "수정 가능한 선거가 1개 이상 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/election')",
+          "expected_result": "선거 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('.election-item:first-child')",
+          "expected_result": "첫 번째 선거가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-testid=\"edit-election-button\"]')",
+          "expected_result": "수정 버튼이 클릭되고 편집 모드로 전환됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"election-name\"]', '제21대 대통령선거(수정)')",
+          "expected_result": "선거명이 수정됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_fill('input[name=\"election-date\"]', '2024-03-10')",
+          "expected_result": "선거일이 수정됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "수정 성공 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "선거 정보가 정상적으로 수정됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-0-02-N01",
+      "name": "[부정] 하위 데이터 존재 시 선거 삭제 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거에 연결된 정당/후보자/여론조사 데이터가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/election')",
+          "expected_result": "선거 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('.election-item:first-child')",
+          "expected_result": "하위 데이터가 있는 선거가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-testid=\"delete-election-button\"]')",
+          "expected_result": "삭제 버튼이 클릭됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.warning-message')",
+          "expected_result": "삭제 불가 경고 메시지가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_get_text('.warning-message')",
+          "expected_result": "하위 데이터 존재로 인한 삭제 불가 안내 텍스트 확인"
+        }
+      ],
+      "expected_result": "하위 데이터 존재 시 삭제 불가 경고가 표시되고 삭제가 차단됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-0-02-P03",
+      "name": "[긍정] 하위 데이터 없는 선거 삭제",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "하위 데이터가 없는 선거가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/election')",
+          "expected_result": "선거 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('.election-item[data-has-children=\"false\"]')",
+          "expected_result": "하위 데이터가 없는 선거가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-testid=\"delete-election-button\"]')",
+          "expected_result": "삭제 버튼이 클릭됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.confirm-dialog')",
+          "expected_result": "삭제 확인 다이얼로그가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('button[data-testid=\"confirm-delete\"]')",
+          "expected_result": "삭제 확인 버튼이 클릭됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "삭제 성공 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "하위 데이터가 없는 선거가 정상적으로 삭제됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-0-03-P01",
+      "name": "[긍정] 선거 선택 후 하위 데이터 관리 진입",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 1개 이상 등록되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/election')",
+          "expected_result": "선거 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('.election-item:first-child')",
+          "expected_result": "특정 선거가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('a[href=\"/admin/data\"]')",
+          "expected_result": "데이터 관리 메뉴가 클릭됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.selected-election-info')",
+          "expected_result": "선택된 선거 정보가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_get_attribute('.data-list', 'data-election-id')",
+          "expected_result": "데이터 목록이 선택된 선거에 속한 것만 필터링되어 표시됨"
+        }
+      ],
+      "expected_result": "선거 선택 후 해당 선거의 데이터만 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-0-03-N01",
+      "name": "[부정] 선거 미선택 시 하위 관리 진입",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되지 않은 상태"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/party')",
+          "expected_result": "정당 관리 페이지로 직접 접근 시도"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_wait_for_selector('.info-message')",
+          "expected_result": "선거 선택 안내 메시지가 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_get_text('.info-message')",
+          "expected_result": "'선거를 먼저 선택해주세요' 안내 메시지 확인"
+        }
+      ],
+      "expected_result": "선거 미선택 시 선거 선택 안내 메시지가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-0-03-P02",
+      "name": "[긍정] 선거 전환 시 데이터 분리 확인",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거 A와 선거 B가 각각 등록되어 있음",
+        "선거 A에 정당이 등록되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/election')",
+          "expected_result": "선거 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('.election-item[data-election-name=\"선거A\"]')",
+          "expected_result": "선거 A가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('a[href=\"/admin/party\"]')",
+          "expected_result": "정당 관리 페이지로 이동"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_query_selector_all('.party-item')",
+          "expected_result": "선거 A의 정당 목록이 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('button[data-testid=\"change-election\"]')",
+          "expected_result": "선거 변경 버튼 클릭"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_click('.election-item[data-election-name=\"선거B\"]')",
+          "expected_result": "선거 B로 전환됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/party')",
+          "expected_result": "정당 관리 페이지 재로드"
+        },
+        {
+          "step_number": 8,
+          "action": "playwright_query_selector_all('.party-item')",
+          "expected_result": "선거 A의 정당이 표시되지 않음"
+        }
+      ],
+      "expected_result": "선거 전환 시 이전 선거의 데이터는 표시되지 않음",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-1-01-P01",
+      "name": "[긍정] XLSX 파일 정상 업로드",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음",
+        "정상적인 .xlsx 파일이 준비되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data')",
+          "expected_result": "데이터 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('input[type=\"radio\"][value=\"party\"]')",
+          "expected_result": "'정당 지지율' 카테고리가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_set_input_files('input[type=\"file\"]', './test-data/party-support.xlsx')",
+          "expected_result": "파일 선택 다이얼로그에서 파일이 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('button[data-testid=\"upload-button\"]')",
+          "expected_result": "업로드 버튼이 클릭됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.success-message', {timeout: 10000})",
+          "expected_result": "10초 이내에 업로드 성공 메시지가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_get_text('.success-message')",
+          "expected_result": "파일 업로드 성공 확인 메시지 확인"
+        }
+      ],
+      "expected_result": "XLSX 파일이 정상적으로 업로드되고 확인 메시지가 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-1-01-N01",
+      "name": "[부정] 카테고리 미선택 시 업로드 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data')",
+          "expected_result": "데이터 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_set_input_files('input[type=\"file\"]', './test-data/party-support.xlsx')",
+          "expected_result": "파일만 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-testid=\"upload-button\"]')",
+          "expected_result": "업로드 버튼이 클릭됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "카테고리 선택 필수 안내 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "카테고리 미선택 시 안내 메시지가 표시되고 업로드가 차단됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-1-01-N02",
+      "name": "[부정] 잘못된 파일 형식 업로드 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음",
+        ".pdf 파일이 준비되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data')",
+          "expected_result": "데이터 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('input[type=\"radio\"][value=\"party\"]')",
+          "expected_result": "정당 지지율 카테고리가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_set_input_files('input[type=\"file\"]', './test-data/wrong-file.pdf')",
+          "expected_result": "PDF 파일이 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('button[data-testid=\"upload-button\"]')",
+          "expected_result": "업로드 버튼이 클릭됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "파일 형식 오류 메시지가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_get_text('.error-message')",
+          "expected_result": "'파일 형식이 잘못되었습니다.' 메시지 확인"
+        }
+      ],
+      "expected_result": "xlsx가 아닌 파일 업로드 시 오류 메시지가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-1-01-N03",
+      "name": "[부정] 빈 파일 업로드 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음",
+        "빈 .xlsx 파일이 준비되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data')",
+          "expected_result": "데이터 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('input[type=\"radio\"][value=\"candidate\"]')",
+          "expected_result": "후보자 지지율 카테고리가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_set_input_files('input[type=\"file\"]', './test-data/empty-file.xlsx')",
+          "expected_result": "빈 파일이 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('button[data-testid=\"upload-button\"]')",
+          "expected_result": "업로드 버튼이 클릭됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "필수 데이터 없음 오류 메시지가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_get_text('.error-message')",
+          "expected_result": "'필수 데이터가 없습니다.' 메시지 확인"
+        }
+      ],
+      "expected_result": "빈 파일 업로드 시 필수 데이터 없음 오류가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-1-01-P02",
+      "name": "[긍정] 파일 업로드 버전 관리 확인",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음",
+        "정상적인 .xlsx 파일이 준비되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data')",
+          "expected_result": "데이터 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('input[type=\"radio\"][value=\"party\"]')",
+          "expected_result": "정당 지지율 카테고리가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_set_input_files('input[type=\"file\"]', './test-data/party-support-v1.xlsx')",
+          "expected_result": "파일이 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('button[data-testid=\"upload-button\"]')",
+          "expected_result": "업로드 버튼이 클릭됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "업로드 성공 메시지가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_click('a[href=\"/admin/data/versions\"]')",
+          "expected_result": "버전 목록 페이지로 이동"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_wait_for_selector('.version-list')",
+          "expected_result": "버전 목록이 표시됨"
+        },
+        {
+          "step_number": 8,
+          "action": "playwright_get_text('.version-item:first-child .version-number')",
+          "expected_result": "새 버전 번호가 표시됨"
+        },
+        {
+          "step_number": 9,
+          "action": "playwright_get_text('.version-item:first-child .upload-date')",
+          "expected_result": "업로드 일시가 표시됨"
+        }
+      ],
+      "expected_result": "파일 업로드 후 새 버전으로 등록되어 이력이 관리됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-1-02-P01",
+      "name": "[긍정] 정당 지지율 파일 유효성 검사 통과",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있고 필수 컬럼(date, party1~party8)이 설정되어 있음",
+        "올바른 정당 지지율 .xlsx 파일이 업로드됨"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data')",
+          "expected_result": "데이터 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('input[type=\"radio\"][value=\"party\"]')",
+          "expected_result": "정당 지지율 카테고리가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_set_input_files('input[type=\"file\"]', './test-data/valid-party-support.xlsx')",
+          "expected_result": "올바른 파일이 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('button[data-testid=\"upload-button\"]')",
+          "expected_result": "업로드 버튼이 클릭됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.validation-result')",
+          "expected_result": "유효성 검사 결과가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_get_text('.validation-result .status')",
+          "expected_result": "'검증 성공' 메시지 확인"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_get_text('.validation-result .data-summary')",
+          "expected_result": "데이터 요약(행 수, 기간) 정보가 표시됨"
+        }
+      ],
+      "expected_result": "모든 유효성 검사를 통과하고 성공 메시지와 데이터 요약이 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-1-02-N01",
+      "name": "[부정] 필수 컬럼 누락된 파일 업로드",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음",
+        "필수 컬럼이 누락된 .xlsx 파일이 준비되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data')",
+          "expected_result": "데이터 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('input[type=\"radio\"][value=\"party\"]')",
+          "expected_result": "정당 지지율 카테고리가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_set_input_files('input[type=\"file\"]', './test-data/missing-column.xlsx')",
+          "expected_result": "필수 컬럼이 누락된 파일이 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('button[data-testid=\"upload-button\"]')",
+          "expected_result": "업로드 버튼이 클릭됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "필수 데이터 없음 오류가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_get_text('.error-message')",
+          "expected_result": "'필수 데이터가 없습니다.' 메시지와 누락 컬럼명 확인"
+        }
+      ],
+      "expected_result": "필수 컬럼 누락 시 오류 메시지와 누락 컬럼명이 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-1-02-N02",
+      "name": "[부정] 잘못된 날짜 형식 파일 업로드",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음",
+        "날짜 컬럼에 잘못된 형식이 있는 .xlsx 파일이 준비되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data')",
+          "expected_result": "데이터 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('input[type=\"radio\"][value=\"candidate\"]')",
+          "expected_result": "후보자 지지율 카테고리가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_set_input_files('input[type=\"file\"]', './test-data/invalid-date-format.xlsx')",
+          "expected_result": "잘못된 날짜 형식 파일이 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('button[data-testid=\"upload-button\"]')",
+          "expected_result": "업로드 버튼이 클릭됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "날짜 형식 오류 메시지가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_get_text('.error-message')",
+          "expected_result": "'날짜 형식이 잘못되었습니다.' 메시지 확인"
+        }
+      ],
+      "expected_result": "잘못된 날짜 형식 발견 시 오류 메시지가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-1-02-N03",
+      "name": "[부정] 수치 데이터에 문자열 포함된 파일 업로드",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음",
+        "수치 컬럼에 문자열이 포함된 .xlsx 파일이 준비되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data')",
+          "expected_result": "데이터 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('input[type=\"radio\"][value=\"party\"]')",
+          "expected_result": "정당 지지율 카테고리가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_set_input_files('input[type=\"file\"]', './test-data/string-in-numeric.xlsx')",
+          "expected_result": "문자열 포함 파일이 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('button[data-testid=\"upload-button\"]')",
+          "expected_result": "업로드 버튼이 클릭됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "수치 데이터 오류 메시지가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_get_text('.error-message')",
+          "expected_result": "해당 셀 위치와 함께 오류 내용이 표시됨"
+        }
+      ],
+      "expected_result": "수치 데이터에 문자열 포함 시 셀 위치와 함께 오류가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-1-02-N04",
+      "name": "[부정] 수치 범위 초과 데이터 파일 업로드",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음",
+        "수치 데이터가 0~1 범위를 벗어난 .xlsx 파일이 준비되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data')",
+          "expected_result": "데이터 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('input[type=\"radio\"][value=\"candidate\"]')",
+          "expected_result": "후보자 지지율 카테고리가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_set_input_files('input[type=\"file\"]', './test-data/out-of-range.xlsx')",
+          "expected_result": "범위 초과 데이터 파일이 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('button[data-testid=\"upload-button\"]')",
+          "expected_result": "업로드 버튼이 클릭됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.warning-message')",
+          "expected_result": "범위 초과 경고 메시지가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_get_text('.warning-message')",
+          "expected_result": "범위 초과 경고 내용 확인"
+        }
+      ],
+      "expected_result": "수치 데이터 범위 초과 시 경고가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-1-02-N05",
+      "name": "[부정] 중복 날짜 데이터 파일 업로드",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음",
+        "중복된 날짜 데이터가 있는 .xlsx 파일이 준비되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data')",
+          "expected_result": "데이터 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('input[type=\"radio\"][value=\"party\"]')",
+          "expected_result": "정당 지지율 카테고리가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_set_input_files('input[type=\"file\"]', './test-data/duplicate-date.xlsx')",
+          "expected_result": "중복 날짜 파일이 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('button[data-testid=\"upload-button\"]')",
+          "expected_result": "업로드 버튼이 클릭됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.warning-message')",
+          "expected_result": "중복 날짜 경고 메시지가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_get_text('.warning-message')",
+          "expected_result": "중복 날짜 경고 내용 확인"
+        }
+      ],
+      "expected_result": "중복 날짜 발견 시 경고가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-1-03-P01",
+      "name": "[긍정] 정당 지지율 데이터 미리보기",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음",
+        "정당 지지율 카테고리로 파일이 성공적으로 업로드됨"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data')",
+          "expected_result": "데이터 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"preview-button\"]')",
+          "expected_result": "미리보기 버튼이 클릭됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_wait_for_selector('.preview-chart', {timeout: 1000})",
+          "expected_result": "1초 이내에 미리보기 그래프가 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_get_attribute('.preview-chart', 'data-category')",
+          "expected_result": "'party' 카테고리 그래프가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_query_selector('.preview-chart canvas')",
+          "expected_result": "FO와 동일한 형태의 그래프가 렌더링됨"
+        }
+      ],
+      "expected_result": "정당 지지율 그래프가 FO와 동일한 형태로 미리보기됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-1-03-P02",
+      "name": "[긍정] 후보자 지지율 데이터 미리보기",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음",
+        "후보자 지지율 카테고리로 파일이 성공적으로 업로드됨"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data')",
+          "expected_result": "데이터 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"preview-button\"]')",
+          "expected_result": "미리보기 버튼이 클릭됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_wait_for_selector('.preview-chart', {timeout: 1000})",
+          "expected_result": "1초 이내에 미리보기 그래프가 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_get_attribute('.preview-chart', 'data-category')",
+          "expected_result": "'candidate' 카테고리 그래프가 표시됨"
+        }
+      ],
+      "expected_result": "후보자 지지율 그래프가 FO와 동일한 형태로 미리보기됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-1-03-P03",
+      "name": "[긍정] 미리보기 필터 변경",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "미리보기 화면이 표시되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_wait_for_selector('.preview-chart')",
+          "expected_result": "미리보기 그래프가 표시됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-filter=\"gender\"]')",
+          "expected_result": "성별 필터가 클릭됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-filter-value=\"male\"]')",
+          "expected_result": "'남성' 필터가 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.preview-chart.updated', {timeout: 1000})",
+          "expected_result": "1초 이내에 그래프가 갱신됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_get_attribute('.preview-chart', 'data-current-filter')",
+          "expected_result": "남성 필터가 적용된 데이터로 그래프가 표시됨"
+        }
+      ],
+      "expected_result": "필터 변경 시 해당 필터에 맞는 데이터로 그래프가 갱신됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-1-03-N01",
+      "name": "[부정] 오류 데이터 미리보기 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "유효성 검사에서 오류가 발견된 데이터가 업로드됨"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data')",
+          "expected_result": "데이터 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"preview-button\"]')",
+          "expected_result": "미리보기 버튼이 클릭됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_wait_for_selector('.preview-chart')",
+          "expected_result": "미리보기 화면이 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_query_selector('.error-area.dimmed')",
+          "expected_result": "오류 영역이 dimmed 처리됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_get_text('.error-message')",
+          "expected_result": "오류 안내 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "데이터 오류 시 오류 영역이 dimmed되고 안내 메시지가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-1-04-P01",
+      "name": "[긍정] 데이터 버전 목록 확인",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음",
+        "데이터가 1회 이상 업로드됨"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data/versions')",
+          "expected_result": "버전 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_wait_for_selector('.version-list')",
+          "expected_result": "버전 목록이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_get_text('.version-item:first-child .upload-date')",
+          "expected_result": "업로드 일시가 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_get_text('.version-item:first-child .version-number')",
+          "expected_result": "버전 번호가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_get_text('.version-item:first-child .status')",
+          "expected_result": "'미리보기(preview)' 상태가 표시됨"
+        }
+      ],
+      "expected_result": "업로드 일시, 버전 번호, 미리보기 상태가 정상 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-1-04-P02",
+      "name": "[긍정] 데이터 버전 게시(publish)",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "미리보기 상태의 버전이 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data/versions')",
+          "expected_result": "버전 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('.version-item[data-status=\"preview\"]:first-child')",
+          "expected_result": "미리보기 상태의 버전이 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-testid=\"publish-button\"]')",
+          "expected_result": "게시 버튼이 클릭됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "게시 성공 메시지가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_get_attribute('.version-item:first-child', 'data-status')",
+          "expected_result": "상태가 'published'로 변경됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr')",
+          "expected_result": "FO 메인 페이지로 이동"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_wait_for_selector('.chart-container')",
+          "expected_result": "게시된 버전의 데이터가 FO에 표시됨"
+        }
+      ],
+      "expected_result": "미리보기 버전을 게시하면 FO에 해당 데이터가 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-1-04-P03",
+      "name": "[긍정] 다른 버전 게시 시 이전 버전 미리보기 전환",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "게시 상태의 버전 A가 존재함",
+        "미리보기 상태의 버전 B가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data/versions')",
+          "expected_result": "버전 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_get_attribute('.version-item[data-version=\"A\"]', 'data-status')",
+          "expected_result": "버전 A의 상태가 'published'임을 확인"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('.version-item[data-version=\"B\"]')",
+          "expected_result": "버전 B가 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('button[data-testid=\"publish-button\"]')",
+          "expected_result": "버전 B 게시 버튼이 클릭됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "게시 성공 메시지가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_get_attribute('.version-item[data-version=\"A\"]', 'data-status')",
+          "expected_result": "버전 A의 상태가 'preview'로 변경됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_get_attribute('.version-item[data-version=\"B\"]', 'data-status')",
+          "expected_result": "버전 B의 상태가 'published'로 변경됨"
+        }
+      ],
+      "expected_result": "새 버전 게시 시 이전 버전이 미리보기 상태로 전환됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-1-04-P04",
+      "name": "[긍정] 이전 버전으로 롤백",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "버전 A(미리보기)와 버전 B(게시)가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data/versions')",
+          "expected_result": "버전 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('.version-item[data-version=\"A\"]')",
+          "expected_result": "이전 버전 A가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-testid=\"publish-button\"]')",
+          "expected_result": "버전 A 게시 버튼이 클릭됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "게시 성공 메시지가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr')",
+          "expected_result": "FO 메인 페이지로 이동"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.chart-container')",
+          "expected_result": "버전 A의 데이터가 FO에 표시됨(롤백 완료)"
+        }
+      ],
+      "expected_result": "이전 버전 선택 후 게시하면 FO 데이터가 해당 버전으로 롤백됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-1-04-N01",
+      "name": "[부정] 미저장 상태로 페이지 이탈 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "버전의 게시 상태를 변경했으나 저장하지 않음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/data/versions')",
+          "expected_result": "버전 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('.version-item:first-child')",
+          "expected_result": "버전이 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-testid=\"publish-button\"]')",
+          "expected_result": "게시 버튼이 클릭됨(저장하지 않음)"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('a[href=\"/admin/party\"]')",
+          "expected_result": "다른 페이지로 이동 시도"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.confirm-dialog')",
+          "expected_result": "변경사항 저장 확인 알림이 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_get_text('.confirm-dialog')",
+          "expected_result": "'변경사항을 저장하지 않았습니다' 메시지 확인"
+        }
+      ],
+      "expected_result": "미저장 상태로 페이지 이탈 시 저장 확인 알림이 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-2-01-P01",
+      "name": "[긍정] 특정 시점 추가",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/timepoint')",
+          "expected_result": "시점 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-timepoint-button\"]')",
+          "expected_result": "시점 추가 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"timepoint-name\"]', '공식 선거운동 시작')",
+          "expected_result": "시점명이 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('input[name=\"timepoint-date\"]')",
+          "expected_result": "캘린더가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('.calendar-day[data-date=\"2024-02-15\"]')",
+          "expected_result": "날짜가 선택됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "시점 등록 성공 메시지가 표시됨"
+        },
+        {
+          "step_number": 8,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/party')",
+          "expected_result": "FO 정당 지지율 페이지로 이동"
+        },
+        {
+          "step_number": 9,
+          "action": "playwright_wait_for_selector('.timepoint-marker[data-date=\"2024-02-15\"]')",
+          "expected_result": "해당 날짜에 시점 마커가 표시됨"
+        }
+      ],
+      "expected_result": "시점이 정상 등록되고 FO 그래프에 마커가 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-2-01-N01",
+      "name": "[부정] 시점명 미입력 시 저장 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "시점 관리 페이지에 접근 가능함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/timepoint')",
+          "expected_result": "시점 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-timepoint-button\"]')",
+          "expected_result": "시점 추가 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('input[name=\"timepoint-date\"]')",
+          "expected_result": "캘린더가 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('.calendar-day[data-date=\"2024-02-15\"]')",
+          "expected_result": "날짜만 선택됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "필수값 입력 안내 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "시점명 미입력 시 필수값 입력 안내 메시지가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-2-01-N02",
+      "name": "[부정] 날짜 미선택 시 저장 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "시점 관리 페이지에 접근 가능함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/timepoint')",
+          "expected_result": "시점 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-timepoint-button\"]')",
+          "expected_result": "시점 추가 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"timepoint-name\"]', '공식 선거운동 시작')",
+          "expected_result": "시점명만 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "날짜 선택 필수 안내 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "날짜 미선택 시 필수 안내 메시지가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-2-01-N03",
+      "name": "[부정] 중복 날짜에 시점 추가 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "2024-02-15에 이미 시점이 등록되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/timepoint')",
+          "expected_result": "시점 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-timepoint-button\"]')",
+          "expected_result": "시점 추가 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"timepoint-name\"]', '후보 등록 마감')",
+          "expected_result": "다른 시점명이 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('input[name=\"timepoint-date\"]')",
+          "expected_result": "캘린더가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('.calendar-day[data-date=\"2024-02-15\"]')",
+          "expected_result": "기존 시점과 동일한 날짜가 선택됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_wait_for_selector('.warning-message')",
+          "expected_result": "중복 경고 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "동일 날짜 시점 추가 시 중복 경고가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-2-01-P02",
+      "name": "[긍정] 시점 수정 및 삭제",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "시점이 1개 이상 등록되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/timepoint')",
+          "expected_result": "시점 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('.timepoint-item:first-child')",
+          "expected_result": "첫 번째 시점이 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-testid=\"edit-timepoint-button\"]')",
+          "expected_result": "수정 버튼이 클릭됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"timepoint-name\"]', '공식 선거운동 시작(수정)')",
+          "expected_result": "시점명이 수정됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "수정 성공 메시지가 표시됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_click('button[data-testid=\"delete-timepoint-button\"]')",
+          "expected_result": "삭제 버튼이 클릭됨"
+        },
+        {
+          "step_number": 8,
+          "action": "playwright_wait_for_selector('.confirm-dialog')",
+          "expected_result": "삭제 확인 다이얼로그가 표시됨"
+        },
+        {
+          "step_number": 9,
+          "action": "playwright_click('button[data-testid=\"confirm-delete\"]')",
+          "expected_result": "삭제 확인 버튼이 클릭됨"
+        },
+        {
+          "step_number": 10,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "삭제 성공 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "시점 정보가 정상적으로 수정 및 삭제됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-3-01-P01",
+      "name": "[긍정] 정당 정보 정상 등록",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/party')",
+          "expected_result": "정당 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-party-button\"]')",
+          "expected_result": "정당 등록 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"party-number\"]', '1')",
+          "expected_result": "정당 번호가 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"party-name\"]', '국민의힘')",
+          "expected_result": "정당명이 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_fill('input[name=\"color-code\"]', '#E61E2B')",
+          "expected_result": "색상 코드가 입력됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_set_input_files('input[name=\"party-image\"]', './test-data/party-logo.png')",
+          "expected_result": "이미지가 선택됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 8,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "정당 등록 성공 메시지가 표시됨"
+        },
+        {
+          "step_number": 9,
+          "action": "playwright_wait_for_selector('.party-list')",
+          "expected_result": "정당 목록이 표시됨"
+        },
+        {
+          "step_number": 10,
+          "action": "playwright_get_text('.party-item:first-child .party-number')",
+          "expected_result": "정당이 번호 오름차순으로 정렬되어 표시됨"
+        }
+      ],
+      "expected_result": "정당이 정상 등록되고 목록에 번호 순으로 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-3-01-N01",
+      "name": "[부정] 정당 번호에 문자 입력 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "정당 관리 페이지에 접근 가능함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/party')",
+          "expected_result": "정당 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-party-button\"]')",
+          "expected_result": "정당 등록 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"party-number\"]', 'ABC')",
+          "expected_result": "문자가 입력 시도됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "'숫자만 입력 가능합니다.' 오류가 표시됨"
+        }
+      ],
+      "expected_result": "정당 번호에 문자 입력 시 오류 메시지가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-3-01-N02",
+      "name": "[부정] 정당 번호 범위 초과 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "정당 관리 페이지에 접근 가능함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/party')",
+          "expected_result": "정당 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-party-button\"]')",
+          "expected_result": "정당 등록 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"party-number\"]', '0')",
+          "expected_result": "0이 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"party-name\"]', '테스트정당')",
+          "expected_result": "정당명이 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "범위 오류 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "정당 번호가 0 이하 시 범위 오류가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-3-01-N03",
+      "name": "[부정] 정당명 30자 초과 입력 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "정당 관리 페이지에 접근 가능함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/party')",
+          "expected_result": "정당 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-party-button\"]')",
+          "expected_result": "정당 등록 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"party-number\"]', '1')",
+          "expected_result": "정당 번호가 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"party-name\"]', '이것은매우긴정당명으로서삼십자를초과하는테스트입니다')",
+          "expected_result": "30자 초과 정당명이 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "'최대 30자까지 입력 가능합니다.' 오류가 표시됨"
+        }
+      ],
+      "expected_result": "정당명 30자 초과 시 오류 메시지가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-3-01-N04",
+      "name": "[부정] 필수 입력값 미입력 시 저장 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "정당 관리 페이지에 접근 가능함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/party')",
+          "expected_result": "정당 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-party-button\"]')",
+          "expected_result": "정당 등록 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "필수값 없이 저장 시도"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "'정보 입력은 필수값 입니다.' 오류가 표시됨"
+        }
+      ],
+      "expected_result": "필수 입력값 미입력 시 필수값 오류가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-3-01-N05",
+      "name": "[부정] 중복 정당 번호 등록 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "정당 번호 1번이 이미 등록되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/party')",
+          "expected_result": "정당 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-party-button\"]')",
+          "expected_result": "정당 등록 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"party-number\"]', '1')",
+          "expected_result": "기존과 동일한 번호 입력"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"party-name\"]', '새정당')",
+          "expected_result": "다른 정당명 입력"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "중복 오류 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "중복 정당 번호 등록 시 오류가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-3-02-P01",
+      "name": "[긍정] 정당 정보 수정",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "정당이 1개 이상 등록되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/party')",
+          "expected_result": "정당 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('.party-item:first-child')",
+          "expected_result": "첫 번째 정당이 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-testid=\"edit-party-button\"]')",
+          "expected_result": "수정 버튼이 클릭되고 편집 화면이 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"party-name\"]', '국민의힘(수정)')",
+          "expected_result": "정당명이 수정됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_fill('input[name=\"color-code\"]', '#FF0000')",
+          "expected_result": "색상 코드가 수정됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "수정 성공 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "정당 정보가 정상적으로 수정됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-3-02-P02",
+      "name": "[긍정] 정당 비활성화",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "정당이 1개 이상 등록되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/party')",
+          "expected_result": "정당 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('.party-item:first-child')",
+          "expected_result": "정당이 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-testid=\"deactivate-party-button\"]')",
+          "expected_result": "비활성화 버튼이 클릭됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "비활성화 성공 메시지가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/party')",
+          "expected_result": "FO 정당 지지율 페이지로 이동"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.chart-container')",
+          "expected_result": "그래프가 표시됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_query_selector('.party-legend .deactivated-party')",
+          "expected_result": "비활성화된 정당이 FO에서 표시되지 않음"
+        }
+      ],
+      "expected_result": "정당 비활성화 시 FO에서 표시되지 않음",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-4-01-P01",
+      "name": "[긍정] 후보자 정보 정상 등록",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/candidate')",
+          "expected_result": "후보자 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-candidate-button\"]')",
+          "expected_result": "후보자 등록 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"candidate-number\"]', '1')",
+          "expected_result": "기호가 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"candidate-name\"]', '홍길동')",
+          "expected_result": "후보자명이 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_set_input_files('input[name=\"candidate-image-large\"]', './test-data/candidate-large.png')",
+          "expected_result": "대형 이미지가 선택됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_set_input_files('input[name=\"candidate-image-small\"]', './test-data/candidate-small.png')",
+          "expected_result": "소형 이미지가 선택됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_fill('textarea[name=\"profile-birth\"]', '1970년 1월 1일')",
+          "expected_result": "출생 정보가 입력됨"
+        },
+        {
+          "step_number": 8,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 9,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "후보자 등록 성공 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "후보자가 정상 등록됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-4-01-N01",
+      "name": "[부정] 기호에 문자 입력 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "후보자 관리 페이지에 접근 가능함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/candidate')",
+          "expected_result": "후보자 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-candidate-button\"]')",
+          "expected_result": "후보자 등록 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"candidate-number\"]', 'ABC')",
+          "expected_result": "문자가 입력 시도됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "'숫자만 입력 가능합니다.' 오류가 표시됨"
+        }
+      ],
+      "expected_result": "기호에 문자 입력 시 오류 메시지가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-4-01-N02",
+      "name": "[부정] 후보자명 30자 초과 입력 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "후보자 관리 페이지에 접근 가능함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/candidate')",
+          "expected_result": "후보자 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-candidate-button\"]')",
+          "expected_result": "후보자 등록 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"candidate-number\"]', '1')",
+          "expected_result": "기호가 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"candidate-name\"]', '이것은매우긴후보자명으로서삼십자를초과하는테스트입니다')",
+          "expected_result": "30자 초과 후보자명이 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "'최대 30자까지 입력 가능합니다.' 오류가 표시됨"
+        }
+      ],
+      "expected_result": "후보자명 30자 초과 시 오류 메시지가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-4-01-P02",
+      "name": "[긍정] 이미지 및 약력 없이 후보자 등록",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/candidate')",
+          "expected_result": "후보자 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-candidate-button\"]')",
+          "expected_result": "후보자 등록 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"candidate-number\"]', '2')",
+          "expected_result": "기호가 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"candidate-name\"]', '김철수')",
+          "expected_result": "후보자명이 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨(이미지/약력 없음)"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "등록 성공 메시지가 표시됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/candidate')",
+          "expected_result": "FO 후보자 지지율 페이지로 이동"
+        },
+        {
+          "step_number": 8,
+          "action": "playwright_wait_for_selector('.candidate-item[data-candidate=\"김철수\"]')",
+          "expected_result": "후보자가 표시되며 디폴트 이미지가 표시됨"
+        }
+      ],
+      "expected_result": "이미지/약력 없이 후보자가 정상 등록되고 FO에서 디폴트 이미지로 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-4-01-P03",
+      "name": "[긍정] 사퇴 여부 Y로 설정 후 등록",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "선거가 선택되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/candidate')",
+          "expected_result": "후보자 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-candidate-button\"]')",
+          "expected_result": "후보자 등록 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"candidate-number\"]', '3')",
+          "expected_result": "기호가 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"candidate-name\"]', '이영희')",
+          "expected_result": "후보자명이 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('input[name=\"resigned\"][value=\"Y\"]')",
+          "expected_result": "사퇴 여부가 Y로 선택됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "등록 성공 메시지가 표시됨"
+        },
+        {
+          "step_number": 8,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/candidate')",
+          "expected_result": "FO 후보자 지지율 페이지로 이동"
+        },
+        {
+          "step_number": 9,
+          "action": "playwright_wait_for_selector('.candidate-item[data-candidate=\"이영희\"].resigned')",
+          "expected_result": "후보자가 사퇴 표시와 함께 표시됨"
+        }
+      ],
+      "expected_result": "사퇴 여부 Y 설정 시 FO에서 사퇴 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-4-01-N03",
+      "name": "[부정] 중복 기호 등록 시도",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "기호 1번 후보자가 이미 등록되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/candidate')",
+          "expected_result": "후보자 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-testid=\"add-candidate-button\"]')",
+          "expected_result": "후보자 등록 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"candidate-number\"]', '1')",
+          "expected_result": "기존과 동일한 기호 입력"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"candidate-name\"]', '박민수')",
+          "expected_result": "다른 후보자명 입력"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "중복 오류 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "중복 기호 등록 시 오류가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-4-02-P01",
+      "name": "[긍정] 후보자 정보 수정",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "후보자가 1개 이상 등록되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/candidate')",
+          "expected_result": "후보자 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('.candidate-item:first-child')",
+          "expected_result": "첫 번째 후보자가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-testid=\"edit-candidate-button\"]')",
+          "expected_result": "수정 버튼이 클릭되고 편집 화면이 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"candidate-name\"]', '홍길동(수정)')",
+          "expected_result": "후보자명이 수정됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_fill('textarea[name=\"profile-birth\"]', '1975년 5월 5일')",
+          "expected_result": "출생 정보가 수정됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_click('button[type=\"submit\"]')",
+          "expected_result": "저장 버튼이 클릭됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "수정 성공 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "후보자 정보가 정상적으로 수정됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-4-02-P02",
+      "name": "[긍정] 후보자 비활성화",
+      "preconditions": [
+        "관리자로 로그인되어 있음",
+        "후보자가 1개 이상 등록되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/admin/candidate')",
+          "expected_result": "후보자 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('.candidate-item:first-child')",
+          "expected_result": "후보자가 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-testid=\"deactivate-candidate-button\"]')",
+          "expected_result": "비활성화 버튼이 클릭됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.success-message')",
+          "expected_result": "비활성화 성공 메시지가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/candidate')",
+          "expected_result": "FO 후보자 지지율 페이지로 이동"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.chart-container')",
+          "expected_result": "그래프가 표시됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_query_selector('.candidate-legend .deactivated-candidate')",
+          "expected_result": "비활성화된 후보자가 FO에서 표시되지 않음"
+        }
+      ],
+      "expected_result": "후보자 비활성화 시 FO에서 표시되지 않음",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-5-01-P01",
+      "name": "[긍정] 메인 페이지 로딩 및 표시",
+      "preconditions": [
+        "정당 지지율 및 후보자 지지율 데이터가 게시되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr')",
+          "expected_result": "메인 페이지 로딩 시작"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_wait_for_selector('.main-container', {timeout: 1000})",
+          "expected_result": "1초 이내에 메인 페이지가 로드됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_get_text('h2.subtitle:nth-of-type(1)')",
+          "expected_result": "'민심이 선택한 대통령 후보는?' 소타이틀 확인"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_get_text('h2.subtitle:nth-of-type(2)')",
+          "expected_result": "'민심이 선택한 정당은?' 소타이틀 확인"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.party-chart')",
+          "expected_result": "정당 지지율 그래프가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.candidate-chart')",
+          "expected_result": "후보자 지지율 그래프가 표시됨"
+        }
+      ],
+      "expected_result": "메인 페이지가 1초 이내에 로딩되고 정당/후보자 지지율 그래프가 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-6-01-P01",
+      "name": "[긍정] 정당 지지율 전체 그래프 조회",
+      "preconditions": [
+        "정당 지지율 데이터가 S3에 JSON 형태로 저장되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/party')",
+          "expected_result": "정당 지지율 페이지 로딩 시작"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_wait_for_selector('.party-chart', {timeout: 1000})",
+          "expected_result": "1초 이내에 정당 지지율 그래프가 렌더링됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_query_selector_all('.party-legend .party-item')",
+          "expected_result": "정당별 색상과 이름이 범례에 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_hover('.party-chart', {position: {x: 100, y: 100}})",
+          "expected_result": "그래프에 마우스 호버"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.chart-tooltip')",
+          "expected_result": "해당 날짜의 각 정당 지지율 수치가 툴팁으로 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_query_selector_all('.timepoint-marker')",
+          "expected_result": "등록된 특정 시점 마커가 그래프에 표시됨"
+        }
+      ],
+      "expected_result": "정당 지지율 전체 그래프가 1초 이내에 표시되고 범례, 툴팁, 시점 마커가 정상 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-6-02-P01",
+      "name": "[긍정] 정당 지지율 성별 필터 적용",
+      "preconditions": [
+        "정당 지지율 페이지가 로드되어 있음",
+        "성별 필터 데이터가 JSON에 포함되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/party')",
+          "expected_result": "정당 지지율 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_wait_for_selector('.party-chart')",
+          "expected_result": "전체 그래프가 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-filter=\"gender\"]')",
+          "expected_result": "성별 필터 버튼이 클릭됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('button[data-filter-value=\"male\"]')",
+          "expected_result": "'남성' 필터가 선택됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.party-chart.updated', {timeout: 1000})",
+          "expected_result": "1초 이내에 남성 데이터로 그래프가 갱신됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_get_attribute('.party-chart', 'data-current-filter')",
+          "expected_result": "현재 필터가 'gender-male'로 설정됨"
+        }
+      ],
+      "expected_result": "성별 필터 선택 시 해당 데이터로 그래프가 1초 이내에 갱신됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-6-02-P02",
+      "name": "[긍정] 정당 지지율 연령 필터 적용",
+      "preconditions": [
+        "정당 지지율 페이지가 로드되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/party')",
+          "expected_result": "정당 지지율 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-filter=\"age\"]')",
+          "expected_result": "연령 필터 버튼이 클릭됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-filter-value=\"30-39\"]')",
+          "expected_result": "'30~39' 연령대 필터가 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.party-chart.updated', {timeout: 1000})",
+          "expected_result": "1초 이내에 30대 데이터로 그래프가 갱신됨"
+        }
+      ],
+      "expected_result": "연령 필터 선택 시 해당 연령대 데이터로 그래프가 갱신됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-6-02-P03",
+      "name": "[긍정] 정당 지지율 지역 필터 적용",
+      "preconditions": [
+        "정당 지지율 페이지가 로드되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/party')",
+          "expected_result": "정당 지지율 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-filter=\"region\"]')",
+          "expected_result": "지역 필터 버튼이 클릭됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-filter-value=\"seoul\"]')",
+          "expected_result": "'서울' 지역 필터가 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.party-chart.updated', {timeout: 1000})",
+          "expected_result": "서울 지역 데이터로 그래프가 갱신됨"
+        }
+      ],
+      "expected_result": "지역 필터 선택 시 해당 지역 데이터로 그래프가 갱신됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-6-03-P01",
+      "name": "[긍정] 정당 지지율 주별 기간 조회",
+      "preconditions": [
+        "정당 지지율 페이지가 로드되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/party')",
+          "expected_result": "정당 지지율 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-period=\"weekly\"]')",
+          "expected_result": "'주별' 기간 옵션이 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_wait_for_selector('.party-chart.updated')",
+          "expected_result": "주 단위로 집계된 그래프가 표시됨"
+        }
+      ],
+      "expected_result": "주별 선택 시 데이터가 주 단위로 집계되어 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-6-03-P02",
+      "name": "[긍정] 정당 지지율 월별 기간 조회",
+      "preconditions": [
+        "정당 지지율 페이지가 로드되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/party')",
+          "expected_result": "정당 지지율 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-period=\"monthly\"]')",
+          "expected_result": "'월별' 기간 옵션이 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_wait_for_selector('.party-chart.updated')",
+          "expected_result": "월 단위로 집계된 그래프가 표시됨"
+        }
+      ],
+      "expected_result": "월별 선택 시 데이터가 월 단위로 집계되어 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-6-03-P03",
+      "name": "[긍정] 정당 지지율 특정 기간 조회",
+      "preconditions": [
+        "정당 지지율 페이지가 로드되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/party')",
+          "expected_result": "정당 지지율 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-period=\"custom\"]')",
+          "expected_result": "'특정 기간 설정' 옵션이 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_wait_for_selector('.date-picker')",
+          "expected_result": "시작일/종료일 캘린더가 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"start-date\"]', '2024-01-01')",
+          "expected_result": "시작일이 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_fill('input[name=\"end-date\"]', '2024-03-31')",
+          "expected_result": "종료일이 입력됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_click('button[data-testid=\"apply-custom-period\"]')",
+          "expected_result": "적용 버튼이 클릭됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_wait_for_selector('.party-chart.updated')",
+          "expected_result": "선택한 기간의 데이터로 그래프가 표시됨"
+        }
+      ],
+      "expected_result": "특정 기간 설정 시 해당 기간의 데이터가 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-6-03-N01",
+      "name": "[부정] 시작일이 종료일보다 이후인 경우",
+      "preconditions": [
+        "정당 지지율 페이지가 로드되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/party')",
+          "expected_result": "정당 지지율 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-period=\"custom\"]')",
+          "expected_result": "특정 기간 설정이 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill('input[name=\"start-date\"]', '2024-03-31')",
+          "expected_result": "시작일이 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill('input[name=\"end-date\"]', '2024-01-01')",
+          "expected_result": "종료일이 시작일보다 이전 날짜로 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('button[data-testid=\"apply-custom-period\"]')",
+          "expected_result": "적용 버튼이 클릭됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.error-message')",
+          "expected_result": "기간 설정 오류 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "시작일이 종료일보다 이후인 경우 오류 메시지가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-A-6-04-P01",
+      "name": "[긍정] 정당 체크박스 on/off",
+      "preconditions": [
+        "정당 지지율 페이지가 로드되어 있음",
+        "3개 이상의 정당이 표시되고 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/party')",
+          "expected_result": "정당 지지율 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_wait_for_selector('.party-legend')",
+          "expected_result": "정당 범례가 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('input[type=\"checkbox\"][data-party=\"party1\"]')",
+          "expected_result": "첫 번째 정당 체크박스가 해제됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.party-chart .party-line[data-party=\"party1\"].hidden')",
+          "expected_result": "해당 정당 라인이 그래프에서 숨겨짐"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click('input[type=\"checkbox\"][data-party=\"party1\"]')",
+          "expected_result": "체크박스를 다시 체크함"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_wait_for_selector('.party-chart .party-line[data-party=\"party1\"]:not(.hidden)')",
+          "expected_result": "해당 정당 라인이 그래프에 다시 표시됨"
+        }
+      ],
+      "expected_result": "정당 체크박스 해제 시 라인이 숨겨지고 재체크 시 다시 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-6-04-P02",
+      "name": "[긍정] 모든 정당 체크박스 해제",
+      "preconditions": [
+        "정당 지지율 페이지가 로드되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/party')",
+          "expected_result": "정당 지지율 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_query_selector_all('input[type=\"checkbox\"][data-party]')",
+          "expected_result": "모든 정당 체크박스를 찾음"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_eval('document.querySelectorAll(\"input[type=checkbox][data-party]\").forEach(cb => cb.checked = false)')",
+          "expected_result": "모든 체크박스가 해제됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.party-chart.empty')",
+          "expected_result": "빈 그래프가 표시됨"
+        }
+      ],
+      "expected_result": "모든 정당 체크박스 해제 시 빈 그래프가 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-7-01-P01",
+      "name": "[긍정] 후보자 지지율 전체 그래프 조회",
+      "preconditions": [
+        "후보자 지지율 데이터가 S3에 JSON 형태로 저장되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/candidate')",
+          "expected_result": "후보자 지지율 페이지 로딩 시작"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_wait_for_selector('.candidate-chart', {timeout: 1000})",
+          "expected_result": "1초 이내에 후보자 지지율 그래프가 렌더링됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_query_selector_all('.candidate-legend .candidate-item')",
+          "expected_result": "후보자별 색상과 이름이 범례에 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_query_selector('.candidate-legend .non-support')",
+          "expected_result": "'지지 후보 없음' 항목이 범례에 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_query_selector('.candidate-legend .no-answer')",
+          "expected_result": "'모름/무응답' 항목이 범례에 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_query_selector_all('.timepoint-marker')",
+          "expected_result": "등록된 특정 시점 마커가 그래프에 표시됨"
+        }
+      ],
+      "expected_result": "후보자 지지율 전체 그래프가 표시되고 모든 항목이 범례에 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-7-02-P01",
+      "name": "[긍정] 후보자 지지율 성별 필터 적용",
+      "preconditions": [
+        "후보자 지지율 페이지가 로드되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/candidate')",
+          "expected_result": "후보자 지지율 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-filter=\"gender\"]')",
+          "expected_result": "성별 필터 버튼이 클릭됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click('button[data-filter-value=\"female\"]')",
+          "expected_result": "'여성' 필터가 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_wait_for_selector('.candidate-chart.updated', {timeout: 1000})",
+          "expected_result": "여성 데이터로 그래프가 갱신됨"
+        }
+      ],
+      "expected_result": "성별 필터 선택 시 해당 데이터로 그래프가 갱신됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-7-03-P01",
+      "name": "[긍정] 후보자 지지율 월별 기간 조회",
+      "preconditions": [
+        "후보자 지지율 페이지가 로드되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/candidate')",
+          "expected_result": "후보자 지지율 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('button[data-period=\"monthly\"]')",
+          "expected_result": "'월별' 기간 옵션이 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_wait_for_selector('.candidate-chart.updated')",
+          "expected_result": "월 단위로 집계된 그래프가 표시됨"
+        }
+      ],
+      "expected_result": "월별 선택 시 데이터가 월 단위로 집계되어 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-7-04-P01",
+      "name": "[긍정] 후보자 체크박스 on/off",
+      "preconditions": [
+        "후보자 지지율 페이지가 로드되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/candidate')",
+          "expected_result": "후보자 지지율 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('input[type=\"checkbox\"][data-candidate=\"candi1\"]')",
+          "expected_result": "첫 번째 후보자 체크박스가 해제됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_wait_for_selector('.candidate-chart .candidate-line[data-candidate=\"candi1\"].hidden')",
+          "expected_result": "해당 후보자 라인이 그래프에서 숨겨짐"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('input[type=\"checkbox\"][data-candidate=\"candi1\"]')",
+          "expected_result": "체크박스를 다시 체크함"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('.candidate-chart .candidate-line[data-candidate=\"candi1\"]:not(.hidden)')",
+          "expected_result": "해당 후보자 라인이 그래프에 다시 표시됨"
+        }
+      ],
+      "expected_result": "후보자 체크박스 해제 시 라인이 숨겨지고 재체크 시 다시 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-8-01-P01",
+      "name": "[긍정] 메타J 소개 페이지 접근",
+      "preconditions": [
+        "사용자가 사이트에 접속 가능함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr')",
+          "expected_result": "메인 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('a[href=\"/about\"]')",
+          "expected_result": "메타J 소개 메뉴가 클릭됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_wait_for_selector('.about-container', {timeout: 1000})",
+          "expected_result": "1초 이내에 소개 페이지가 로드됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_query_selector('.about-content')",
+          "expected_result": "정적 콘텐츠(텍스트/이미지)가 표시됨"
+        }
+      ],
+      "expected_result": "메타J 소개 페이지가 1초 이내에 로드되고 콘텐츠가 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-8-02-P01",
+      "name": "[긍정] 방법론 페이지 접근",
+      "preconditions": [
+        "사용자가 사이트에 접속 가능함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr')",
+          "expected_result": "메인 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('a[href=\"/methodology\"]')",
+          "expected_result": "방법론 메뉴가 클릭됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_wait_for_selector('.methodology-container')",
+          "expected_result": "방법론 페이지가 로드됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_query_selector('.methodology-content')",
+          "expected_result": "정적 콘텐츠(텍스트/이미지)가 표시됨"
+        }
+      ],
+      "expected_result": "방법론 페이지가 로드되고 콘텐츠가 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-8-03-P01",
+      "name": "[긍정] 공통 헤더/푸터 표시 확인",
+      "preconditions": [
+        "사용자가 사이트에 접속 가능함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr')",
+          "expected_result": "메인 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_wait_for_selector('header.common-header')",
+          "expected_result": "공통 헤더가 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_query_selector('header .logo')",
+          "expected_result": "로고가 헤더에 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_query_selector_all('header nav a')",
+          "expected_result": "메뉴(메타J/정당 지지율/후보자 지지율/메타J 소개/방법론)가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_selector('footer.common-footer')",
+          "expected_result": "공통 푸터가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr/party')",
+          "expected_result": "다른 페이지로 이동"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_wait_for_selector('header.common-header')",
+          "expected_result": "동일한 공통 헤더가 표시됨"
+        },
+        {
+          "step_number": 8,
+          "action": "playwright_wait_for_selector('footer.common-footer')",
+          "expected_result": "동일한 공통 푸터가 표시됨"
+        }
+      ],
+      "expected_result": "모든 페이지에서 공통 헤더와 푸터가 일관되게 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-A-8-03-P02",
+      "name": "[긍정] 헤더 메뉴 네비게이션",
+      "preconditions": [
+        "사용자가 사이트에 접속 가능함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate('https://metaj.jtbc.co.kr')",
+          "expected_result": "메인 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click('header nav a[href=\"/party\"]')",
+          "expected_result": "정당 지지율 메뉴가 클릭됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_wait_for_url('https://metaj.jtbc.co.kr/party')",
+          "expected_result": "정당 지지율 페이지로 이동됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click('header nav a[href=\"/candidate\"]')",
+          "expected_result": "후보자 지지율 메뉴가 클릭됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_wait_for_url('https://metaj.jtbc.co.kr/candidate')",
+          "expected_result": "후보자 지지율 페이지로 이동됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_click('header .logo')",
+          "expected_result": "로고가 클릭됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_wait_for_url('https://metaj.jtbc.co.kr')",
+          "expected_result": "메인 페이지로 이동됨"
+        }
+      ],
+      "expected_result": "헤더 메뉴를 통해 모든 페이지로 정상 이동됨",
+      "scenario_type": "positive"
+    }
+  ],
+  "created_at": "2026-02-27T02:35:31.273806Z"
+}

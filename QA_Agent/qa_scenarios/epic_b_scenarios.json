@@ -1,0 +1,1241 @@
+{
+  "target_url": "https://metaj.jtbc.co.kr",
+  "requirements": "# Epic B: 콘텐트 성과 분석 통계\n\n유저 스토리 ID: US-A-8-04\n기능: Feature A-8: [FO] 정적 페이지 및 공통 UI\n제목: 반응형 UI 및 모바일 최적화\n역할: 일반 사용자 (김시민)\n목표: 모바일, 태블릿, 데스크톱에서 최적화된 화면으로 서비스를 이용할 수 있다\n가치: 어떤 디바이스에서든 편하게 여론조사 데이터를 확인할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 모바일 디바이스에서 접속했을 때, When 화면을 확인하면, Then 모바일에 최적화된 레이아웃이 표시된다\n  2. Given 모바일에서 그래프를 확인할 때, When 그래프 영역을 터치하면, Then 좌우 스크롤이 가능하다\n  3. Given 태블릿에서 접속했을 때, When 화면을 확인하면, Then 태블릿에 적합한 레이아웃이 표시된다\n  4. Given 데스크톱에서 접속했을 때, When 화면을 확인하면, Then 데스크톱 전체 화면 레이아웃이 표시된다\n\n---\n\n유저 스토리 ID: US-B-1-01\n기능: Feature B-1: [CMS] 기사/영상 PV 데이터 조회 (QuickSight)\n제목: 기사 PV 데이터 조회\n역할: 콘텐트 운영자 (이콘텐)\n목표: QuickSight 대시보드에서 기사별 PV 데이터를 날짜별/시간별로 조회하고 유입 경로를 확인할 수 있다\n가치: 기사별 성과를 분석할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given QuickSight 대시보드에서, When 기사 PV 영역을 확인하면, Then 기사ID, 제목, 카테고리, PV 수, 유입 경로가 표시된다\n  2. Given 기사 목록에서, When 특정 기사를 드릴다운하면, Then 해당 기사의 상세 PV 데이터(날짜별/시간별)가 표시된다\n  3. Given 유입 경로 데이터에서, When 경로별 비중을 확인하면, Then JTBC, 네이버, 다음, 네이트, 스포츠빅이벤트, 기타별 PV가 표시된다\n  4. Given 일별/주별/월별 필터가 있을 때, When 필터를 변경하면, Then 해당 기간 단위로 집계된 데이터가 표시된다\n  5. Given 카테고리 필터가 있을 때, When 특정 카테고리를 선택하면, Then 해당 카테고리의 기사만 표시된다\n\n---\n\n유저 스토리 ID: US-B-1-02\n기능: Feature B-1: [CMS] 기사/영상 PV 데이터 조회 (QuickSight)\n제목: 영상 PV 데이터 조회\n역할: 콘텐트 운영자 (이콘텐)\n목표: QuickSight 대시보드에서 영상별 PV 및 재생 횟수 데이터를 조회할 수 있다\n가치: 영상 콘텐트의 성과를 분석할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given QuickSight 대시보드에서, When 영상 PV 영역을 확인하면, Then 영상ID, 제목, 재생 횟수, PV 수, 유입 경로가 표시된다\n  2. Given 영상 목록에서, When 특정 영상을 드릴다운하면, Then 해당 영상의 상세 PV 데이터가 표시된다\n  3. Given 일별/주별/월별 필터를 변경하면, When 데이터가 갱신되면, Then 해당 기간 단위로 집계된 데이터가 표시된다\n\n---\n\n유저 스토리 ID: US-B-2-01\n기능: Feature B-2: [CMS] PV 추이 그래프 (QuickSight)\n제목: 기사/영상 PV 비교 차트\n역할: 콘텐트 운영자 (이콘텐)\n목표: QuickSight 대시보드에서 기사 PV와 영상 PV를 비교하거나 분리해서 볼 수 있다\n가치: 기사와 영상의 성과를 비교 분석할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 기사 내 영상이 있는 경우, When PV 추이 그래프를 확인하면, Then 기사 PV와 영상 PV가 하나의 차트에서 비교 표시된다\n  2. Given 기사가 없는 영상인 경우, When 그래프를 확인하면, Then 영상 PV 그래프만 표시된다\n  3. Given 영상이 없는 기사인 경우, When 그래프를 확인하면, Then 기사 PV 그래프만 표시된다\n\n---\n\n유저 스토리 ID: US-B-3-01\n기능: Feature B-3: [CMS] 외부 유입률 분석 (QuickSight)\n제목: 포털별 유입 비중 분석\n역할: 콘텐트 운영자 (이콘텐)\n목표: QuickSight 대시보드에서 포털별 유입 비중을 확인할 수 있다\n가치: 어떤 포털에서 유입이 많은지 파악하여 콘텐트 배포 전략을 수립할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given QuickSight 대시보드에서, When 유입 비중 차트를 확인하면, Then 네이버, 다음, 네이트, JTBC, 스포츠빅이벤트, 기타별 비중이 표시된다\n  2. Given 기간 필터를 변경했을 때, When 데이터가 갱신되면, Then 해당 기간의 유입 비중이 표시된다\n\n---\n\n유저 스토리 ID: US-B-3-02\n기능: Feature B-3: [CMS] 외부 유입률 분석 (QuickSight)\n제목: 유입 급증 시계열 차트\n역할: 콘텐트 운영자 (이콘텐)\n목표: QuickSight 대시보드에서 포털별 유입 급증 추이를 시계열 차트로 확인할 수 있다\n가치: 유입 트렌드 변화를 추적할 수 있다\n우선순위: Medium\n\n인수 조건 (Acceptance Criteria):\n  1. Given QuickSight 대시보드에서, When 시계열 차트를 확인하면, Then 포털별 유입 추이가 시간 순서로 표시된다\n  2. Given 특정 기간을 설정했을 때, When 차트가 갱신되면, Then 해당 기간의 포털별 유입 추이가 표시된다\n\n---\n\n유저 스토리 ID: US-B-4-01\n기능: Feature B-4: [CMS] 콘텐트 랭킹 (QuickSight)\n제목: 기사 TOP10 랭킹\n역할: 콘텐트 운영자 (이콘텐)\n목표: QuickSight 대시보드에서 가장 많이 본 기사 TOP10을 확인할 수 있다\n가치: 인기 콘텐트를 파악할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given QuickSight 대시보드에서, When 기사 TOP10을 확인하면, Then PV 기준 상위 10개 기사가 순위와 함께 표시된다\n  2. Given 디폴트 기간이 적용될 때, When 대시보드에 접속하면, Then 최근 7일(종료=오늘) 기준 랭킹이 표시된다\n  3. Given 기간 필터를 변경했을 때, When 시작일/종료일을 설정하면, Then 해당 기간의 TOP10이 갱신된다\n\n---\n\n유저 스토리 ID: US-B-4-02\n기능: Feature B-4: [CMS] 콘텐트 랭킹 (QuickSight)\n제목: 영상 TOP10 랭킹\n역할: 콘텐트 운영자 (이콘텐)\n목표: QuickSight 대시보드에서 유입률이 높은 영상 TOP10을 확인할 수 있다\n가치: 인기 영상 콘텐트를 파악할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given QuickSight 대시보드에서, When 영상 TOP10을 확인하면, Then 유입률 기준 상위 10개 영상이 순위와 함께 표시된다\n  2. Given 디폴트 기간이 적용될 때, When 대시보드에 접속하면, Then 최근 7일(종료=오늘) 기준 랭킹이 표시된다\n\n---\n",
+  "test_cases": [
+    {
+      "id": "TC-US-A-8-04-001",
+      "name": "모바일 디바이스 반응형 레이아웃 검증",
+      "preconditions": [
+        "테스트 URL https://metaj.jtbc.co.kr 접근 가능",
+        "모바일 디바이스 에뮬레이션 설정 가능 (iPhone 12 Pro, 390x844)"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to 'https://metaj.jtbc.co.kr' with viewport width=390, height=844",
+          "expected_result": "페이지가 정상적으로 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.screenshot of full page",
+          "expected_result": "모바일 최적화 레이아웃 스크린샷 캡처"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.evaluate document.body.clientWidth",
+          "expected_result": "viewport width가 390px로 설정됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.query_selector for navigation menu (hamburger icon or mobile menu)",
+          "expected_result": "모바일 전용 네비게이션 메뉴가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.query_selector for responsive content containers",
+          "expected_result": "콘텐츠 컨테이너가 모바일 width에 맞게 배치됨"
+        }
+      ],
+      "expected_result": "모바일 디바이스에서 최적화된 레이아웃이 표시되고, 모든 UI 요소가 화면 크기에 맞게 조정됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-A-8-04-002",
+      "name": "모바일 그래프 좌우 스크롤 기능 검증",
+      "preconditions": [
+        "테스트 URL 접근 가능",
+        "모바일 viewport 설정 (390x844)",
+        "그래프 차트가 포함된 페이지 존재"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to 'https://metaj.jtbc.co.kr' with mobile viewport",
+          "expected_result": "페이지 로드 완료"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.query_selector for chart or graph element (canvas, svg, or chart container)",
+          "expected_result": "그래프 요소가 발견됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.evaluate to check if graph element has overflow-x: scroll or auto",
+          "expected_result": "그래프 영역에 수평 스크롤 속성이 적용됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.touch_start and touch_move on graph element (swipe left)",
+          "expected_result": "터치 이벤트가 정상 처리됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.evaluate to check scrollLeft value change",
+          "expected_result": "그래프 영역의 scrollLeft 값이 변경되어 스크롤됨"
+        }
+      ],
+      "expected_result": "모바일에서 그래프 영역을 터치하여 좌우로 스크롤할 수 있음",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-A-8-04-003",
+      "name": "태블릿 디바이스 반응형 레이아웃 검증",
+      "preconditions": [
+        "테스트 URL 접근 가능",
+        "태블릿 디바이스 에뮬레이션 설정 가능 (iPad Air, 820x1180)"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to 'https://metaj.jtbc.co.kr' with viewport width=820, height=1180",
+          "expected_result": "페이지가 정상적으로 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.screenshot of full page",
+          "expected_result": "태블릿 레이아웃 스크린샷 캡처"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.evaluate to check media query breakpoint",
+          "expected_result": "태블릿용 미디어 쿼리가 활성화됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.query_selector for tablet-specific layout elements",
+          "expected_result": "태블릿에 최적화된 2단 또는 3단 레이아웃이 표시됨"
+        }
+      ],
+      "expected_result": "태블릿 디바이스에서 적합한 레이아웃이 표시되고, 화면 크기에 맞는 UI 구성이 적용됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-A-8-04-004",
+      "name": "데스크톱 전체 화면 레이아웃 검증",
+      "preconditions": [
+        "테스트 URL 접근 가능",
+        "데스크톱 viewport 설정 (1920x1080)"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to 'https://metaj.jtbc.co.kr' with viewport width=1920, height=1080",
+          "expected_result": "페이지가 정상적으로 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.screenshot of full page",
+          "expected_result": "데스크톱 레이아웃 스크린샷 캡처"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.query_selector for desktop navigation menu",
+          "expected_result": "데스크톱용 수평 네비게이션 메뉴가 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.evaluate to check container max-width or full-width layout",
+          "expected_result": "전체 화면을 활용한 레이아웃이 적용됨"
+        }
+      ],
+      "expected_result": "데스크톱에서 전체 화면 레이아웃이 표시되고, 넓은 화면을 효율적으로 활용함",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-A-8-04-005",
+      "name": "극소형 모바일 디바이스에서 레이아웃 깨짐 검증 (부정)",
+      "preconditions": [
+        "테스트 URL 접근 가능",
+        "극소형 viewport 설정 (320x568)"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to 'https://metaj.jtbc.co.kr' with viewport width=320, height=568",
+          "expected_result": "페이지 로드 완료"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.screenshot of full page",
+          "expected_result": "극소형 화면 스크린샷 캡처"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.evaluate to check for horizontal overflow (document.body.scrollWidth > window.innerWidth)",
+          "expected_result": "수평 스크롤이 발생하지 않아야 함"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.query_selector for overlapping elements or text cutoff",
+          "expected_result": "UI 요소가 겹치거나 텍스트가 잘리지 않음"
+        }
+      ],
+      "expected_result": "극소형 디바이스에서도 레이아웃이 깨지지 않고 모든 콘텐츠가 정상적으로 표시됨 (또는 최소 지원 width 안내)",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-US-B-1-01-001",
+      "name": "QuickSight 기사 PV 데이터 조회 - 기본 표시",
+      "preconditions": [
+        "QuickSight 대시보드 접근 권한 보유",
+        "테스트 기사 데이터가 존재함",
+        "CMS 시스템에 로그인된 상태"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to 'https://metaj.jtbc.co.kr' (CMS/QuickSight 대시보드 영역)",
+          "expected_result": "대시보드 페이지 로드 완료"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.query_selector for '기사 PV' section or tab",
+          "expected_result": "기사 PV 영역이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.click on 기사 PV 영역",
+          "expected_result": "기사 PV 데이터 테이블 또는 차트가 로드됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.query_selector for table headers: '기사ID', '제목', '카테고리', 'PV 수', '유입 경로'",
+          "expected_result": "모든 필수 컬럼 헤더가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.query_selector for table rows with data",
+          "expected_result": "기사 데이터가 행으로 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright.evaluate to verify each row contains 기사ID, 제목, 카테고리, PV 수, 유입 경로",
+          "expected_result": "각 행에 모든 필수 데이터가 포함됨"
+        }
+      ],
+      "expected_result": "기사 PV 영역에서 기사ID, 제목, 카테고리, PV 수, 유입 경로가 정상적으로 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-1-01-002",
+      "name": "QuickSight 기사 드릴다운 상세 PV 데이터 조회",
+      "preconditions": [
+        "기사 PV 목록이 표시된 상태",
+        "드릴다운 가능한 기사가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.query_selector for first article row in PV table",
+          "expected_result": "첫 번째 기사 행이 선택됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.click on article row or drill-down button",
+          "expected_result": "드릴다운 액션 실행"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.wait_for_selector for detailed view or modal",
+          "expected_result": "상세 뷰가 로드됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.query_selector for date/time breakdown chart or table",
+          "expected_result": "날짜별/시간별 PV 데이터가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.evaluate to verify time-series data presence",
+          "expected_result": "시계열 데이터가 존재하고 날짜/시간 단위로 집계됨"
+        }
+      ],
+      "expected_result": "특정 기사를 드릴다운하면 해당 기사의 날짜별/시간별 상세 PV 데이터가 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-1-01-003",
+      "name": "유입 경로별 PV 데이터 검증",
+      "preconditions": [
+        "기사 PV 데이터가 표시된 상태",
+        "유입 경로 데이터가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.query_selector for '유입 경로' column or section",
+          "expected_result": "유입 경로 영역이 표시됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.click on 유입 경로 데이터 or filter",
+          "expected_result": "유입 경로별 상세 정보 표시"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.query_selector for traffic sources: 'JTBC', '네이버', '다음', '네이트', '스포츠빅이벤트', '기타'",
+          "expected_result": "모든 유입 경로 항목이 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.evaluate to verify each source has PV count",
+          "expected_result": "각 유입 경로별 PV 수가 표시됨"
+        }
+      ],
+      "expected_result": "유입 경로 데이터에서 JTBC, 네이버, 다음, 네이트, 스포츠빅이벤트, 기타별 PV가 정상적으로 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-1-01-004",
+      "name": "기간 필터 변경 - 일별/주별/월별",
+      "preconditions": [
+        "기사 PV 대시보드가 로드된 상태",
+        "기간 필터 UI가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.query_selector for date filter dropdown or buttons (일별/주별/월별)",
+          "expected_result": "기간 필터 UI가 발견됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.click on '주별' filter option",
+          "expected_result": "주별 필터 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.wait_for_selector for updated data table or chart",
+          "expected_result": "데이터가 갱신됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.evaluate to verify data is aggregated by week",
+          "expected_result": "주 단위로 집계된 데이터가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.click on '월별' filter option",
+          "expected_result": "월별 필터 선택됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright.wait_for_selector for updated data",
+          "expected_result": "월별 집계 데이터로 갱신됨"
+        }
+      ],
+      "expected_result": "일별/주별/월별 필터를 변경하면 해당 기간 단위로 집계된 데이터가 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-1-01-005",
+      "name": "카테고리 필터 적용",
+      "preconditions": [
+        "기사 PV 대시보드가 로드된 상태",
+        "카테고리 필터가 존재함",
+        "여러 카테고리의 기사가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.query_selector for category filter dropdown",
+          "expected_result": "카테고리 필터 UI가 발견됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.click on category filter dropdown",
+          "expected_result": "카테고리 목록이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.click on specific category option (예: '정치')",
+          "expected_result": "정치 카테고리 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.wait_for_selector for filtered data table",
+          "expected_result": "데이터 테이블이 갱신됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.evaluate to verify all displayed articles belong to selected category",
+          "expected_result": "표시된 모든 기사가 선택한 카테고리에 속함"
+        }
+      ],
+      "expected_result": "특정 카테고리를 선택하면 해당 카테고리의 기사만 필터링되어 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-1-01-006",
+      "name": "기사 PV 데이터 없는 경우 처리 (부정)",
+      "preconditions": [
+        "QuickSight 대시보드 접근",
+        "선택한 기간 또는 필터에 해당하는 기사 데이터가 없음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to 기사 PV 대시보드",
+          "expected_result": "대시보드 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.click on date filter and select future date range with no data",
+          "expected_result": "미래 날짜 범위 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.wait_for_selector for empty state message or 'No data' indicator",
+          "expected_result": "데이터 없음 메시지가 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.query_selector to verify no article rows are displayed",
+          "expected_result": "기사 데이터 행이 표시되지 않음"
+        }
+      ],
+      "expected_result": "데이터가 없는 경우 적절한 안내 메시지가 표시되고, 빈 테이블이 정상적으로 처리됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-US-B-1-02-001",
+      "name": "QuickSight 영상 PV 데이터 조회 - 기본 표시",
+      "preconditions": [
+        "QuickSight 대시보드 접근 권한 보유",
+        "테스트 영상 데이터가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to QuickSight 대시보드",
+          "expected_result": "대시보드 로드 완료"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.query_selector for '영상 PV' section or tab",
+          "expected_result": "영상 PV 영역이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.click on 영상 PV 영역",
+          "expected_result": "영상 PV 데이터 로드"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.query_selector for table headers: '영상ID', '제목', '재생 횟수', 'PV 수', '유입 경로'",
+          "expected_result": "모든 필수 컬럼 헤더가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.query_selector for table rows with video data",
+          "expected_result": "영상 데이터가 행으로 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright.evaluate to verify each row contains all required fields",
+          "expected_result": "각 행에 영상ID, 제목, 재생 횟수, PV 수, 유입 경로가 모두 포함됨"
+        }
+      ],
+      "expected_result": "영상 PV 영역에서 영상ID, 제목, 재생 횟수, PV 수, 유입 경로가 정상적으로 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-1-02-002",
+      "name": "영상 드릴다운 상세 PV 데이터 조회",
+      "preconditions": [
+        "영상 PV 목록이 표시된 상태",
+        "드릴다운 가능한 영상이 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.query_selector for first video row in PV table",
+          "expected_result": "첫 번째 영상 행이 선택됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.click on video row or drill-down icon",
+          "expected_result": "드릴다운 실행"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.wait_for_selector for detailed video analytics view",
+          "expected_result": "상세 뷰가 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.query_selector for time-series PV data chart",
+          "expected_result": "시계열 PV 데이터가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.evaluate to verify detailed metrics (날짜별/시간별 재생 및 PV)",
+          "expected_result": "상세 메트릭 데이터가 존재함"
+        }
+      ],
+      "expected_result": "특정 영상을 드릴다운하면 해당 영상의 상세 PV 데이터가 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-1-02-003",
+      "name": "영상 PV 일별/주별/월별 필터 변경",
+      "preconditions": [
+        "영상 PV 대시보드가 로드된 상태",
+        "기간 필터가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.query_selector for date range filter",
+          "expected_result": "기간 필터 UI 발견"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.click on '일별' option",
+          "expected_result": "일별 필터 적용"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.wait_for_selector for updated video PV data",
+          "expected_result": "일별 집계 데이터 표시"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.click on '월별' option",
+          "expected_result": "월별 필터 적용"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.wait_for_selector for updated data aggregated by month",
+          "expected_result": "월별 집계 데이터 표시"
+        }
+      ],
+      "expected_result": "일별/주별/월별 필터를 변경하면 해당 기간 단위로 집계된 영상 PV 데이터가 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-1-02-004",
+      "name": "영상 재생 횟수 0인 경우 표시 검증 (부정)",
+      "preconditions": [
+        "영상 PV 대시보드 접근",
+        "재생 횟수가 0인 영상이 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to 영상 PV 대시보드",
+          "expected_result": "대시보드 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.query_selector for video with 0 play count",
+          "expected_result": "재생 횟수 0인 영상 행 발견"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.evaluate to verify play count displays '0' or equivalent",
+          "expected_result": "재생 횟수가 0으로 명확히 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.click on the video row to drill down",
+          "expected_result": "드릴다운 가능"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.wait_for_selector for detailed view with empty or zero metrics",
+          "expected_result": "상세 뷰에서도 재생 데이터가 없음을 정상 표시"
+        }
+      ],
+      "expected_result": "재생 횟수가 0인 영상도 정상적으로 표시되고, 드릴다운 시 데이터 없음을 적절히 안내함",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-US-B-2-01-001",
+      "name": "기사 내 영상 PV 비교 차트 검증",
+      "preconditions": [
+        "기사 내 영상이 포함된 콘텐츠가 존재함",
+        "QuickSight 대시보드 접근"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to PV 추이 그래프 대시보드",
+          "expected_result": "대시보드 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.query_selector for article with embedded video",
+          "expected_result": "영상이 포함된 기사 선택"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.click on article to view PV trend chart",
+          "expected_result": "PV 추이 그래프 표시"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.query_selector for chart with multiple series (기사 PV, 영상 PV)",
+          "expected_result": "두 개의 데이터 시리즈가 차트에 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.evaluate to verify chart legend shows '기사 PV' and '영상 PV'",
+          "expected_result": "범례에 기사 PV와 영상 PV가 구분되어 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright.screenshot of comparison chart",
+          "expected_result": "비교 차트 스크린샷 캡처"
+        }
+      ],
+      "expected_result": "기사 내 영상이 있는 경우 기사 PV와 영상 PV가 하나의 차트에서 비교 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-2-01-002",
+      "name": "영상만 있는 콘텐츠 PV 그래프 검증",
+      "preconditions": [
+        "기사 없이 영상만 존재하는 콘텐츠가 있음",
+        "QuickSight 대시보드 접근"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to PV 추이 대시보드",
+          "expected_result": "대시보드 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.query_selector for video-only content",
+          "expected_result": "영상 단독 콘텐츠 선택"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.click on video content to view PV chart",
+          "expected_result": "PV 차트 표시"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.query_selector for chart with single series (영상 PV only)",
+          "expected_result": "영상 PV 데이터만 표시된 차트 확인"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.evaluate to verify no article PV series exists",
+          "expected_result": "기사 PV 시리즈가 차트에 없음"
+        }
+      ],
+      "expected_result": "기사가 없는 영상인 경우 영상 PV 그래프만 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-2-01-003",
+      "name": "기사만 있는 콘텐츠 PV 그래프 검증",
+      "preconditions": [
+        "영상 없이 기사만 존재하는 콘텐츠가 있음",
+        "QuickSight 대시보드 접근"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to PV 추이 대시보드",
+          "expected_result": "대시보드 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.query_selector for article-only content (no video)",
+          "expected_result": "기사 단독 콘텐츠 선택"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.click on article to view PV chart",
+          "expected_result": "PV 차트 표시"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.query_selector for chart with single series (기사 PV only)",
+          "expected_result": "기사 PV 데이터만 표시된 차트 확인"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.evaluate to verify no video PV series exists",
+          "expected_result": "영상 PV 시리즈가 차트에 없음"
+        }
+      ],
+      "expected_result": "영상이 없는 기사인 경우 기사 PV 그래프만 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-2-01-004",
+      "name": "기사/영상 모두 없는 경우 차트 표시 (부정)",
+      "preconditions": [
+        "QuickSight 대시보드 접근",
+        "PV 데이터가 없는 콘텐츠 또는 삭제된 콘텐츠"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to PV 추이 대시보드",
+          "expected_result": "대시보드 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.query_selector for content with no PV data",
+          "expected_result": "데이터 없는 콘텐츠 선택 시도"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.wait_for_selector for empty chart or 'No data' message",
+          "expected_result": "빈 차트 또는 데이터 없음 메시지 표시"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.evaluate to verify no chart series are rendered",
+          "expected_result": "차트에 데이터 시리즈가 없음"
+        }
+      ],
+      "expected_result": "PV 데이터가 없는 경우 적절한 안내 메시지가 표시되거나 빈 차트가 정상 처리됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-US-B-3-01-001",
+      "name": "포털별 유입 비중 차트 표시 검증",
+      "preconditions": [
+        "QuickSight 대시보드 접근",
+        "유입 데이터가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to 외부 유입률 분석 대시보드",
+          "expected_result": "대시보드 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.query_selector for '유입 비중' chart section",
+          "expected_result": "유입 비중 차트 영역 발견"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.query_selector for chart legend or labels: '네이버', '다음', '네이트', 'JTBC', '스포츠빅이벤트', '기타'",
+          "expected_result": "모든 유입 경로 항목이 차트에 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.evaluate to verify chart data contains values for each portal",
+          "expected_result": "각 포털별 비중 값이 존재함"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.screenshot of traffic source chart",
+          "expected_result": "유입 비중 차트 스크린샷 캡처"
+        }
+      ],
+      "expected_result": "QuickSight 대시보드에서 네이버, 다음, 네이트, JTBC, 스포츠빅이벤트, 기타별 유입 비중이 차트로 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-3-01-002",
+      "name": "유입 비중 차트 기간 필터 변경",
+      "preconditions": [
+        "유입 비중 차트가 표시된 상태",
+        "기간 필터가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.query_selector for date range filter",
+          "expected_result": "기간 필터 발견"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.click on date filter and select custom date range (예: 최근 30일)",
+          "expected_result": "날짜 범위 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.wait_for_selector for chart data refresh",
+          "expected_result": "차트 데이터 갱신 완료"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.evaluate to verify chart reflects selected date range data",
+          "expected_result": "선택한 기간의 유입 비중 데이터가 차트에 반영됨"
+        }
+      ],
+      "expected_result": "기간 필터를 변경하면 해당 기간의 유입 비중이 차트에 갱신되어 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-3-01-003",
+      "name": "유입 데이터 없는 기간 선택 시 차트 표시 (부정)",
+      "preconditions": [
+        "QuickSight 대시보드 접근",
+        "유입 데이터가 없는 기간 존재"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to 유입 비중 대시보드",
+          "expected_result": "대시보드 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.click on date filter and select period with no traffic data",
+          "expected_result": "데이터 없는 기간 선택"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.wait_for_selector for empty chart or 'No data available' message",
+          "expected_result": "빈 차트 또는 안내 메시지 표시"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.evaluate to verify chart has no data series",
+          "expected_result": "차트에 데이터가 표시되지 않음"
+        }
+      ],
+      "expected_result": "유입 데이터가 없는 기간을 선택하면 적절한 안내 메시지가 표시되거나 빈 차트가 정상 처리됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-US-B-3-02-001",
+      "name": "포털별 유입 급증 시계열 차트 표시",
+      "preconditions": [
+        "QuickSight 대시보드 접근",
+        "시계열 유입 데이터가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to 유입 급증 시계열 차트 섹션",
+          "expected_result": "시계열 차트 영역 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.query_selector for time-series chart with multiple portal lines",
+          "expected_result": "포털별 라인이 표시된 시계열 차트 발견"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.evaluate to verify chart x-axis shows time progression",
+          "expected_result": "X축에 시간 순서가 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.evaluate to verify chart has separate lines for each portal",
+          "expected_result": "각 포털별로 구분된 라인이 존재함"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.screenshot of time-series traffic chart",
+          "expected_result": "시계열 차트 스크린샷 캡처"
+        }
+      ],
+      "expected_result": "QuickSight 대시보드에서 포털별 유입 추이가 시간 순서로 표시된 시계열 차트 확인",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-3-02-002",
+      "name": "시계열 차트 특정 기간 설정 검증",
+      "preconditions": [
+        "시계열 차트가 표시된 상태",
+        "기간 설정 필터가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.query_selector for date range picker",
+          "expected_result": "날짜 범위 선택 UI 발견"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.click on start date input and select date",
+          "expected_result": "시작일 선택"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.click on end date input and select date",
+          "expected_result": "종료일 선택"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.click on apply or submit button",
+          "expected_result": "필터 적용"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.wait_for_selector for updated time-series chart",
+          "expected_result": "차트가 선택한 기간으로 갱신됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright.evaluate to verify chart x-axis range matches selected period",
+          "expected_result": "X축 범위가 선택한 기간과 일치함"
+        }
+      ],
+      "expected_result": "특정 기간을 설정하면 해당 기간의 포털별 유입 추이가 시계열 차트에 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-3-02-003",
+      "name": "시계열 차트 데이터 포인트 호버 상세 정보 (부정 시나리오 아님, 추가 검증)",
+      "preconditions": [
+        "시계열 차트가 표시된 상태"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.query_selector for time-series chart canvas or SVG",
+          "expected_result": "차트 요소 발견"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.hover over specific data point on chart line",
+          "expected_result": "데이터 포인트에 마우스 호버"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.wait_for_selector for tooltip or data label",
+          "expected_result": "툴팁이 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.evaluate to verify tooltip contains date, portal name, and value",
+          "expected_result": "툴팁에 날짜, 포털명, 유입 수 정보가 표시됨"
+        }
+      ],
+      "expected_result": "차트 데이터 포인트에 호버 시 해당 시점의 상세 정보가 툴팁으로 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-4-01-001",
+      "name": "기사 TOP10 랭킹 표시 - 디폴트 기간 (최근 7일)",
+      "preconditions": [
+        "QuickSight 대시보드 접근",
+        "기사 PV 데이터가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to 콘텐트 랭킹 대시보드",
+          "expected_result": "랭킹 대시보드 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.query_selector for '기사 TOP10' section",
+          "expected_result": "기사 TOP10 영역 발견"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.evaluate to verify default date range is last 7 days ending today",
+          "expected_result": "기본 기간이 최근 7일로 설정됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.query_selector for ranked list with 10 items",
+          "expected_result": "10개 항목의 랭킹 리스트 표시"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.evaluate to verify each item has rank number, article title, and PV count",
+          "expected_result": "각 항목에 순위, 제목, PV 수가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright.evaluate to verify ranking is sorted by PV count descending",
+          "expected_result": "PV 수 기준 내림차순 정렬 확인"
+        }
+      ],
+      "expected_result": "대시보드 접속 시 최근 7일(종료=오늘) 기준 PV 상위 10개 기사가 순위와 함께 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-4-01-002",
+      "name": "기사 TOP10 랭킹 기간 필터 변경",
+      "preconditions": [
+        "기사 TOP10이 표시된 상태",
+        "기간 필터가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.query_selector for date range filter (시작일/종료일)",
+          "expected_result": "날짜 필터 UI 발견"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.click on start date and select custom date",
+          "expected_result": "시작일 선택"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.click on end date and select custom date",
+          "expected_result": "종료일 선택"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.click on apply filter button",
+          "expected_result": "필터 적용"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.wait_for_selector for updated TOP10 list",
+          "expected_result": "랭킹 리스트 갱신"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright.evaluate to verify ranking reflects selected date range",
+          "expected_result": "선택한 기간의 TOP10이 표시됨"
+        }
+      ],
+      "expected_result": "기간 필터에서 시작일/종료일을 설정하면 해당 기간의 기사 TOP10이 갱신되어 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-4-01-003",
+      "name": "기사 데이터 10개 미만인 경우 랭킹 표시 (부정)",
+      "preconditions": [
+        "QuickSight 대시보드 접근",
+        "선택한 기간에 기사가 10개 미만"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to 기사 TOP10 섹션",
+          "expected_result": "TOP10 섹션 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.click on date filter and select period with fewer than 10 articles",
+          "expected_result": "기사 10개 미만 기간 선택"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.wait_for_selector for ranking list",
+          "expected_result": "랭킹 리스트 표시"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.query_selector_all for list items",
+          "expected_result": "실제 존재하는 기사 수만큼 항목 표시"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.evaluate to verify list contains less than 10 items",
+          "expected_result": "10개 미만의 항목만 표시됨"
+        }
+      ],
+      "expected_result": "기사가 10개 미만인 경우 실제 존재하는 기사만 랭킹에 표시되고, 빈 슬롯이나 오류 없이 정상 처리됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-US-B-4-02-001",
+      "name": "영상 TOP10 랭킹 표시 - 디폴트 기간 (최근 7일)",
+      "preconditions": [
+        "QuickSight 대시보드 접근",
+        "영상 유입 데이터가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to 콘텐트 랭킹 대시보드",
+          "expected_result": "랭킹 대시보드 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.query_selector for '영상 TOP10' section",
+          "expected_result": "영상 TOP10 영역 발견"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.evaluate to verify default date range is last 7 days ending today",
+          "expected_result": "기본 기간이 최근 7일로 설정됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.query_selector for ranked list with up to 10 video items",
+          "expected_result": "10개 항목의 영상 랭킹 리스트 표시"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.evaluate to verify each item has rank, video title, and traffic rate",
+          "expected_result": "각 항목에 순위, 영상 제목, 유입률이 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright.evaluate to verify ranking is sorted by traffic rate descending",
+          "expected_result": "유입률 기준 내림차순 정렬 확인"
+        }
+      ],
+      "expected_result": "대시보드 접속 시 최근 7일(종료=오늘) 기준 유입률 상위 10개 영상이 순위와 함께 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-4-02-002",
+      "name": "영상 TOP10 랭킹 기간 필터 변경",
+      "preconditions": [
+        "영상 TOP10이 표시된 상태",
+        "기간 필터가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.query_selector for date range filter",
+          "expected_result": "날짜 필터 발견"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.click on date filter and select last 30 days",
+          "expected_result": "최근 30일 선택"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.wait_for_selector for updated video TOP10 list",
+          "expected_result": "영상 랭킹 갱신"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.evaluate to verify ranking reflects 30-day traffic data",
+          "expected_result": "30일 기준 TOP10이 표시됨"
+        }
+      ],
+      "expected_result": "기간 필터를 변경하면 해당 기간의 영상 TOP10이 갱신되어 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-4-02-003",
+      "name": "영상 유입률 데이터 없는 기간 TOP10 (부정)",
+      "preconditions": [
+        "QuickSight 대시보드 접근",
+        "선택한 기간에 영상 유입 데이터가 없음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to 영상 TOP10 섹션",
+          "expected_result": "TOP10 섹션 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.click on date filter and select period with no video traffic",
+          "expected_result": "데이터 없는 기간 선택"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.wait_for_selector for empty ranking list or 'No data' message",
+          "expected_result": "빈 리스트 또는 안내 메시지 표시"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.query_selector_all for video ranking items",
+          "expected_result": "랭킹 항목이 없음"
+        }
+      ],
+      "expected_result": "영상 유입 데이터가 없는 기간을 선택하면 적절한 안내 메시지가 표시되거나 빈 랭킹 리스트가 정상 처리됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-US-B-INTEGRATION-001",
+      "name": "전체 대시보드 통합 시나리오 - 기사 선택부터 상세 분석까지",
+      "preconditions": [
+        "QuickSight 대시보드 전체 접근 권한",
+        "기사 및 영상 데이터 존재",
+        "최근 7일 데이터 존재"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to 'https://metaj.jtbc.co.kr' QuickSight dashboard",
+          "expected_result": "대시보드 메인 화면 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.query_selector for 기사 TOP10 ranking section",
+          "expected_result": "기사 TOP10 표시 확인"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.click on first ranked article",
+          "expected_result": "1위 기사 선택"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.wait_for_selector for article detail view with PV trend chart",
+          "expected_result": "기사 상세 뷰 및 PV 추이 차트 로드"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.query_selector for traffic source breakdown",
+          "expected_result": "유입 경로별 데이터 표시 확인"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright.screenshot of detailed analytics view",
+          "expected_result": "상세 분석 화면 스크린샷 캡처"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright.click on back or close button to return to main dashboard",
+          "expected_result": "메인 대시보드로 복귀"
+        },
+        {
+          "step_number": 8,
+          "action": "playwright.query_selector for 영상 TOP10 section",
+          "expected_result": "영상 TOP10 표시 확인"
+        },
+        {
+          "step_number": 9,
+          "action": "playwright.click on top video in ranking",
+          "expected_result": "1위 영상 선택"
+        },
+        {
+          "step_number": 10,
+          "action": "playwright.wait_for_selector for video analytics detail",
+          "expected_result": "영상 상세 분석 로드"
+        }
+      ],
+      "expected_result": "TOP10 랭킹에서 콘텐츠를 선택하고 상세 PV 분석, 유입 경로 분석까지 전체 워크플로우가 정상 작동함",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-US-B-PERFORMANCE-001",
+      "name": "대용량 데이터 로딩 성능 검증 (부정 시나리오)",
+      "preconditions": [
+        "QuickSight 대시보드 접근",
+        "대용량 기간 선택 가능 (예: 1년 데이터)"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright.navigate to QuickSight dashboard",
+          "expected_result": "대시보드 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright.click on date filter and select 1-year range",
+          "expected_result": "1년 기간 선택"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright.wait_for_selector for loading indicator or spinner",
+          "expected_result": "로딩 인디케이터 표시"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright.wait_for_selector for data refresh completion (with timeout 30s)",
+          "expected_result": "30초 내 데이터 로드 완료 또는 타임아웃"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright.evaluate to check if error message or timeout warning displayed",
+          "expected_result": "타임아웃 시 적절한 에러 메시지 표시"
+        }
+      ],
+      "expected_result": "대용량 데이터 로딩 시 적절한 로딩 인디케이터가 표시되고, 타임아웃 발생 시 명확한 에러 메시지가 표시됨",
+      "scenario_type": "negative"
+    }
+  ],
+  "created_at": "2026-02-27T02:37:42.136244Z"
+}

@@ -15,7 +15,9 @@ Markdown 형식으로 포맷팅하는 에이전트입니다.
 
 from __future__ import annotations
 
+import json
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
@@ -269,6 +271,120 @@ class ReportAgent:
             for r in results
             if not r.passed and r.screenshot_path is not None
         ]
+
+    # ============================================================
+    # 파일 쓰기 메서드 (File Write Methods)
+    # ============================================================
+
+    def save_report_markdown(self, report: TestReport, output_path: str) -> str:
+        """TestReport의 Markdown 내용을 파일로 저장합니다.
+
+        Args:
+            report: 저장할 테스트 리포트
+            output_path: 저장할 파일 경로 (.md)
+
+        Returns:
+            저장된 파일의 절대 경로
+
+        Raises:
+            ValueError: .md 확장자가 아닐 때
+        """
+        path = Path(output_path)
+
+        if path.suffix.lower() != ".md":
+            raise ValueError(
+                f"Markdown 리포트 파일은 .md 형식이어야 합니다. 입력값: {path.suffix}"
+            )
+
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(report.markdown_content, encoding="utf-8")
+
+        return str(path.resolve())
+
+    def save_report_json(self, report: TestReport, output_path: str) -> str:
+        """TestReport를 JSON 파일로 저장합니다.
+
+        Pydantic 모델을 JSON으로 직렬화하여 저장합니다.
+        나중에 로드하여 TestReport 객체로 복원할 수 있습니다.
+
+        Args:
+            report: 저장할 테스트 리포트
+            output_path: 저장할 파일 경로 (.json)
+
+        Returns:
+            저장된 파일의 절대 경로
+
+        Raises:
+            ValueError: .json 확장자가 아닐 때
+        """
+        path = Path(output_path)
+
+        if path.suffix.lower() != ".json":
+            raise ValueError(
+                f"JSON 리포트 파일은 .json 형식이어야 합니다. 입력값: {path.suffix}"
+            )
+
+        path.parent.mkdir(parents=True, exist_ok=True)
+        json_data = report.model_dump_json(indent=2)
+        path.write_text(json_data, encoding="utf-8")
+
+        return str(path.resolve())
+
+    def save_report(
+        self,
+        report: TestReport,
+        output_dir: str = "reports",
+    ) -> dict[str, str]:
+        """TestReport를 Markdown과 JSON 파일 모두로 저장합니다.
+
+        타임스탬프 기반 파일명을 자동 생성하여 output_dir에 저장합니다.
+
+        Args:
+            report: 저장할 테스트 리포트
+            output_dir: 저장 디렉토리 경로 (기본값: "reports")
+
+        Returns:
+            {"markdown": 절대경로, "json": 절대경로} 딕셔너리
+        """
+        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+        dir_path = Path(output_dir)
+        dir_path.mkdir(parents=True, exist_ok=True)
+
+        md_path = self.save_report_markdown(
+            report, str(dir_path / f"report_{timestamp}.md")
+        )
+        json_path = self.save_report_json(
+            report, str(dir_path / f"report_{timestamp}.json")
+        )
+
+        return {"markdown": md_path, "json": json_path}
+
+    @staticmethod
+    def load_report_from_file(file_path: str) -> TestReport:
+        """JSON 파일에서 TestReport를 로드합니다.
+
+        Args:
+            file_path: 리포트 JSON 파일 경로
+
+        Returns:
+            로드된 TestReport 객체
+
+        Raises:
+            FileNotFoundError: 파일이 존재하지 않을 때
+            ValueError: JSON 파싱 또는 스키마 검증 실패 시
+        """
+        path = Path(file_path)
+
+        if not path.exists():
+            raise FileNotFoundError(f"리포트 파일을 찾을 수 없습니다: {file_path}")
+
+        try:
+            json_text = path.read_text(encoding="utf-8")
+            return TestReport.model_validate_json(json_text)
+        except json.JSONDecodeError as e:
+            raise ValueError(f"JSON 파싱 실패: {e}") from e
+        except Exception as e:
+            raise ValueError(f"리포트 스키마 검증 실패: {e}") from e
 
 
 def _escape_pipe(text: str) -> str:

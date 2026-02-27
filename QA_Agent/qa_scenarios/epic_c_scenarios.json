@@ -1,0 +1,1118 @@
+{
+  "target_url": "https://metaj.jtbc.co.kr",
+  "requirements": "# Epic C: 시스템 설정\n\n유저 스토리 ID: US-B-5-01\n기능: Feature B-5: [CMS] QuickSight 대시보드 임베딩\n제목: QuickSight 대시보드 임베딩\n역할: 콘텐트 운영자 (이콘텐)\n목표: CMS 내에서 QuickSight 대시보드를 통해 B-1~B-4의 모든 통계를 시각화하여 볼 수 있다\n가치: 고급 분석 기능을 별도 도구 없이 CMS에서 바로 사용할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given CMS 통계 페이지에서, When QuickSight 대시보드 영역을 확인하면, Then 임베딩된 QuickSight 대시보드가 표시된다\n  2. Given 대시보드가 로딩될 때, When 인증이 필요하면, Then JWT 토큰 기반으로 자동 인증되어 대시보드가 표시된다\n  3. Given 대시보드 내에서, When 필터나 드릴다운을 사용하면, Then QuickSight 기본 인터랙션이 정상 동작한다\n  4. Given 대시보드 로딩에 실패했을 때, When 오류가 발생하면, Then 오류 메시지와 재시도 안내가 표시된다\n\n---\n\n유저 스토리 ID: US-C-1-01\n기능: Feature C-1: [CMS] 계정 관리\n제목: 관리자 계정 생성\n역할: 슈퍼 관리자 (최관리)\n목표: 새 관리자 계정을 생성하고 역할(슈퍼 관리자/여론조사 관리자/콘텐트 운영자)을 지정할 수 있다\n가치: 적절한 권한을 가진 관리자를 시스템에 추가할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 계정 관리 페이지에서, When ID, 비밀번호, 이름, 역할을 입력하고 저장하면, Then 새 관리자 계정이 생성된다\n  2. Given 역할 선택 시, When 슈퍼 관리자/여론조사 관리자/콘텐트 운영자 중 하나를 선택하면, Then 해당 역할의 권한이 부여된다\n  3. Given 이미 존재하는 ID로 생성을 시도할 때, When 저장하면, Then 중복 ID 오류가 표시된다\n  4. Given 필수 입력값이 비어있을 때, When 저장을 시도하면, Then 필수값 입력 안내가 표시된다\n\n---\n\n유저 스토리 ID: US-C-1-02\n기능: Feature C-1: [CMS] 계정 관리\n제목: 관리자 계정 조회/수정/비활성화\n역할: 슈퍼 관리자 (최관리)\n목표: 관리자 계정 목록을 조회하고 정보를 수정하거나 비활성화할 수 있다\n가치: 관리자 계정을 관리할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given 계정 관리 페이지에서, When 계정 목록을 확인하면, Then 모든 관리자 계정이 리스트로 표시된다\n  2. Given 계정을 선택했을 때, When 수정 버튼을 클릭하면, Then 이름, 역할 등을 수정할 수 있다\n  3. Given 계정을 비활성화할 때, When 비활성화를 실행하면, Then 해당 계정으로 로그인이 불가능해진다\n  4. Given 슈퍼 관리자 본인 계정을 비활성화하려 할 때, When 시도하면, Then 자기 자신 비활성화 불가 오류가 표시된다\n\n---\n\n유저 스토리 ID: US-C-2-01\n기능: Feature C-2: [CMS] 코드 관리\n제목: 공통 코드 CRUD\n역할: 슈퍼 관리자 (최관리)\n목표: 시스템 공통 코드를 생성, 조회, 수정, 삭제할 수 있다\n가치: 시스템에서 사용하는 코드 값을 중앙에서 관리할 수 있다\n우선순위: Medium\n\n인수 조건 (Acceptance Criteria):\n  1. Given 코드 관리 페이지에서, When 코드 그룹, 코드 값, 코드명, 코드 순서를 입력하고 저장하면, Then 새 공통 코드가 등록된다\n  2. Given 코드 목록에서, When 특정 코드를 선택하면, Then 코드 상세 정보(코드 그룹, 코드 값, 코드명, 순서)가 표시된다\n  3. Given 코드를 수정했을 때, When 저장하면, Then 변경된 코드 값이 시스템에 반영된다\n  4. Given 코드를 삭제할 때, When 삭제를 실행하면, Then 해당 코드가 제거된다\n  5. Given 시스템에서 사용 중인 코드를 삭제하려 할 때, When 시도하면, Then 사용 중 삭제 불가 경고가 표시된다\n\n---\n\n유저 스토리 ID: US-C-3-01\n기능: Feature C-3: [CMS] 로그 관리\n제목: CMS 접속 로그 조회\n역할: 슈퍼 관리자 (최관리)\n목표: CMS 접속 로그(로그인/로그아웃 이력)를 조회할 수 있다\n가치: 관리자의 시스템 접속 현황을 모니터링할 수 있다\n우선순위: Medium\n\n인수 조건 (Acceptance Criteria):\n  1. Given 로그 관리 페이지에서, When 접속 로그 탭을 선택하면, Then 관리자별 로그인/로그아웃 이력이 시간순으로 표시된다\n  2. Given 접속 로그에서, When 특정 관리자로 필터링하면, Then 해당 관리자의 접속 이력만 표시된다\n  3. Given 접속 로그에서, When 기간 필터를 설정하면, Then 해당 기간의 접속 이력만 표시된다\n\n---\n",
+  "test_cases": [
+    {
+      "id": "TC-B-5-01-P01",
+      "name": "QuickSight 대시보드 정상 임베딩 및 표시 확인",
+      "preconditions": [
+        "CMS에 콘텐트 운영자 권한으로 로그인되어 있음",
+        "QuickSight 대시보드가 설정되어 있음",
+        "JWT 인증 토큰이 유효함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/statistics' or similar statistics page",
+          "expected_result": "통계 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "wait for selector 'iframe[src*=\"quicksight\"]' or '[data-testid=\"quicksight-dashboard\"]' with timeout 10000",
+          "expected_result": "QuickSight 대시보드 임베딩 영역이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "evaluate '() => document.querySelector(\"iframe[src*=\\\"quicksight\\\"]\")?.contentWindow !== null'",
+          "expected_result": "대시보드 iframe이 정상적으로 로드됨"
+        },
+        {
+          "step_number": 4,
+          "action": "wait for 3000 milliseconds to ensure dashboard fully renders",
+          "expected_result": "대시보드 콘텐츠가 완전히 렌더링됨"
+        }
+      ],
+      "expected_result": "QuickSight 대시보드가 CMS 통계 페이지에 정상적으로 임베딩되어 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-B-5-01-P02",
+      "name": "QuickSight 대시보드 JWT 자동 인증 확인",
+      "preconditions": [
+        "CMS에 로그인되어 있음",
+        "JWT 토큰 기반 인증이 설정되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/statistics'",
+          "expected_result": "통계 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "wait for selector 'iframe[src*=\"quicksight\"]' with timeout 15000",
+          "expected_result": "QuickSight iframe이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "check that no authentication prompt or login modal is visible",
+          "expected_result": "별도 로그인 프롬프트 없이 대시보드가 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "wait for selector '[data-testid=\"dashboard-loaded\"]' or similar indicator with timeout 10000",
+          "expected_result": "대시보드가 정상적으로 로드됨"
+        }
+      ],
+      "expected_result": "JWT 토큰을 통해 자동 인증되어 대시보드가 즉시 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-B-5-01-P03",
+      "name": "QuickSight 대시보드 인터랙션(필터, 드릴다운) 동작 확인",
+      "preconditions": [
+        "QuickSight 대시보드가 정상적으로 로드되어 있음",
+        "대시보드에 필터 및 드릴다운 기능이 설정되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/statistics'",
+          "expected_result": "통계 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "wait for selector 'iframe[src*=\"quicksight\"]' with timeout 10000",
+          "expected_result": "대시보드 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "switch to iframe context and click on filter dropdown or selector '[data-testid=\"filter-control\"]'",
+          "expected_result": "필터 메뉴가 열림"
+        },
+        {
+          "step_number": 4,
+          "action": "select filter option and apply",
+          "expected_result": "필터가 적용되고 대시보드 데이터가 업데이트됨"
+        },
+        {
+          "step_number": 5,
+          "action": "click on chart element to trigger drill-down",
+          "expected_result": "드릴다운이 실행되어 상세 데이터가 표시됨"
+        }
+      ],
+      "expected_result": "QuickSight 대시보드의 필터 및 드릴다운 기능이 정상 동작함",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-B-5-01-N01",
+      "name": "QuickSight 대시보드 로딩 실패 시 오류 메시지 표시 확인",
+      "preconditions": [
+        "CMS에 로그인되어 있음",
+        "네트워크 오류 또는 QuickSight 서비스 장애 상황 시뮬레이션"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "set offline mode or block requests matching '*quicksight*'",
+          "expected_result": "QuickSight 요청이 차단됨"
+        },
+        {
+          "step_number": 2,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/statistics'",
+          "expected_result": "통계 페이지 로드 시도"
+        },
+        {
+          "step_number": 3,
+          "action": "wait for selector '[data-testid=\"dashboard-error\"]' or text containing '오류' with timeout 15000",
+          "expected_result": "대시보드 로딩 오류 메시지가 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "check that error message contains '재시도' or '다시 시도' text",
+          "expected_result": "재시도 안내 메시지가 포함됨"
+        },
+        {
+          "step_number": 5,
+          "action": "click on retry button if present '[data-testid=\"retry-button\"]'",
+          "expected_result": "재시도 버튼이 동작함"
+        }
+      ],
+      "expected_result": "대시보드 로딩 실패 시 명확한 오류 메시지와 재시도 안내가 표시됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-C-1-01-P01",
+      "name": "관리자 계정 정상 생성 (슈퍼 관리자 역할)",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음",
+        "계정 관리 페이지 접근 가능"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/accounts' or similar account management page",
+          "expected_result": "계정 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on button with text '계정 생성' or '[data-testid=\"create-account-button\"]'",
+          "expected_result": "계정 생성 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "fill input '[name=\"userId\"]' with 'testadmin001'",
+          "expected_result": "ID 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "fill input '[name=\"password\"]' with 'Test@1234!@'",
+          "expected_result": "비밀번호 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "fill input '[name=\"name\"]' with '테스트관리자'",
+          "expected_result": "이름 입력됨"
+        },
+        {
+          "step_number": 6,
+          "action": "select option '[name=\"role\"]' with value '슈퍼 관리자' or 'SUPER_ADMIN'",
+          "expected_result": "슈퍼 관리자 역할 선택됨"
+        },
+        {
+          "step_number": 7,
+          "action": "click on button with text '저장' or '[data-testid=\"save-account-button\"]'",
+          "expected_result": "저장 버튼 클릭됨"
+        },
+        {
+          "step_number": 8,
+          "action": "wait for text '생성되었습니다' or '[data-testid=\"success-message\"]' with timeout 5000",
+          "expected_result": "성공 메시지 표시됨"
+        },
+        {
+          "step_number": 9,
+          "action": "check that account list contains text 'testadmin001'",
+          "expected_result": "계정 목록에 새 계정이 표시됨"
+        }
+      ],
+      "expected_result": "새 슈퍼 관리자 계정이 정상적으로 생성되고 목록에 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-1-01-P02",
+      "name": "관리자 계정 정상 생성 (여론조사 관리자 역할)",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/accounts'",
+          "expected_result": "계정 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on '[data-testid=\"create-account-button\"]'",
+          "expected_result": "계정 생성 폼 표시"
+        },
+        {
+          "step_number": 3,
+          "action": "fill '[name=\"userId\"]' with 'pollmanager001'",
+          "expected_result": "ID 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "fill '[name=\"password\"]' with 'Poll@1234!@'",
+          "expected_result": "비밀번호 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "fill '[name=\"name\"]' with '여론조사담당자'",
+          "expected_result": "이름 입력됨"
+        },
+        {
+          "step_number": 6,
+          "action": "select '[name=\"role\"]' with value '여론조사 관리자' or 'POLL_MANAGER'",
+          "expected_result": "여론조사 관리자 역할 선택됨"
+        },
+        {
+          "step_number": 7,
+          "action": "click on '[data-testid=\"save-account-button\"]'",
+          "expected_result": "저장 버튼 클릭됨"
+        },
+        {
+          "step_number": 8,
+          "action": "wait for success message with timeout 5000",
+          "expected_result": "성공 메시지 표시됨"
+        }
+      ],
+      "expected_result": "여론조사 관리자 권한을 가진 계정이 정상적으로 생성됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-1-01-P03",
+      "name": "관리자 계정 정상 생성 (콘텐트 운영자 역할)",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/accounts'",
+          "expected_result": "계정 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on '[data-testid=\"create-account-button\"]'",
+          "expected_result": "계정 생성 폼 표시"
+        },
+        {
+          "step_number": 3,
+          "action": "fill '[name=\"userId\"]' with 'contentop001'",
+          "expected_result": "ID 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "fill '[name=\"password\"]' with 'Content@1234!@'",
+          "expected_result": "비밀번호 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "fill '[name=\"name\"]' with '콘텐트운영자'",
+          "expected_result": "이름 입력됨"
+        },
+        {
+          "step_number": 6,
+          "action": "select '[name=\"role\"]' with value '콘텐트 운영자' or 'CONTENT_OPERATOR'",
+          "expected_result": "콘텐트 운영자 역할 선택됨"
+        },
+        {
+          "step_number": 7,
+          "action": "click on '[data-testid=\"save-account-button\"]'",
+          "expected_result": "저장 버튼 클릭됨"
+        },
+        {
+          "step_number": 8,
+          "action": "wait for success message with timeout 5000",
+          "expected_result": "성공 메시지 표시됨"
+        }
+      ],
+      "expected_result": "콘텐트 운영자 권한을 가진 계정이 정상적으로 생성됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-1-01-N01",
+      "name": "중복 ID로 계정 생성 시 오류 표시 확인",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음",
+        "'existingadmin' ID를 가진 계정이 이미 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/accounts'",
+          "expected_result": "계정 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on '[data-testid=\"create-account-button\"]'",
+          "expected_result": "계정 생성 폼 표시"
+        },
+        {
+          "step_number": 3,
+          "action": "fill '[name=\"userId\"]' with 'existingadmin'",
+          "expected_result": "기존에 존재하는 ID 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "fill '[name=\"password\"]' with 'Test@1234!@'",
+          "expected_result": "비밀번호 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "fill '[name=\"name\"]' with '중복테스트'",
+          "expected_result": "이름 입력됨"
+        },
+        {
+          "step_number": 6,
+          "action": "select '[name=\"role\"]' with value 'SUPER_ADMIN'",
+          "expected_result": "역할 선택됨"
+        },
+        {
+          "step_number": 7,
+          "action": "click on '[data-testid=\"save-account-button\"]'",
+          "expected_result": "저장 버튼 클릭됨"
+        },
+        {
+          "step_number": 8,
+          "action": "wait for text containing '중복' or '이미 존재' with timeout 5000",
+          "expected_result": "중복 ID 오류 메시지가 표시됨"
+        },
+        {
+          "step_number": 9,
+          "action": "check that account creation form is still visible",
+          "expected_result": "계정이 생성되지 않고 폼이 유지됨"
+        }
+      ],
+      "expected_result": "중복 ID로 계정 생성 시도 시 적절한 오류 메시지가 표시되고 계정이 생성되지 않음",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-C-1-01-N02",
+      "name": "필수 입력값 누락 시 안내 메시지 표시 확인 (ID 누락)",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/accounts'",
+          "expected_result": "계정 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on '[data-testid=\"create-account-button\"]'",
+          "expected_result": "계정 생성 폼 표시"
+        },
+        {
+          "step_number": 3,
+          "action": "leave '[name=\"userId\"]' empty",
+          "expected_result": "ID 필드가 비어있음"
+        },
+        {
+          "step_number": 4,
+          "action": "fill '[name=\"password\"]' with 'Test@1234!@'",
+          "expected_result": "비밀번호 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "fill '[name=\"name\"]' with '테스트'",
+          "expected_result": "이름 입력됨"
+        },
+        {
+          "step_number": 6,
+          "action": "select '[name=\"role\"]' with value 'SUPER_ADMIN'",
+          "expected_result": "역할 선택됨"
+        },
+        {
+          "step_number": 7,
+          "action": "click on '[data-testid=\"save-account-button\"]'",
+          "expected_result": "저장 버튼 클릭됨"
+        },
+        {
+          "step_number": 8,
+          "action": "wait for text containing '필수' or '입력' with timeout 5000",
+          "expected_result": "필수값 입력 안내 메시지가 표시됨"
+        },
+        {
+          "step_number": 9,
+          "action": "check that '[name=\"userId\"]' has validation error indicator",
+          "expected_result": "ID 필드에 오류 표시가 나타남"
+        }
+      ],
+      "expected_result": "필수 입력값(ID) 누락 시 적절한 안내 메시지가 표시되고 계정이 생성되지 않음",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-C-1-01-N03",
+      "name": "필수 입력값 누락 시 안내 메시지 표시 확인 (비밀번호 누락)",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/accounts'",
+          "expected_result": "계정 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on '[data-testid=\"create-account-button\"]'",
+          "expected_result": "계정 생성 폼 표시"
+        },
+        {
+          "step_number": 3,
+          "action": "fill '[name=\"userId\"]' with 'testuser123'",
+          "expected_result": "ID 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "leave '[name=\"password\"]' empty",
+          "expected_result": "비밀번호 필드가 비어있음"
+        },
+        {
+          "step_number": 5,
+          "action": "fill '[name=\"name\"]' with '테스트'",
+          "expected_result": "이름 입력됨"
+        },
+        {
+          "step_number": 6,
+          "action": "select '[name=\"role\"]' with value 'SUPER_ADMIN'",
+          "expected_result": "역할 선택됨"
+        },
+        {
+          "step_number": 7,
+          "action": "click on '[data-testid=\"save-account-button\"]'",
+          "expected_result": "저장 버튼 클릭됨"
+        },
+        {
+          "step_number": 8,
+          "action": "wait for validation error message with timeout 5000",
+          "expected_result": "비밀번호 필수 입력 안내가 표시됨"
+        }
+      ],
+      "expected_result": "필수 입력값(비밀번호) 누락 시 적절한 안내 메시지가 표시되고 계정이 생성되지 않음",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-C-1-01-N04",
+      "name": "필수 입력값 누락 시 안내 메시지 표시 확인 (역할 미선택)",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/accounts'",
+          "expected_result": "계정 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on '[data-testid=\"create-account-button\"]'",
+          "expected_result": "계정 생성 폼 표시"
+        },
+        {
+          "step_number": 3,
+          "action": "fill '[name=\"userId\"]' with 'testuser456'",
+          "expected_result": "ID 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "fill '[name=\"password\"]' with 'Test@1234!@'",
+          "expected_result": "비밀번호 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "fill '[name=\"name\"]' with '테스트'",
+          "expected_result": "이름 입력됨"
+        },
+        {
+          "step_number": 6,
+          "action": "leave '[name=\"role\"]' unselected or select default empty value",
+          "expected_result": "역할이 선택되지 않음"
+        },
+        {
+          "step_number": 7,
+          "action": "click on '[data-testid=\"save-account-button\"]'",
+          "expected_result": "저장 버튼 클릭됨"
+        },
+        {
+          "step_number": 8,
+          "action": "wait for text containing '역할' and '선택' with timeout 5000",
+          "expected_result": "역할 선택 안내 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "필수 입력값(역할) 누락 시 적절한 안내 메시지가 표시되고 계정이 생성되지 않음",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-C-1-02-P01",
+      "name": "관리자 계정 목록 조회 확인",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음",
+        "시스템에 최소 1개 이상의 관리자 계정이 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/accounts'",
+          "expected_result": "계정 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "wait for selector '[data-testid=\"account-list\"]' or 'table tbody tr' with timeout 5000",
+          "expected_result": "계정 목록 테이블이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "count elements matching 'table tbody tr' or '[data-testid=\"account-row\"]'",
+          "expected_result": "1개 이상의 계정 행이 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "check that table headers contain 'ID', '이름', '역할'",
+          "expected_result": "계정 정보 컬럼이 표시됨"
+        }
+      ],
+      "expected_result": "모든 관리자 계정이 리스트 형태로 정상 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-1-02-P02",
+      "name": "관리자 계정 정보 수정 (이름 변경)",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음",
+        "수정 가능한 테스트 계정이 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/accounts'",
+          "expected_result": "계정 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on first account row or '[data-testid=\"account-row\"]:first-child'",
+          "expected_result": "계정이 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "click on button with text '수정' or '[data-testid=\"edit-account-button\"]'",
+          "expected_result": "수정 폼이 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "clear and fill '[name=\"name\"]' with '수정된이름'",
+          "expected_result": "이름이 변경됨"
+        },
+        {
+          "step_number": 5,
+          "action": "click on button with text '저장' or '[data-testid=\"save-changes-button\"]'",
+          "expected_result": "저장 버튼 클릭됨"
+        },
+        {
+          "step_number": 6,
+          "action": "wait for success message with timeout 5000",
+          "expected_result": "수정 완료 메시지가 표시됨"
+        },
+        {
+          "step_number": 7,
+          "action": "check that account list contains text '수정된이름'",
+          "expected_result": "변경된 이름이 목록에 반영됨"
+        }
+      ],
+      "expected_result": "관리자 계정의 이름이 정상적으로 수정됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-1-02-P03",
+      "name": "관리자 계정 역할 변경",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음",
+        "역할 변경 가능한 테스트 계정이 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/accounts'",
+          "expected_result": "계정 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on test account row",
+          "expected_result": "계정 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "click on '[data-testid=\"edit-account-button\"]'",
+          "expected_result": "수정 폼 표시"
+        },
+        {
+          "step_number": 4,
+          "action": "select '[name=\"role\"]' with different role value",
+          "expected_result": "역할이 변경됨"
+        },
+        {
+          "step_number": 5,
+          "action": "click on '[data-testid=\"save-changes-button\"]'",
+          "expected_result": "저장 버튼 클릭됨"
+        },
+        {
+          "step_number": 6,
+          "action": "wait for success message with timeout 5000",
+          "expected_result": "수정 완료 메시지 표시"
+        },
+        {
+          "step_number": 7,
+          "action": "verify that account row shows updated role",
+          "expected_result": "변경된 역할이 목록에 반영됨"
+        }
+      ],
+      "expected_result": "관리자 계정의 역할이 정상적으로 변경됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-1-02-P04",
+      "name": "관리자 계정 비활성화",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음",
+        "비활성화 가능한 테스트 계정이 존재함",
+        "현재 로그인한 계정이 아닌 다른 계정임"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/accounts'",
+          "expected_result": "계정 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on test account row (not current user)",
+          "expected_result": "계정 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "click on button with text '비활성화' or '[data-testid=\"deactivate-account-button\"]'",
+          "expected_result": "비활성화 확인 대화상자 표시"
+        },
+        {
+          "step_number": 4,
+          "action": "click on confirm button in modal",
+          "expected_result": "비활성화 실행됨"
+        },
+        {
+          "step_number": 5,
+          "action": "wait for success message with timeout 5000",
+          "expected_result": "비활성화 완료 메시지 표시"
+        },
+        {
+          "step_number": 6,
+          "action": "check that account row shows '비활성' or 'inactive' status",
+          "expected_result": "계정 상태가 비활성으로 변경됨"
+        }
+      ],
+      "expected_result": "관리자 계정이 정상적으로 비활성화되고 로그인 불가 상태가 됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-1-02-N01",
+      "name": "본인 계정 비활성화 시도 시 오류 표시 확인",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/accounts'",
+          "expected_result": "계정 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "find and click on row containing current user's account ID",
+          "expected_result": "본인 계정이 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "click on '[data-testid=\"deactivate-account-button\"]'",
+          "expected_result": "비활성화 버튼 클릭됨"
+        },
+        {
+          "step_number": 4,
+          "action": "wait for error message containing '본인' or '자기 자신' with timeout 5000",
+          "expected_result": "본인 계정 비활성화 불가 오류 메시지가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "check that account status remains active",
+          "expected_result": "계정이 활성 상태로 유지됨"
+        }
+      ],
+      "expected_result": "본인 계정 비활성화 시도 시 적절한 오류 메시지가 표시되고 비활성화되지 않음",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-C-2-01-P01",
+      "name": "공통 코드 정상 생성",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음",
+        "코드 관리 페이지 접근 가능"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/codes' or similar code management page",
+          "expected_result": "코드 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on button with text '코드 생성' or '[data-testid=\"create-code-button\"]'",
+          "expected_result": "코드 생성 폼이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "fill '[name=\"codeGroup\"]' with 'TEST_GROUP'",
+          "expected_result": "코드 그룹 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "fill '[name=\"codeValue\"]' with 'TEST_CODE_001'",
+          "expected_result": "코드 값 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "fill '[name=\"codeName\"]' with '테스트코드명'",
+          "expected_result": "코드명 입력됨"
+        },
+        {
+          "step_number": 6,
+          "action": "fill '[name=\"codeOrder\"]' with '1'",
+          "expected_result": "코드 순서 입력됨"
+        },
+        {
+          "step_number": 7,
+          "action": "click on button with text '저장' or '[data-testid=\"save-code-button\"]'",
+          "expected_result": "저장 버튼 클릭됨"
+        },
+        {
+          "step_number": 8,
+          "action": "wait for success message with timeout 5000",
+          "expected_result": "등록 완료 메시지 표시"
+        },
+        {
+          "step_number": 9,
+          "action": "check that code list contains 'TEST_CODE_001'",
+          "expected_result": "코드 목록에 새 코드가 표시됨"
+        }
+      ],
+      "expected_result": "새 공통 코드가 정상적으로 등록되고 목록에 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-2-01-P02",
+      "name": "공통 코드 조회 및 상세 정보 확인",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음",
+        "시스템에 조회 가능한 코드가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/codes'",
+          "expected_result": "코드 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "wait for selector '[data-testid=\"code-list\"]' or 'table tbody tr' with timeout 5000",
+          "expected_result": "코드 목록이 표시됨"
+        },
+        {
+          "step_number": 3,
+          "action": "click on first code row or '[data-testid=\"code-row\"]:first-child'",
+          "expected_result": "코드가 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "wait for selector '[data-testid=\"code-detail\"]' with timeout 3000",
+          "expected_result": "코드 상세 정보 영역이 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "check that detail view contains '코드 그룹', '코드 값', '코드명', '순서'",
+          "expected_result": "모든 코드 상세 정보가 표시됨"
+        }
+      ],
+      "expected_result": "코드 선택 시 상세 정보가 정상적으로 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-2-01-P03",
+      "name": "공통 코드 수정",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음",
+        "수정 가능한 테스트 코드가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/codes'",
+          "expected_result": "코드 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on test code row",
+          "expected_result": "코드 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "click on button with text '수정' or '[data-testid=\"edit-code-button\"]'",
+          "expected_result": "수정 폼이 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "clear and fill '[name=\"codeName\"]' with '수정된코드명'",
+          "expected_result": "코드명이 변경됨"
+        },
+        {
+          "step_number": 5,
+          "action": "clear and fill '[name=\"codeOrder\"]' with '5'",
+          "expected_result": "순서가 변경됨"
+        },
+        {
+          "step_number": 6,
+          "action": "click on '[data-testid=\"save-code-button\"]'",
+          "expected_result": "저장 버튼 클릭됨"
+        },
+        {
+          "step_number": 7,
+          "action": "wait for success message with timeout 5000",
+          "expected_result": "수정 완료 메시지 표시"
+        },
+        {
+          "step_number": 8,
+          "action": "check that code list shows updated values",
+          "expected_result": "변경된 코드 정보가 목록에 반영됨"
+        }
+      ],
+      "expected_result": "공통 코드가 정상적으로 수정되고 시스템에 반영됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-2-01-P04",
+      "name": "공통 코드 삭제",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음",
+        "시스템에서 사용하지 않는 삭제 가능한 코드가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/codes'",
+          "expected_result": "코드 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on unused test code row",
+          "expected_result": "삭제 가능한 코드 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "click on button with text '삭제' or '[data-testid=\"delete-code-button\"]'",
+          "expected_result": "삭제 확인 대화상자 표시"
+        },
+        {
+          "step_number": 4,
+          "action": "click on confirm button in modal",
+          "expected_result": "삭제 실행됨"
+        },
+        {
+          "step_number": 5,
+          "action": "wait for success message with timeout 5000",
+          "expected_result": "삭제 완료 메시지 표시"
+        },
+        {
+          "step_number": 6,
+          "action": "check that code is removed from list",
+          "expected_result": "코드가 목록에서 제거됨"
+        }
+      ],
+      "expected_result": "공통 코드가 정상적으로 삭제되고 시스템에서 제거됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-2-01-N01",
+      "name": "시스템 사용 중인 코드 삭제 시도 시 경고 표시 확인",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음",
+        "시스템에서 사용 중인 코드가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/codes'",
+          "expected_result": "코드 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on code row that is in use by system",
+          "expected_result": "사용 중인 코드 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "click on '[data-testid=\"delete-code-button\"]'",
+          "expected_result": "삭제 버튼 클릭됨"
+        },
+        {
+          "step_number": 4,
+          "action": "wait for error message containing '사용 중' or '삭제 불가' with timeout 5000",
+          "expected_result": "사용 중 삭제 불가 경고 메시지가 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "check that code still exists in list",
+          "expected_result": "코드가 삭제되지 않고 목록에 유지됨"
+        }
+      ],
+      "expected_result": "시스템 사용 중인 코드 삭제 시도 시 적절한 경고 메시지가 표시되고 삭제되지 않음",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-C-3-01-P01",
+      "name": "CMS 접속 로그 조회 (전체)",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음",
+        "시스템에 접속 로그 데이터가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/logs' or similar log management page",
+          "expected_result": "로그 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on tab with text '접속 로그' or '[data-testid=\"access-log-tab\"]'",
+          "expected_result": "접속 로그 탭이 활성화됨"
+        },
+        {
+          "step_number": 3,
+          "action": "wait for selector '[data-testid=\"access-log-list\"]' or 'table tbody tr' with timeout 5000",
+          "expected_result": "접속 로그 목록이 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "check that table headers contain '관리자', '액션', '시간'",
+          "expected_result": "로그 정보 컬럼이 표시됨"
+        },
+        {
+          "step_number": 5,
+          "action": "check that log entries show '로그인' or '로그아웃' actions",
+          "expected_result": "로그인/로그아웃 이력이 시간순으로 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "verify that logs are sorted by timestamp descending",
+          "expected_result": "최신 로그가 상단에 표시됨"
+        }
+      ],
+      "expected_result": "관리자별 로그인/로그아웃 이력이 시간순으로 정상 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-3-01-P02",
+      "name": "특정 관리자 접속 로그 필터링",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음",
+        "여러 관리자의 접속 로그가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/logs'",
+          "expected_result": "로그 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on '[data-testid=\"access-log-tab\"]'",
+          "expected_result": "접속 로그 탭 활성화"
+        },
+        {
+          "step_number": 3,
+          "action": "click on or select '[name=\"adminFilter\"]' or '[data-testid=\"admin-filter\"]'",
+          "expected_result": "관리자 필터 드롭다운 열림"
+        },
+        {
+          "step_number": 4,
+          "action": "select specific admin from dropdown",
+          "expected_result": "특정 관리자 선택됨"
+        },
+        {
+          "step_number": 5,
+          "action": "click on apply filter button or wait for auto-filter",
+          "expected_result": "필터가 적용됨"
+        },
+        {
+          "step_number": 6,
+          "action": "check that all visible log entries belong to selected admin",
+          "expected_result": "선택한 관리자의 접속 이력만 표시됨"
+        }
+      ],
+      "expected_result": "특정 관리자로 필터링 시 해당 관리자의 접속 이력만 정상 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-3-01-P03",
+      "name": "기간별 접속 로그 필터링",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음",
+        "다양한 날짜의 접속 로그가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/logs'",
+          "expected_result": "로그 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on '[data-testid=\"access-log-tab\"]'",
+          "expected_result": "접속 로그 탭 활성화"
+        },
+        {
+          "step_number": 3,
+          "action": "fill '[name=\"startDate\"]' or '[data-testid=\"start-date\"]' with specific date",
+          "expected_result": "시작일 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "fill '[name=\"endDate\"]' or '[data-testid=\"end-date\"]' with specific date",
+          "expected_result": "종료일 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "click on button with text '조회' or '[data-testid=\"apply-date-filter\"]'",
+          "expected_result": "기간 필터가 적용됨"
+        },
+        {
+          "step_number": 6,
+          "action": "check that all visible log entries fall within selected date range",
+          "expected_result": "선택한 기간의 접속 이력만 표시됨"
+        }
+      ],
+      "expected_result": "기간 필터 설정 시 해당 기간의 접속 이력만 정상 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-3-01-P04",
+      "name": "관리자 및 기간 복합 필터링",
+      "preconditions": [
+        "슈퍼 관리자 권한으로 로그인되어 있음",
+        "충분한 접속 로그 데이터가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "navigate to 'https://metaj.jtbc.co.kr/admin/logs'",
+          "expected_result": "로그 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "click on '[data-testid=\"access-log-tab\"]'",
+          "expected_result": "접속 로그 탭 활성화"
+        },
+        {
+          "step_number": 3,
+          "action": "select specific admin from '[data-testid=\"admin-filter\"]'",
+          "expected_result": "관리자 필터 선택됨"
+        },
+        {
+          "step_number": 4,
+          "action": "fill date range in '[data-testid=\"start-date\"]' and '[data-testid=\"end-date\"]'",
+          "expected_result": "기간 필터 입력됨"
+        },
+        {
+          "step_number": 5,
+          "action": "click on '[data-testid=\"apply-filters\"]'",
+          "expected_result": "모든 필터가 적용됨"
+        },
+        {
+          "step_number": 6,
+          "action": "verify that results match both admin and date criteria",
+          "expected_result": "선택한 관리자의 해당 기간 로그만 표시됨"
+        }
+      ],
+      "expected_result": "관리자 및 기간 복합 필터 적용 시 조건에 맞는 로그만 정상 표시됨",
+      "scenario_type": "positive"
+    }
+  ],
+  "created_at": "2026-02-27T02:39:28.911319Z"
+}

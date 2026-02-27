@@ -1,0 +1,66 @@
+# Epic D: 인증 및 공통
+
+유저 스토리 ID: US-C-3-02
+기능: Feature C-3: [CMS] 로그 관리
+제목: 데이터 CRUD 로그 조회
+역할: 슈퍼 관리자 (최관리)
+목표: 데이터 생성/조회/수정/삭제 이력을 조회할 수 있다
+가치: 데이터 변경 및 접근 이력을 추적하고 감사할 수 있다
+우선순위: Medium
+
+인수 조건 (Acceptance Criteria):
+  1. Given 로그 관리 페이지에서, When CRUD 로그 탭을 선택하면, Then 데이터 변경 이력(생성/조회/수정/삭제)이 시간순으로 표시된다
+  2. Given CRUD 로그에서, When 작업 유형(생성/조회/수정/삭제)으로 필터링하면, Then 해당 유형의 이력만 표시된다
+  3. Given CRUD 로그에서, When 특정 관리자로 필터링하면, Then 해당 관리자의 변경 이력만 표시된다
+  4. Given CRUD 로그에서, When 대상 테이블/기능으로 필터링하면, Then 해당 영역의 변경 이력만 표시된다
+
+---
+
+유저 스토리 ID: US-D-1-01
+기능: Feature D-1: [CMS] 인증
+제목: 관리자 로그인
+역할: CMS 관리자 (모든 역할)
+목표: ID와 비밀번호로 CMS에 로그인할 수 있다
+가치: 권한에 맞는 CMS 기능을 사용할 수 있다
+우선순위: High
+
+인수 조건 (Acceptance Criteria):
+  1. Given CMS 로그인 페이지에서, When 올바른 ID/비밀번호를 입력하고 로그인하면, Then JWT 토큰이 발급되고 대시보드로 이동한다
+  2. Given 잘못된 ID/비밀번호를 입력했을 때, When 로그인을 시도하면, Then 인증 실패 메시지가 표시된다
+  3. Given 비활성화된 계정으로 로그인을 시도할 때, When 로그인하면, Then 계정 비활성화 안내 메시지가 표시된다
+  4. Given 로그인 성공 후, When 역할이 여론조사 관리자일 때, Then 여론조사 관리 메뉴만 접근 가능하다
+  5. Given 로그인 성공 후, When 역할이 콘텐트 운영자일 때, Then 뉴스 통계 관리 메뉴만 접근 가능하다
+  6. Given 로그인 성공 후, When 역할이 슈퍼 관리자일 때, Then 모든 메뉴에 접근 가능하다
+  7. Given JWT 토큰이 만료되었을 때, When API를 호출하면, Then 로그인 페이지로 리다이렉트된다
+  8. Given 로그인 시도가 연속 5회 실패했을 때, When 다시 시도하면, Then 일정 시간 로그인이 차단된다
+
+---
+
+유저 스토리 ID: US-D-1-02
+기능: Feature D-1: [CMS] 인증
+제목: 관리자 로그아웃
+역할: CMS 관리자 (모든 역할)
+목표: CMS에서 로그아웃할 수 있다
+가치: 세션을 안전하게 종료할 수 있다
+우선순위: High
+
+인수 조건 (Acceptance Criteria):
+  1. Given CMS에 로그인된 상태에서, When 로그아웃 버튼을 클릭하면, Then JWT 토큰이 무효화되고 로그인 페이지로 이동한다
+  2. Given 로그아웃 후, When 이전 페이지에 접근을 시도하면, Then 로그인 페이지로 리다이렉트된다
+
+---
+
+유저 스토리 ID: US-D-2-01
+기능: Feature D-2: [FO] SEO
+제목: FO 페이지 SEO 적용
+역할: 일반 사용자 (김시민)
+목표: 검색 엔진에서 여론조사 서비스 페이지를 검색할 수 있다
+가치: 검색을 통해 서비스에 쉽게 접근할 수 있다
+우선순위: Medium
+
+인수 조건 (Acceptance Criteria):
+  1. Given FO 각 페이지에, When 소스를 확인하면, Then 적절한 메타 태그(title, description)가 포함되어 있다
+  2. Given FO 각 페이지에, When HTML 구조를 확인하면, Then 시맨틱 HTML 태그(header, nav, main, footer 등)가 사용되어 있다
+  3. Given FO 각 페이지에, When Open Graph 태그를 확인하면, Then og:title, og:description, og:image 등이 포함되어 있다
+
+---

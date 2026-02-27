@@ -1,0 +1,121 @@
+# Epic B: 콘텐트 성과 분석 통계
+
+유저 스토리 ID: US-A-8-04
+기능: Feature A-8: [FO] 정적 페이지 및 공통 UI
+제목: 반응형 UI 및 모바일 최적화
+역할: 일반 사용자 (김시민)
+목표: 모바일, 태블릿, 데스크톱에서 최적화된 화면으로 서비스를 이용할 수 있다
+가치: 어떤 디바이스에서든 편하게 여론조사 데이터를 확인할 수 있다
+우선순위: High
+
+인수 조건 (Acceptance Criteria):
+  1. Given 모바일 디바이스에서 접속했을 때, When 화면을 확인하면, Then 모바일에 최적화된 레이아웃이 표시된다
+  2. Given 모바일에서 그래프를 확인할 때, When 그래프 영역을 터치하면, Then 좌우 스크롤이 가능하다
+  3. Given 태블릿에서 접속했을 때, When 화면을 확인하면, Then 태블릿에 적합한 레이아웃이 표시된다
+  4. Given 데스크톱에서 접속했을 때, When 화면을 확인하면, Then 데스크톱 전체 화면 레이아웃이 표시된다
+
+---
+
+유저 스토리 ID: US-B-1-01
+기능: Feature B-1: [CMS] 기사/영상 PV 데이터 조회 (QuickSight)
+제목: 기사 PV 데이터 조회
+역할: 콘텐트 운영자 (이콘텐)
+목표: QuickSight 대시보드에서 기사별 PV 데이터를 날짜별/시간별로 조회하고 유입 경로를 확인할 수 있다
+가치: 기사별 성과를 분석할 수 있다
+우선순위: High
+
+인수 조건 (Acceptance Criteria):
+  1. Given QuickSight 대시보드에서, When 기사 PV 영역을 확인하면, Then 기사ID, 제목, 카테고리, PV 수, 유입 경로가 표시된다
+  2. Given 기사 목록에서, When 특정 기사를 드릴다운하면, Then 해당 기사의 상세 PV 데이터(날짜별/시간별)가 표시된다
+  3. Given 유입 경로 데이터에서, When 경로별 비중을 확인하면, Then JTBC, 네이버, 다음, 네이트, 스포츠빅이벤트, 기타별 PV가 표시된다
+  4. Given 일별/주별/월별 필터가 있을 때, When 필터를 변경하면, Then 해당 기간 단위로 집계된 데이터가 표시된다
+  5. Given 카테고리 필터가 있을 때, When 특정 카테고리를 선택하면, Then 해당 카테고리의 기사만 표시된다
+
+---
+
+유저 스토리 ID: US-B-1-02
+기능: Feature B-1: [CMS] 기사/영상 PV 데이터 조회 (QuickSight)
+제목: 영상 PV 데이터 조회
+역할: 콘텐트 운영자 (이콘텐)
+목표: QuickSight 대시보드에서 영상별 PV 및 재생 횟수 데이터를 조회할 수 있다
+가치: 영상 콘텐트의 성과를 분석할 수 있다
+우선순위: High
+
+인수 조건 (Acceptance Criteria):
+  1. Given QuickSight 대시보드에서, When 영상 PV 영역을 확인하면, Then 영상ID, 제목, 재생 횟수, PV 수, 유입 경로가 표시된다
+  2. Given 영상 목록에서, When 특정 영상을 드릴다운하면, Then 해당 영상의 상세 PV 데이터가 표시된다
+  3. Given 일별/주별/월별 필터를 변경하면, When 데이터가 갱신되면, Then 해당 기간 단위로 집계된 데이터가 표시된다
+
+---
+
+유저 스토리 ID: US-B-2-01
+기능: Feature B-2: [CMS] PV 추이 그래프 (QuickSight)
+제목: 기사/영상 PV 비교 차트
+역할: 콘텐트 운영자 (이콘텐)
+목표: QuickSight 대시보드에서 기사 PV와 영상 PV를 비교하거나 분리해서 볼 수 있다
+가치: 기사와 영상의 성과를 비교 분석할 수 있다
+우선순위: High
+
+인수 조건 (Acceptance Criteria):
+  1. Given 기사 내 영상이 있는 경우, When PV 추이 그래프를 확인하면, Then 기사 PV와 영상 PV가 하나의 차트에서 비교 표시된다
+  2. Given 기사가 없는 영상인 경우, When 그래프를 확인하면, Then 영상 PV 그래프만 표시된다
+  3. Given 영상이 없는 기사인 경우, When 그래프를 확인하면, Then 기사 PV 그래프만 표시된다
+
+---
+
+유저 스토리 ID: US-B-3-01
+기능: Feature B-3: [CMS] 외부 유입률 분석 (QuickSight)
+제목: 포털별 유입 비중 분석
+역할: 콘텐트 운영자 (이콘텐)
+목표: QuickSight 대시보드에서 포털별 유입 비중을 확인할 수 있다
+가치: 어떤 포털에서 유입이 많은지 파악하여 콘텐트 배포 전략을 수립할 수 있다
+우선순위: High
+
+인수 조건 (Acceptance Criteria):
+  1. Given QuickSight 대시보드에서, When 유입 비중 차트를 확인하면, Then 네이버, 다음, 네이트, JTBC, 스포츠빅이벤트, 기타별 비중이 표시된다
+  2. Given 기간 필터를 변경했을 때, When 데이터가 갱신되면, Then 해당 기간의 유입 비중이 표시된다
+
+---
+
+유저 스토리 ID: US-B-3-02
+기능: Feature B-3: [CMS] 외부 유입률 분석 (QuickSight)
+제목: 유입 급증 시계열 차트
+역할: 콘텐트 운영자 (이콘텐)
+목표: QuickSight 대시보드에서 포털별 유입 급증 추이를 시계열 차트로 확인할 수 있다
+가치: 유입 트렌드 변화를 추적할 수 있다
+우선순위: Medium
+
+인수 조건 (Acceptance Criteria):
+  1. Given QuickSight 대시보드에서, When 시계열 차트를 확인하면, Then 포털별 유입 추이가 시간 순서로 표시된다
+  2. Given 특정 기간을 설정했을 때, When 차트가 갱신되면, Then 해당 기간의 포털별 유입 추이가 표시된다
+
+---
+
+유저 스토리 ID: US-B-4-01
+기능: Feature B-4: [CMS] 콘텐트 랭킹 (QuickSight)
+제목: 기사 TOP10 랭킹
+역할: 콘텐트 운영자 (이콘텐)
+목표: QuickSight 대시보드에서 가장 많이 본 기사 TOP10을 확인할 수 있다
+가치: 인기 콘텐트를 파악할 수 있다
+우선순위: High
+
+인수 조건 (Acceptance Criteria):
+  1. Given QuickSight 대시보드에서, When 기사 TOP10을 확인하면, Then PV 기준 상위 10개 기사가 순위와 함께 표시된다
+  2. Given 디폴트 기간이 적용될 때, When 대시보드에 접속하면, Then 최근 7일(종료=오늘) 기준 랭킹이 표시된다
+  3. Given 기간 필터를 변경했을 때, When 시작일/종료일을 설정하면, Then 해당 기간의 TOP10이 갱신된다
+
+---
+
+유저 스토리 ID: US-B-4-02
+기능: Feature B-4: [CMS] 콘텐트 랭킹 (QuickSight)
+제목: 영상 TOP10 랭킹
+역할: 콘텐트 운영자 (이콘텐)
+목표: QuickSight 대시보드에서 유입률이 높은 영상 TOP10을 확인할 수 있다
+가치: 인기 영상 콘텐트를 파악할 수 있다
+우선순위: High
+
+인수 조건 (Acceptance Criteria):
+  1. Given QuickSight 대시보드에서, When 영상 TOP10을 확인하면, Then 유입률 기준 상위 10개 영상이 순위와 함께 표시된다
+  2. Given 디폴트 기간이 적용될 때, When 대시보드에 접속하면, Then 최근 7일(종료=오늘) 기준 랭킹이 표시된다
+
+---

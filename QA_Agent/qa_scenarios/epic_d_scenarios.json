@@ -1,0 +1,855 @@
+{
+  "target_url": "https://metaj.jtbc.co.kr",
+  "requirements": "# Epic D: 인증 및 공통\n\n유저 스토리 ID: US-C-3-02\n기능: Feature C-3: [CMS] 로그 관리\n제목: 데이터 CRUD 로그 조회\n역할: 슈퍼 관리자 (최관리)\n목표: 데이터 생성/조회/수정/삭제 이력을 조회할 수 있다\n가치: 데이터 변경 및 접근 이력을 추적하고 감사할 수 있다\n우선순위: Medium\n\n인수 조건 (Acceptance Criteria):\n  1. Given 로그 관리 페이지에서, When CRUD 로그 탭을 선택하면, Then 데이터 변경 이력(생성/조회/수정/삭제)이 시간순으로 표시된다\n  2. Given CRUD 로그에서, When 작업 유형(생성/조회/수정/삭제)으로 필터링하면, Then 해당 유형의 이력만 표시된다\n  3. Given CRUD 로그에서, When 특정 관리자로 필터링하면, Then 해당 관리자의 변경 이력만 표시된다\n  4. Given CRUD 로그에서, When 대상 테이블/기능으로 필터링하면, Then 해당 영역의 변경 이력만 표시된다\n\n---\n\n유저 스토리 ID: US-D-1-01\n기능: Feature D-1: [CMS] 인증\n제목: 관리자 로그인\n역할: CMS 관리자 (모든 역할)\n목표: ID와 비밀번호로 CMS에 로그인할 수 있다\n가치: 권한에 맞는 CMS 기능을 사용할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given CMS 로그인 페이지에서, When 올바른 ID/비밀번호를 입력하고 로그인하면, Then JWT 토큰이 발급되고 대시보드로 이동한다\n  2. Given 잘못된 ID/비밀번호를 입력했을 때, When 로그인을 시도하면, Then 인증 실패 메시지가 표시된다\n  3. Given 비활성화된 계정으로 로그인을 시도할 때, When 로그인하면, Then 계정 비활성화 안내 메시지가 표시된다\n  4. Given 로그인 성공 후, When 역할이 여론조사 관리자일 때, Then 여론조사 관리 메뉴만 접근 가능하다\n  5. Given 로그인 성공 후, When 역할이 콘텐트 운영자일 때, Then 뉴스 통계 관리 메뉴만 접근 가능하다\n  6. Given 로그인 성공 후, When 역할이 슈퍼 관리자일 때, Then 모든 메뉴에 접근 가능하다\n  7. Given JWT 토큰이 만료되었을 때, When API를 호출하면, Then 로그인 페이지로 리다이렉트된다\n  8. Given 로그인 시도가 연속 5회 실패했을 때, When 다시 시도하면, Then 일정 시간 로그인이 차단된다\n\n---\n\n유저 스토리 ID: US-D-1-02\n기능: Feature D-1: [CMS] 인증\n제목: 관리자 로그아웃\n역할: CMS 관리자 (모든 역할)\n목표: CMS에서 로그아웃할 수 있다\n가치: 세션을 안전하게 종료할 수 있다\n우선순위: High\n\n인수 조건 (Acceptance Criteria):\n  1. Given CMS에 로그인된 상태에서, When 로그아웃 버튼을 클릭하면, Then JWT 토큰이 무효화되고 로그인 페이지로 이동한다\n  2. Given 로그아웃 후, When 이전 페이지에 접근을 시도하면, Then 로그인 페이지로 리다이렉트된다\n\n---\n\n유저 스토리 ID: US-D-2-01\n기능: Feature D-2: [FO] SEO\n제목: FO 페이지 SEO 적용\n역할: 일반 사용자 (김시민)\n목표: 검색 엔진에서 여론조사 서비스 페이지를 검색할 수 있다\n가치: 검색을 통해 서비스에 쉽게 접근할 수 있다\n우선순위: Medium\n\n인수 조건 (Acceptance Criteria):\n  1. Given FO 각 페이지에, When 소스를 확인하면, Then 적절한 메타 태그(title, description)가 포함되어 있다\n  2. Given FO 각 페이지에, When HTML 구조를 확인하면, Then 시맨틱 HTML 태그(header, nav, main, footer 등)가 사용되어 있다\n  3. Given FO 각 페이지에, When Open Graph 태그를 확인하면, Then og:title, og:description, og:image 등이 포함되어 있다\n\n---\n",
+  "test_cases": [
+    {
+      "id": "TC-D-1-01-001",
+      "name": "관리자 로그인 - 올바른 인증 정보로 로그인 성공",
+      "preconditions": [
+        "CMS 로그인 페이지(https://metaj.jtbc.co.kr/admin/login)에 접근 가능",
+        "유효한 관리자 계정이 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/login'",
+          "expected_result": "로그인 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_fill selector='input[name=\"username\"]' or 'input[type=\"text\"]' with text='valid_admin_id'",
+          "expected_result": "ID 입력 필드에 값이 입력됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill selector='input[name=\"password\"]' or 'input[type=\"password\"]' with text='valid_password'",
+          "expected_result": "비밀번호 입력 필드에 값이 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click selector='button[type=\"submit\"]' or 'button:has-text(\"로그인\")'",
+          "expected_result": "로그인 버튼 클릭됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_evaluate expression='localStorage.getItem(\"token\")' or check cookies for JWT token",
+          "expected_result": "JWT 토큰이 저장됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_navigate 현재 URL 확인",
+          "expected_result": "대시보드 페이지(예: /admin/dashboard)로 리다이렉트됨"
+        }
+      ],
+      "expected_result": "로그인 성공 후 JWT 토큰이 발급되고 대시보드 페이지로 이동",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-D-1-01-002",
+      "name": "관리자 로그인 - 잘못된 ID/비밀번호로 로그인 실패",
+      "preconditions": [
+        "CMS 로그인 페이지에 접근 가능"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/login'",
+          "expected_result": "로그인 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_fill selector='input[name=\"username\"]' with text='invalid_id'",
+          "expected_result": "잘못된 ID가 입력됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill selector='input[name=\"password\"]' with text='wrong_password'",
+          "expected_result": "잘못된 비밀번호가 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click selector='button[type=\"submit\"]'",
+          "expected_result": "로그인 버튼 클릭됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_screenshot and check for error message selector='.error-message' or '.alert'",
+          "expected_result": "인증 실패 메시지가 표시됨 (예: 'ID 또는 비밀번호가 올바르지 않습니다')"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_navigate 현재 URL 확인",
+          "expected_result": "로그인 페이지에 그대로 머무름"
+        }
+      ],
+      "expected_result": "인증 실패 메시지가 표시되고 로그인되지 않음",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-D-1-01-003",
+      "name": "관리자 로그인 - 비활성화된 계정으로 로그인 시도",
+      "preconditions": [
+        "비활성화된 관리자 계정이 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/login'",
+          "expected_result": "로그인 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_fill selector='input[name=\"username\"]' with text='disabled_admin_id'",
+          "expected_result": "비활성화된 계정 ID가 입력됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill selector='input[name=\"password\"]' with text='correct_password'",
+          "expected_result": "올바른 비밀번호가 입력됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click selector='button[type=\"submit\"]'",
+          "expected_result": "로그인 버튼 클릭됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_screenshot and verify error message contains text='비활성화' or '사용 불가'",
+          "expected_result": "계정 비활성화 안내 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "계정 비활성화 안내 메시지가 표시되고 로그인 거부됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-D-1-01-004",
+      "name": "관리자 로그인 - 여론조사 관리자 권한으로 메뉴 접근 확인",
+      "preconditions": [
+        "여론조사 관리자 계정으로 로그인됨"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/login'",
+          "expected_result": "로그인 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_fill selector='input[name=\"username\"]' with text='poll_manager_id'",
+          "expected_result": "여론조사 관리자 ID 입력"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill selector='input[name=\"password\"]' with text='poll_manager_password'",
+          "expected_result": "비밀번호 입력"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click selector='button[type=\"submit\"]'",
+          "expected_result": "로그인 실행"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_screenshot and verify navigation menu contains '여론조사 관리' menu",
+          "expected_result": "여론조사 관리 메뉴가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_screenshot and verify navigation menu does NOT contain '계정 관리' or '로그 관리'",
+          "expected_result": "관리자 전용 메뉴는 표시되지 않음"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/accounts' (unauthorized page)",
+          "expected_result": "접근 거부 페이지 또는 403 에러 페이지로 리다이렉트됨"
+        }
+      ],
+      "expected_result": "여론조사 관리자는 여론조사 관리 메뉴만 접근 가능하고 다른 메뉴는 차단됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-D-1-01-005",
+      "name": "관리자 로그인 - 콘텐트 운영자 권한으로 메뉴 접근 확인",
+      "preconditions": [
+        "콘텐트 운영자 계정으로 로그인됨"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/login'",
+          "expected_result": "로그인 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_fill selector='input[name=\"username\"]' with text='content_operator_id'",
+          "expected_result": "콘텐트 운영자 ID 입력"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill selector='input[name=\"password\"]' with text='content_operator_password'",
+          "expected_result": "비밀번호 입력"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click selector='button[type=\"submit\"]'",
+          "expected_result": "로그인 실행"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_screenshot and verify navigation menu contains '뉴스 통계 관리' menu",
+          "expected_result": "뉴스 통계 관리 메뉴가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_screenshot and verify navigation menu does NOT contain '여론조사 관리' or '계정 관리'",
+          "expected_result": "다른 역할의 메뉴는 표시되지 않음"
+        }
+      ],
+      "expected_result": "콘텐트 운영자는 뉴스 통계 관리 메뉴만 접근 가능",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-D-1-01-006",
+      "name": "관리자 로그인 - 슈퍼 관리자 권한으로 모든 메뉴 접근 확인",
+      "preconditions": [
+        "슈퍼 관리자 계정으로 로그인됨"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/login'",
+          "expected_result": "로그인 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_fill selector='input[name=\"username\"]' with text='super_admin_id'",
+          "expected_result": "슈퍼 관리자 ID 입력"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_fill selector='input[name=\"password\"]' with text='super_admin_password'",
+          "expected_result": "비밀번호 입력"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click selector='button[type=\"submit\"]'",
+          "expected_result": "로그인 실행"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_screenshot and verify all menus are visible: '대시보드', '여론조사 관리', '뉴스 통계 관리', '계정 관리', '로그 관리'",
+          "expected_result": "모든 메뉴가 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_click on '계정 관리' menu",
+          "expected_result": "계정 관리 페이지로 이동"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/logs'",
+          "expected_result": "로그 관리 페이지 접근 가능"
+        }
+      ],
+      "expected_result": "슈퍼 관리자는 모든 메뉴에 접근 가능",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-D-1-01-007",
+      "name": "관리자 로그인 - JWT 토큰 만료 시 재인증 처리",
+      "preconditions": [
+        "관리자가 로그인되어 있음",
+        "JWT 토큰이 만료됨"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/dashboard' (already logged in)",
+          "expected_result": "대시보드 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_evaluate expression to manipulate token expiration or wait for token expiry",
+          "expected_result": "JWT 토큰이 만료됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click on any menu or API call triggering action",
+          "expected_result": "API 호출 시도"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_navigate 현재 URL 확인",
+          "expected_result": "로그인 페이지(/admin/login)로 리다이렉트됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_screenshot and verify login form is displayed",
+          "expected_result": "로그인 폼이 표시됨"
+        }
+      ],
+      "expected_result": "JWT 토큰 만료 시 로그인 페이지로 리다이렉트됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-D-1-01-008",
+      "name": "관리자 로그인 - 연속 5회 실패 시 계정 잠금",
+      "preconditions": [
+        "유효한 관리자 계정이 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/login'",
+          "expected_result": "로그인 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "Loop 5 times: playwright_fill ID with 'valid_id', password with 'wrong_password', then playwright_click submit button",
+          "expected_result": "5회 연속 로그인 실패"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_screenshot and verify error message contains '로그인 시도 횟수 초과' or '일시적으로 차단'",
+          "expected_result": "계정 잠금 메시지가 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_fill with correct credentials and playwright_click submit",
+          "expected_result": "올바른 인증 정보 입력"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_screenshot and verify login is still blocked",
+          "expected_result": "로그인이 차단되고 대기 시간 안내 메시지가 표시됨"
+        }
+      ],
+      "expected_result": "5회 연속 실패 후 일정 시간 로그인이 차단됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-D-1-02-001",
+      "name": "관리자 로그아웃 - 정상 로그아웃 처리",
+      "preconditions": [
+        "관리자가 CMS에 로그인되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/dashboard'",
+          "expected_result": "대시보드 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click selector='button:has-text(\"로그아웃\")' or '.logout-button' or header logout icon",
+          "expected_result": "로그아웃 버튼 클릭됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_evaluate expression='localStorage.getItem(\"token\")' to verify token removal",
+          "expected_result": "JWT 토큰이 무효화됨 (localStorage/cookie에서 제거됨)"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_navigate 현재 URL 확인",
+          "expected_result": "로그인 페이지(/admin/login)로 리다이렉트됨"
+        }
+      ],
+      "expected_result": "JWT 토큰이 무효화되고 로그인 페이지로 이동",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-D-1-02-002",
+      "name": "관리자 로그아웃 - 로그아웃 후 이전 페이지 접근 시도",
+      "preconditions": [
+        "관리자가 로그아웃을 완료함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/login'",
+          "expected_result": "로그인 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "Perform login with valid credentials",
+          "expected_result": "로그인 성공"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click logout button",
+          "expected_result": "로그아웃 실행"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/dashboard' (previous page)",
+          "expected_result": "대시보드 페이지 접근 시도"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_navigate 현재 URL 확인",
+          "expected_result": "로그인 페이지(/admin/login)로 리다이렉트됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_screenshot and verify login form is displayed",
+          "expected_result": "로그인 폼이 표시됨"
+        }
+      ],
+      "expected_result": "로그아웃 후 보호된 페이지 접근 시 로그인 페이지로 리다이렉트됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-C-3-02-001",
+      "name": "데이터 CRUD 로그 조회 - 전체 이력 시간순 표시",
+      "preconditions": [
+        "슈퍼 관리자로 로그인됨",
+        "CRUD 로그 데이터가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/logs'",
+          "expected_result": "로그 관리 페이지가 로드됨"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click selector='[role=\"tab\"]:has-text(\"CRUD 로그\")' or '.crud-log-tab'",
+          "expected_result": "CRUD 로그 탭이 선택됨"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_screenshot and verify table with columns: '시간', '작업 유형', '관리자', '대상 테이블', '상세'",
+          "expected_result": "CRUD 로그 테이블이 표시됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_evaluate to get first and last row timestamps and verify chronological order (최신순 또는 오래된순)",
+          "expected_result": "데이터가 시간순으로 정렬되어 있음"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_screenshot and verify log entries show types: '생성', '조회', '수정', '삭제'",
+          "expected_result": "생성/조회/수정/삭제 이력이 모두 표시됨"
+        }
+      ],
+      "expected_result": "데이터 변경 이력이 시간순으로 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-3-02-002",
+      "name": "데이터 CRUD 로그 조회 - 작업 유형별 필터링",
+      "preconditions": [
+        "슈퍼 관리자로 로그인됨",
+        "CRUD 로그 페이지에 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/logs'",
+          "expected_result": "로그 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click CRUD 로그 탭",
+          "expected_result": "CRUD 로그 탭 활성화"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click selector='select[name=\"action_type\"]' or '.filter-action-type'",
+          "expected_result": "작업 유형 필터 드롭다운 열림"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click option with text='생성' or value='CREATE'",
+          "expected_result": "'생성' 필터 선택됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_screenshot and verify all visible log entries have action type='생성'",
+          "expected_result": "'생성' 유형의 이력만 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_click filter and select '수정' or 'UPDATE'",
+          "expected_result": "'수정' 필터 선택"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_screenshot and verify all entries show action type='수정'",
+          "expected_result": "'수정' 유형의 이력만 표시됨"
+        }
+      ],
+      "expected_result": "선택한 작업 유형의 이력만 필터링되어 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-3-02-003",
+      "name": "데이터 CRUD 로그 조회 - 관리자별 필터링",
+      "preconditions": [
+        "슈퍼 관리자로 로그인됨",
+        "여러 관리자의 CRUD 로그가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/logs'",
+          "expected_result": "로그 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click CRUD 로그 탭",
+          "expected_result": "CRUD 로그 탭 활성화"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click selector='select[name=\"admin_id\"]' or '.filter-admin'",
+          "expected_result": "관리자 필터 드롭다운 열림"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click option with specific admin name (예: '최관리')",
+          "expected_result": "특정 관리자 선택됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_screenshot and verify all log entries show selected admin name in '관리자' column",
+          "expected_result": "선택한 관리자의 변경 이력만 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_evaluate to count entries and verify all belong to selected admin",
+          "expected_result": "모든 로그가 선택한 관리자의 것임"
+        }
+      ],
+      "expected_result": "특정 관리자의 변경 이력만 필터링되어 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-3-02-004",
+      "name": "데이터 CRUD 로그 조회 - 대상 테이블/기능별 필터링",
+      "preconditions": [
+        "슈퍼 관리자로 로그인됨",
+        "다양한 테이블/기능의 CRUD 로그가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/logs'",
+          "expected_result": "로그 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click CRUD 로그 탭",
+          "expected_result": "CRUD 로그 탭 활성화"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click selector='select[name=\"target_table\"]' or '.filter-table'",
+          "expected_result": "대상 테이블 필터 드롭다운 열림"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click option with specific table name (예: '여론조사', 'polls')",
+          "expected_result": "특정 테이블/기능 선택됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_screenshot and verify all log entries show selected table in '대상 테이블' column",
+          "expected_result": "선택한 영역의 변경 이력만 표시됨"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_evaluate to verify filtered results only contain selected table",
+          "expected_result": "모든 로그가 선택한 테이블/기능과 관련됨"
+        }
+      ],
+      "expected_result": "특정 테이블/기능의 변경 이력만 필터링되어 표시됨",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-3-02-005",
+      "name": "데이터 CRUD 로그 조회 - 복합 필터 적용",
+      "preconditions": [
+        "슈퍼 관리자로 로그인됨",
+        "다양한 CRUD 로그가 존재함"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/logs'",
+          "expected_result": "로그 관리 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_click CRUD 로그 탭",
+          "expected_result": "CRUD 로그 탭 활성화"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_click action type filter and select '수정'",
+          "expected_result": "작업 유형 필터 설정"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_click admin filter and select specific admin",
+          "expected_result": "관리자 필터 설정"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_click table filter and select specific table",
+          "expected_result": "대상 테이블 필터 설정"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_screenshot and verify results match all three filter conditions",
+          "expected_result": "모든 필터 조건을 만족하는 로그만 표시됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_evaluate to verify each log entry meets all criteria",
+          "expected_result": "각 로그가 작업 유형, 관리자, 테이블 조건 모두 충족"
+        }
+      ],
+      "expected_result": "여러 필터를 동시 적용하여 정확한 결과를 조회할 수 있음",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-C-3-02-006",
+      "name": "데이터 CRUD 로그 조회 - 권한 없는 사용자 접근 시도",
+      "preconditions": [
+        "여론조사 관리자 또는 콘텐트 운영자로 로그인됨"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/login'",
+          "expected_result": "로그인 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "Login as poll manager or content operator (non-super admin)",
+          "expected_result": "로그인 완료"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/admin/logs'",
+          "expected_result": "로그 관리 페이지 접근 시도"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_screenshot and verify access denied message or 403 error",
+          "expected_result": "접근 거부 메시지 또는 에러 페이지 표시"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_navigate 현재 URL 확인",
+          "expected_result": "대시보드 또는 권한 없음 페이지로 리다이렉트됨"
+        }
+      ],
+      "expected_result": "슈퍼 관리자가 아닌 경우 로그 관리 페이지 접근이 차단됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-D-2-01-001",
+      "name": "FO 페이지 SEO - 메타 태그 확인",
+      "preconditions": [
+        "FO 메인 페이지에 접근 가능"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr'",
+          "expected_result": "FO 메인 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_evaluate expression='document.querySelector(\"meta[name=\\\"description\\\"]\")?.content' to get meta description",
+          "expected_result": "메타 description 태그가 존재하고 내용이 있음"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_evaluate expression='document.title' to verify page title",
+          "expected_result": "적절한 페이지 title이 설정되어 있음"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_evaluate to check meta keywords (optional) and other meta tags",
+          "expected_result": "SEO 관련 메타 태그들이 적절히 설정됨"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/poll/[poll-id]' (specific poll page)",
+          "expected_result": "개별 여론조사 페이지 로드"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_evaluate to verify poll-specific title and description",
+          "expected_result": "각 페이지별로 고유한 메타 태그가 설정됨"
+        }
+      ],
+      "expected_result": "모든 FO 페이지에 적절한 메타 태그가 포함되어 있음",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-D-2-01-002",
+      "name": "FO 페이지 SEO - 시맨틱 HTML 구조 확인",
+      "preconditions": [
+        "FO 페이지에 접근 가능"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr'",
+          "expected_result": "FO 메인 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_evaluate expression='document.querySelector(\"header\")' to verify header tag exists",
+          "expected_result": "<header> 태그가 존재함"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_evaluate expression='document.querySelector(\"nav\")' to verify nav tag exists",
+          "expected_result": "<nav> 태그가 존재함"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_evaluate expression='document.querySelector(\"main\")' to verify main tag exists",
+          "expected_result": "<main> 태그가 존재함"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_evaluate expression='document.querySelector(\"footer\")' to verify footer tag exists",
+          "expected_result": "<footer> 태그가 존재함"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_evaluate to check for proper heading hierarchy (h1, h2, h3)",
+          "expected_result": "적절한 제목 계층 구조가 사용됨"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_screenshot and verify semantic HTML structure",
+          "expected_result": "시맨틱 HTML 태그가 올바르게 사용됨"
+        }
+      ],
+      "expected_result": "FO 페이지가 시맨틱 HTML 구조를 따름",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-D-2-01-003",
+      "name": "FO 페이지 SEO - Open Graph 태그 확인",
+      "preconditions": [
+        "FO 페이지에 접근 가능"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr'",
+          "expected_result": "FO 메인 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_evaluate expression='document.querySelector(\"meta[property=\\\"og:title\\\"]\")?.content'",
+          "expected_result": "og:title 태그가 존재하고 값이 있음"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_evaluate expression='document.querySelector(\"meta[property=\\\"og:description\\\"]\")?.content'",
+          "expected_result": "og:description 태그가 존재하고 값이 있음"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_evaluate expression='document.querySelector(\"meta[property=\\\"og:image\\\"]\")?.content'",
+          "expected_result": "og:image 태그가 존재하고 이미지 URL이 있음"
+        },
+        {
+          "step_number": 5,
+          "action": "playwright_evaluate expression='document.querySelector(\"meta[property=\\\"og:url\\\"]\")?.content'",
+          "expected_result": "og:url 태그가 존재함 (선택사항)"
+        },
+        {
+          "step_number": 6,
+          "action": "playwright_evaluate expression='document.querySelector(\"meta[property=\\\"og:type\\\"]\")?.content'",
+          "expected_result": "og:type 태그가 존재함 (선택사항)"
+        },
+        {
+          "step_number": 7,
+          "action": "playwright_navigate to specific poll page and verify OG tags are poll-specific",
+          "expected_result": "각 페이지별로 고유한 OG 태그가 설정됨"
+        }
+      ],
+      "expected_result": "모든 FO 페이지에 Open Graph 태그가 포함되어 있음",
+      "scenario_type": "positive"
+    },
+    {
+      "id": "TC-D-2-01-004",
+      "name": "FO 페이지 SEO - 메타 태그 누락 시 확인",
+      "preconditions": [
+        "일부 페이지에 메타 태그가 누락되어 있을 수 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr/[potentially-incomplete-page]'",
+          "expected_result": "테스트 대상 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_evaluate to check if meta description is missing",
+          "expected_result": "메타 description이 없거나 빈 값인지 확인"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_evaluate to check if title is generic or missing",
+          "expected_result": "title이 일반적이거나 없는지 확인"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_screenshot and document pages with missing or inadequate SEO tags",
+          "expected_result": "SEO 태그 누락 페이지 식별"
+        }
+      ],
+      "expected_result": "메타 태그가 누락된 페이지는 SEO 검증 실패로 처리됨",
+      "scenario_type": "negative"
+    },
+    {
+      "id": "TC-D-2-01-005",
+      "name": "FO 페이지 SEO - Open Graph 이미지 유효성 확인",
+      "preconditions": [
+        "FO 페이지에 OG 이미지가 설정되어 있음"
+      ],
+      "steps": [
+        {
+          "step_number": 1,
+          "action": "playwright_navigate to 'https://metaj.jtbc.co.kr'",
+          "expected_result": "FO 메인 페이지 로드"
+        },
+        {
+          "step_number": 2,
+          "action": "playwright_evaluate expression='document.querySelector(\"meta[property=\\\"og:image\\\"]\")?.content' to get image URL",
+          "expected_result": "og:image URL 추출"
+        },
+        {
+          "step_number": 3,
+          "action": "playwright_navigate to extracted image URL or verify with fetch/img load",
+          "expected_result": "이미지 URL이 유효하고 로드됨"
+        },
+        {
+          "step_number": 4,
+          "action": "playwright_evaluate to check image dimensions (recommended: 1200x630 for OG)",
+          "expected_result": "이미지 크기가 소셜 미디어 권장 사이즈에 적합함"
+        },
+        {
+          "step_number": 5,
+          "action": "If image fails to load or is invalid, document failure",
+          "expected_result": "이미지 유효성 검증 완료"
+        }
+      ],
+      "expected_result": "Open Graph 이미지가 유효하고 적절한 크기임",
+      "scenario_type": "positive"
+    }
+  ],
+  "created_at": "2026-02-27T02:40:55.582060Z"
+}

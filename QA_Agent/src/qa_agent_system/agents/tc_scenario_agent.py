@@ -17,7 +17,9 @@ TC 시나리오 작성 에이전트 (TC Scenario Agent)
 from __future__ import annotations
 
 import json
+import os
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import TYPE_CHECKING, Optional, Union
 
 if TYPE_CHECKING:
@@ -401,3 +403,221 @@ class TCScenarioAgent:
             test_cases=test_cases,
             created_at=datetime.now(timezone.utc),
         )
+
+
+    # ============================================================
+    # 파일 I/O 메서드 (File I/O Methods)
+    # ============================================================
+
+    def load_requirements_from_file(self, file_path: str) -> str:
+        """요구사항 파일을 읽어서 문자열로 반환합니다.
+
+        지원 형식: .txt, .md (텍스트 기반 파일)
+
+        Args:
+            file_path: 요구사항 파일 경로
+
+        Returns:
+            파일 내용 문자열
+
+        Raises:
+            FileNotFoundError: 파일이 존재하지 않을 때
+            ValueError: 지원하지 않는 파일 형식일 때
+        """
+        path = Path(file_path)
+
+        if not path.exists():
+            raise FileNotFoundError(f"요구사항 파일을 찾을 수 없습니다: {file_path}")
+
+        supported_extensions = {".txt", ".md", ".rst"}
+        if path.suffix.lower() not in supported_extensions:
+            raise ValueError(
+                f"지원하지 않는 파일 형식입니다: {path.suffix}. "
+                f"지원 형식: {', '.join(supported_extensions)}"
+            )
+
+        return path.read_text(encoding="utf-8")
+
+    def save_scenario_to_file(
+        self, scenario: TestScenario, output_path: str
+    ) -> str:
+        """생성된 TestScenario를 JSON 파일로 저장합니다.
+
+        Args:
+            scenario: 저장할 테스트 시나리오
+            output_path: 저장할 파일 경로 (.json)
+
+        Returns:
+            저장된 파일의 절대 경로
+
+        Raises:
+            ValueError: .json 확장자가 아닐 때
+        """
+        path = Path(output_path)
+
+        if path.suffix.lower() != ".json":
+            raise ValueError(
+                f"시나리오 파일은 .json 형식이어야 합니다. 입력값: {path.suffix}"
+            )
+
+        # 디렉토리가 없으면 생성
+        path.parent.mkdir(parents=True, exist_ok=True)
+
+        # Pydantic 모델을 JSON으로 직렬화하여 저장
+        json_data = scenario.model_dump_json(indent=2)
+        path.write_text(json_data, encoding="utf-8")
+
+        return str(path.resolve())
+
+    def save_scenario_to_markdown(
+        self, scenario: TestScenario, output_path: str
+    ) -> str:
+        """생성된 TestScenario를 Markdown 파일로 저장합니다.
+
+        Args:
+            scenario: 저장할 테스트 시나리오
+            output_path: 저장할 파일 경로 (.md)
+
+        Returns:
+            저장된 파일의 절대 경로
+
+        Raises:
+            ValueError: .md 확장자가 아닐 때
+        """
+        path = Path(output_path)
+
+        if path.suffix.lower() != ".md":
+            raise ValueError(
+                f"마크다운 파일은 .md 형식이어야 합니다. 입력값: {path.suffix}"
+            )
+
+        # 디렉토리가 없으면 생성
+        path.parent.mkdir(parents=True, exist_ok=True)
+
+        # Markdown 변환
+        md_content = self._scenario_to_markdown(scenario)
+        path.write_text(md_content, encoding="utf-8")
+
+        return str(path.resolve())
+
+    def _scenario_to_markdown(self, scenario: TestScenario) -> str:
+        """TestScenario를 Markdown 문자열로 변환합니다.
+
+        Args:
+            scenario: 변환할 테스트 시나리오
+
+        Returns:
+            Markdown 형식 문자열
+        """
+        lines: list[str] = []
+
+        # 헤더 정보
+        lines.append(f"# 테스트 시나리오")
+        lines.append("")
+        lines.append(f"- **테스트 대상 URL**: {scenario.target_url}")
+        lines.append(f"- **생성일시**: {scenario.created_at.strftime('%Y-%m-%d %H:%M:%S UTC')}")
+
+        # 통계 요약
+        total = len(scenario.test_cases)
+        pos = sum(1 for tc in scenario.test_cases if tc.scenario_type == "positive")
+        neg = sum(1 for tc in scenario.test_cases if tc.scenario_type == "negative")
+        lines.append(f"- **총 테스트 케이스**: {total}개 (긍정: {pos}, 부정: {neg})")
+        lines.append("")
+        lines.append("---")
+        lines.append("")
+
+        # 테스트 케이스별 출력
+        for idx, tc in enumerate(scenario.test_cases, 1):
+            # 시나리오 유형 태그
+            type_tag = "✅ 긍정" if tc.scenario_type == "positive" else "❌ 부정"
+            lines.append(f"## {tc.id}: {tc.name}")
+            lines.append("")
+            lines.append(f"| 항목 | 내용 |")
+            lines.append(f"|------|------|")
+            lines.append(f"| **시나리오 유형** | {type_tag} |")
+            lines.append(f"| **기대 결과** | {tc.expected_result} |")
+            lines.append("")
+
+            # 사전 조건
+            if tc.preconditions:
+                lines.append("### 사전 조건")
+                lines.append("")
+                for pre in tc.preconditions:
+                    lines.append(f"- {pre}")
+                lines.append("")
+
+            # 테스트 단계
+            lines.append("### 테스트 단계")
+            lines.append("")
+            lines.append("| # | 액션 | 기대 결과 |")
+            lines.append("|---|------|----------|")
+            for step in tc.steps:
+                # 테이블 내 파이프 문자 이스케이프
+                action = step.action.replace("|", "\\|")
+                expected = step.expected_result.replace("|", "\\|")
+                lines.append(f"| {step.step_number} | {action} | {expected} |")
+            lines.append("")
+            lines.append("---")
+            lines.append("")
+
+        return "\n".join(lines)
+
+
+    def load_scenario_from_file(self, file_path: str) -> TestScenario:
+        """JSON 파일에서 TestScenario를 로드합니다.
+
+        기존에 저장된 시나리오를 다시 불러올 때 사용합니다.
+
+        Args:
+            file_path: 시나리오 JSON 파일 경로
+
+        Returns:
+            로드된 TestScenario 객체
+
+        Raises:
+            FileNotFoundError: 파일이 존재하지 않을 때
+            ValueError: JSON 파싱 또는 스키마 검증 실패 시
+        """
+        path = Path(file_path)
+
+        if not path.exists():
+            raise FileNotFoundError(f"시나리오 파일을 찾을 수 없습니다: {file_path}")
+
+        try:
+            json_text = path.read_text(encoding="utf-8")
+            return TestScenario.model_validate_json(json_text)
+        except json.JSONDecodeError as e:
+            raise ValueError(f"JSON 파싱 실패: {e}") from e
+        except Exception as e:
+            raise ValueError(f"시나리오 스키마 검증 실패: {e}") from e
+
+    def generate_scenario_from_file(
+        self,
+        target_url: str,
+        requirements_file: str,
+        output_path: Optional[str] = None,
+    ) -> Union[TestScenario, str]:
+        """파일에서 요구사항을 읽어 시나리오를 생성하고, 선택적으로 저장합니다.
+
+        파일 읽기 → 시나리오 생성 → (선택) 파일 저장의 전체 흐름을 처리합니다.
+
+        Args:
+            target_url: 테스트 대상 URL
+            requirements_file: 요구사항 파일 경로
+            output_path: 시나리오 저장 경로 (None이면 저장하지 않음)
+
+        Returns:
+            TestScenario 또는 추가 정보 요청 메시지 문자열
+        """
+        # 1. 요구사항 파일 읽기
+        requirements = self.load_requirements_from_file(requirements_file)
+
+        # 2. 시나리오 생성
+        result = self.generate_scenario(target_url, requirements)
+
+        # 3. 시나리오가 정상 생성되었고 저장 경로가 지정된 경우 파일로 저장
+        if isinstance(result, TestScenario) and output_path is not None:
+            self.save_scenario_to_file(result, output_path)
+
+        return result
+

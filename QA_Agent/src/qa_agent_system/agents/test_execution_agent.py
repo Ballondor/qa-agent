@@ -40,9 +40,18 @@ from qa_agent_system.models import (
 # 테스트 실행 에이전트 시스템 프롬프트
 TEST_EXECUTION_AGENT_SYSTEM_PROMPT = (
     "당신은 QA 테스트 실행 전문 에이전트입니다. "
-    "Playwright MCP를 사용하여 브라우저 자동화 테스트를 실행합니다. "
-    "TestScenario에 포함된 각 TestCase를 순차적으로 실행하고, "
-    "각 단계의 실행 결과를 정확히 기록합니다. "
+    "반드시 Playwright MCP 도구를 사용하여 브라우저 자동화 테스트를 실행해야 합니다. "
+    "텍스트로 시뮬레이션하지 말고, 실제 Playwright MCP 도구를 호출하세요.\n\n"
+    "사용 가능한 주요 Playwright MCP 도구:\n"
+    "- browser_navigate: URL로 이동\n"
+    "- browser_click: 요소 클릭\n"
+    "- browser_fill: 입력 필드에 텍스트 입력\n"
+    "- browser_snapshot: 현재 페이지 접근성 스냅샷 조회\n"
+    "- browser_take_screenshot: 스크린샷 캡처\n"
+    "- browser_wait_for: 특정 조건 대기\n\n"
+    "각 테스트 단계를 실행한 후 반드시 다음 JSON 형식으로 결과를 반환하세요:\n"
+    '{"passed": true/false, "actual_result": "실제 결과 설명", '
+    '"failure_reason": "실패 시 원인 (성공이면 null)"}\n\n'
     "테스트 실패 시 재시도하지 않고, 실제 결과와 기대 결과의 차이를 기록한 후 "
     "다음 테스트로 진행합니다. "
     "타임아웃 발생 시에도 재시도 없이 timed_out으로 기록하고 계속 진행합니다."
@@ -216,32 +225,42 @@ class TestExecutionAgent:
         screenshot_path = self.capture_screenshot(test_case.id)
 
         try:
-            # 테스트 단계를 프롬프트로 구성하여 Agent에 전달
+            # Playwright MCP 도구를 명시적으로 사용하도록 프롬프트 구성
             steps_description = "\n".join(
                 f"  {step.step_number}. {step.action} → 기대: {step.expected_result}"
                 for step in test_case.steps
             )
             prompt = (
-                f"테스트 케이스 '{test_case.name}' (ID: {test_case.id})를 실행하세요.\n"
-                f"사전 조건: {', '.join(test_case.preconditions) if test_case.preconditions else '없음'}\n"
-                f"테스트 단계:\n{steps_description}\n"
-                f"최종 기대 결과: {test_case.expected_result}"
+                f"테스트 케이스 '{test_case.name}' (ID: {test_case.id})를 실행하세요.\n\n"
+                f"사전 조건: {', '.join(test_case.preconditions) if test_case.preconditions else '없음'}\n\n"
+                f"테스트 단계 (반드시 Playwright MCP 도구를 사용하여 실행하세요):\n{steps_description}\n\n"
+                f"최종 기대 결과: {test_case.expected_result}\n\n"
+                "중요 지시사항:\n"
+                "1. 각 단계를 Playwright MCP 도구(browser_navigate, browser_click, browser_fill, "
+                "browser_snapshot 등)를 사용하여 실제로 실행하세요.\n"
+                "2. 마지막에 browser_take_screenshot으로 스크린샷을 캡처하세요.\n"
+                "3. 모든 단계 실행 후 다음 JSON 형식으로 최종 결과를 반환하세요:\n"
+                '{"passed": true/false, "actual_result": "실제 결과 설명", '
+                '"failure_reason": "실패 시 원인 (성공이면 null)"}'
             )
 
-            # Strands Agent 호출
+            # Strands Agent 호출 (Playwright MCP 도구 사용)
             result = self._agent(prompt)
-            actual_result = str(result)
+            response_text = str(result)
             elapsed_ms = (time.monotonic() - start_time) * 1000
 
-            # 성공으로 기록 (실제 환경에서는 Agent 응답을 분석하여 판단)
+            # Agent 응답에서 성공/실패 판단
+            parsed = self._parse_execution_result(response_text)
+
             return TestCaseResult(
                 test_case_id=test_case.id,
                 test_name=test_case.name,
-                passed=True,
+                passed=parsed["passed"],
                 execution_time_ms=elapsed_ms,
                 screenshot_path=screenshot_path,
-                actual_result=actual_result,
+                actual_result=parsed["actual_result"],
                 expected_result=test_case.expected_result,
+                failure_reason=parsed.get("failure_reason"),
             )
 
         except ConnectionError as e:
@@ -283,3 +302,62 @@ class TestExecutionAgent:
                 failure_reason=f"테스트 실행 중 오류 발생: {e}",
                 timed_out=False,
             )
+
+    def _parse_execution_result(self, response_text: str) -> dict:
+        """Agent 응답에서 테스트 실행 결과를 파싱합니다.
+
+        JSON 형식의 결과를 추출하고, 파싱 실패 시 텍스트 기반으로 판단합니다.
+
+        Args:
+            response_text: Agent 응답 텍스트
+
+        Returns:
+            {"passed": bool, "actual_result": str, "failure_reason": str|None}
+        """
+        import json as _json
+
+        # JSON 블록 추출 시도
+        json_str = None
+        if "```json" in response_text:
+            try:
+                start = response_text.index("```json") + len("```json")
+                end = response_text.index("```", start)
+                json_str = response_text[start:end].strip()
+            except ValueError:
+                pass
+        elif "{" in response_text and "}" in response_text:
+            # 마지막 JSON 객체 추출 (결과가 응답 끝에 있을 가능성 높음)
+            last_brace = response_text.rfind("}")
+            # 해당 }에 매칭되는 { 찾기
+            depth = 0
+            for i in range(last_brace, -1, -1):
+                if response_text[i] == "}":
+                    depth += 1
+                elif response_text[i] == "{":
+                    depth -= 1
+                    if depth == 0:
+                        json_str = response_text[i : last_brace + 1]
+                        break
+
+        if json_str:
+            try:
+                data = _json.loads(json_str)
+                return {
+                    "passed": bool(data.get("passed", False)),
+                    "actual_result": str(data.get("actual_result", response_text[:500])),
+                    "failure_reason": data.get("failure_reason"),
+                }
+            except (_json.JSONDecodeError, TypeError):
+                pass
+
+        # JSON 파싱 실패 시 텍스트 기반 판단
+        lower_text = response_text.lower()
+        # 실패 키워드 탐지
+        fail_keywords = ["fail", "error", "실패", "오류", "not found", "timeout"]
+        is_failed = any(kw in lower_text for kw in fail_keywords)
+
+        return {
+            "passed": not is_failed,
+            "actual_result": response_text[:500],
+            "failure_reason": "텍스트 분석 기반 실패 감지" if is_failed else None,
+        }

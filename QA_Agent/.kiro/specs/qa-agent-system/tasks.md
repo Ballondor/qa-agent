@@ -145,8 +145,8 @@ Strands SDK 기반 멀티 에이전트 QA 자동화 시스템을 구현합니다
 - [x] 8. 체크포인트 - 개별 에이전트 검증
   - 모든 테스트를 실행하여 통과 여부를 확인하고, 문제가 있으면 사용자에게 질문합니다.
 
-- [ ] 9. 오케스트레이터 에이전트 및 파이프라인 통합
-  - [ ] 9.1 OrchestratorAgent 구현 (`src/qa_agent_system/agents/orchestrator_agent.py`)
+- [x] 9. 오케스트레이터 에이전트 및 파이프라인 통합
+  - [x] 9.1 OrchestratorAgent 구현 (`src/qa_agent_system/agents/orchestrator_agent.py`)
     - `OrchestratorAgent.__init__()` - Strands Agent 래핑 및 시스템 프롬프트 설정
     - `OrchestratorAgent.execute_pipeline()` - TC → Execution → Report 순서로 파이프라인 실행
     - `OrchestratorAgent.validate_data()` - DataValidator를 사용한 에이전트 간 데이터 스키마 검증
@@ -154,39 +154,39 @@ Strands SDK 기반 멀티 에이전트 QA 자동화 시스템을 구현합니다
     - 하위 에이전트 실패 시 에이전트 이름, 실패 단계, 오류 내용 포함 에러 전달
     - _요구사항: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7_
 
-  - [ ]* 9.2 에이전트 상태 전이 순서 속성 테스트 작성
+  - [x]* 9.2 에이전트 상태 전이 순서 속성 테스트 작성
     - **Property 5: 에이전트 상태 전이 순서 (Agent Status Transition Order)**
     - Hypothesis로 임의의 상태 전이 시퀀스 생성하여 IDLE → RUNNING → COMPLETED/FAILED 순서 검증
     - `tests/property/test_pipeline.py`에 구현
     - **검증 대상: 요구사항 2.5**
 
-  - [ ]* 9.3 파이프라인 실행 순서 속성 테스트 작성
+  - [x]* 9.3 파이프라인 실행 순서 속성 테스트 작성
     - **Property 6: 파이프라인 실행 순서 (Pipeline Execution Order)**
     - 모킹된 에이전트로 파이프라인 실행하여 TC → Execution → Report 순서 및 데이터 전달 검증
     - `tests/property/test_pipeline.py`에 구현
     - **검증 대상: 요구사항 2.1, 2.2, 2.3, 2.4**
 
-- [ ] 10. QAAgentSystem 메인 진입점 및 시스템 통합
-  - [ ] 10.1 QAAgentSystem 구현 (`src/qa_agent_system/system.py`)
+- [x] 10. QAAgentSystem 메인 진입점 및 시스템 통합
+  - [x] 10.1 QAAgentSystem 구현 (`src/qa_agent_system/system.py`)
     - `QAAgentSystem.__init__()` - 4개 에이전트 초기화 (Bedrock Opus 4.6 모델 설정)
     - `QAAgentSystem.run()` - OrchestratorAgent를 통한 전체 QA 프로세스 실행
     - 에이전트 초기화 실패 시 에이전트 이름 + 원인 포함 에러 반환
     - Bedrock 모델 연결 실패 시 연결 실패 원인 + 재시도 안내 반환
     - _요구사항: 1.1, 1.2, 1.3, 1.4, 1.5_
 
-  - [ ]* 10.2 시스템 초기화 단위 테스트 작성
+  - [x]* 10.2 시스템 초기화 단위 테스트 작성
     - 4개 에이전트 생성 확인, 각 에이전트에 Bedrock Opus 모델 설정 확인
     - 에이전트 초기화 실패 시 에러 메시지 확인
     - Bedrock 모델 연결 실패 시 에러 메시지 및 재시도 안내 확인
     - `tests/unit/test_agent_init.py`에 구현
     - _요구사항: 1.1, 1.2, 1.4, 1.5_
 
-  - [ ] 10.3 `__init__.py` 모듈 내보내기 설정
+  - [x] 10.3 `__init__.py` 모듈 내보내기 설정
     - `src/qa_agent_system/__init__.py`에서 주요 클래스 및 모델 내보내기
     - `src/qa_agent_system/agents/__init__.py` 설정
     - _요구사항: 1.1_
 
-- [ ] 11. 최종 체크포인트 - 전체 시스템 검증
+- [x] 11. 최종 체크포인트 - 전체 시스템 검증
   - 모든 테스트(단위 테스트 + 속성 기반 테스트)를 실행하여 통과 여부를 확인하고, 문제가 있으면 사용자에게 질문합니다.
 
 ## 참고 사항
